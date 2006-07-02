@@ -459,21 +459,6 @@ static BOOL is_leap_year(unsigned year) {
 					} //switch(num_leading_hyphens) (2 digits)
 					break;
 
-	#if 0
-				case 1:
-					if(num_leading_hyphens == 1U) //-Y (implicit decade)
-						goto parseYear;
-					else if(num_leading_hyphens == 2U) { //--M(-DD) (implicit year) (extension)
-						year = [now yearOfCommonEra];
-						goto parseMonth;
-					} else if(num_leading_hyphens == 0U) {
-						if(*ch == '-') ++ch;
-						if(!isdigit(*ch))
-							goto centuryOnly;
-					}
-					break;
-	#endif //0
-
 				case 7: //YYYY DDD (ordinal date)
 					if(num_leading_hyphens > 0U)
 						isValidDate = NO;
