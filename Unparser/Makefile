@@ -1,4 +1,4 @@
-CFLAGS+=-std=c99 -g
+CFLAGS+=-std=c99 -g -Wall
 LDFLAGS+=-framework Foundation
 
 all: testparser unparse-weekdate unparse-ordinaldate unparse-date
