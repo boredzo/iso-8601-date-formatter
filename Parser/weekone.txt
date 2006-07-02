@@ -1,0 +1,37 @@
+#This is W1 in each year. Output is from gcal -s Mon $YEAR. Manually re-sorted by weekday of W1-1.
+#A comment after each W1 shows the ordinal and calendar (--MM-DD) dates for W1-1.
+
+#In some cases, W1-1 is one of the last days the previous year. In this case, the ordinal date will be > 300 and the calendar date's month will be 12 rather than 1. Mentally fill in the fact that this applies not to the year shown on the gcal output but to the year before it.
+
+     January 2001
+ Mo Tu We Th Fr Sa Su
+  1  2  3  4  5  6  7 #W1-1: 001: --01-01
+
+     January 2002
+ Mo Tu We Th Fr Sa Su
+     1  2  3  4  5  6 #W1-1: 365: --12-31
+
+     January 2003
+ Mo Tu We Th Fr Sa Su
+        1  2  3  4  5 #W1-1: 364: --12-30
+
+     January 2004
+ Mo Tu We Th Fr Sa Su
+           1  2  3  4 #W1-1: 363: --12-29
+
+#W1 is the first week containing Thursday. So in the years after this line, W1 does not contain --01-01, because --01-01 was > Thursday, not <= it.
+
+     January 2010
+ Mo Tu We Th Fr Sa Su
+              1  2  3
+  4  5  6  7  8  9 10 #W1-1: 004: --01-04
+
+     January 2000
+ Mo Tu We Th Fr Sa Su
+                 1  2
+  3  4  5  6  7  8  9 #W1-1: 003: --01-03
+
+     January 2006
+ Mo Tu We Th Fr Sa Su
+                    1
+  2  3  4  5  6  7  8 #W1-1: 002: --01-02
