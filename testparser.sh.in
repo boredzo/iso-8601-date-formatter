@@ -1,6 +1,6 @@
 
 #Tests with a date only
-./testprog 2006-02-24 \
+./testparser 2006-02-24 \
 2006-12 \
 2006 \
 2006- \
@@ -68,21 +68,21 @@
 --055 \
 2006T
 #Current year in x century
-./testprog 20 \
+./testparser 20 \
 1
 #x year in current century
-./testprog -06
+./testparser -06
 #x year and month in current century
-./testprog -06-02
+./testparser -06-02
 #x year, month, and date in current century
-./testprog 06-02-24
+./testparser 06-02-24
 #x month and date in current year
-./testprog --02-24
+./testparser --02-24
 #x date in current year and month
-./testprog ---24
+./testparser ---24
 
 #Tests with a time only
-./testprog T22:63:24-11:21 \
+./testparser T22:63:24-11:21 \
 T22:63:24+50:70 \
 T22:1:2 \
 T22:1Z \
@@ -91,13 +91,13 @@ T22 \
 T2 \
 T2:2:2
 #Tests with both a date and a time
-./testprog 2006-02-24T02:43:24 \
+./testparser 2006-02-24T02:43:24 \
 2006-02-24T22:43:24 \
 2006-02-24T22:63:24 \
 2006-12T12:34 \
 2006T22
 #Tests with a date, a time, and a time zone
-./testprog 2006-02-24T22:63:24-01:00 \
+./testparser 2006-02-24T22:63:24-01:00 \
 2006-02-24T22:63:24Z      \
 2006-02-24T22:63:24-1 \
 2006-02-24T22:63:24-01 \
@@ -109,7 +109,7 @@ T2:2:2
 2006-02-24T22:63:24-11:21
 
 #Invalid dates
-./testprog '' \
+./testparser '' \
 T \
 2006-W \
 2006-366 \
