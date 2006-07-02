@@ -351,7 +351,6 @@ static BOOL is_leap_year(unsigned year) {
 				case 2:
 					switch(num_leading_hyphens) {
 						case 0:
-						parseYear:
 							if(*ch == '-') {
 								//Implicit century
 								year  = [now yearOfCommonEra];
@@ -365,7 +364,6 @@ static BOOL is_leap_year(unsigned year) {
 								} else {
 									//Get month and/or date.
 									segment = read_segment_4digits(ch, &ch, &num_digits);
-								parseMonth:
 									NSLog(@"(%@) parsing month; segment is %u and ch is %s", str, segment, ch);
 									switch(num_digits) {
 										case 4: //YY-MMDD
