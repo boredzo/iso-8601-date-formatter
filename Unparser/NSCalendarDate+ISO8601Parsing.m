@@ -206,7 +206,7 @@ static BOOL is_leap_year(unsigned year) {
 		start_of_date = ch;
 
 		unsigned segment;
-		unsigned num_leading_hyphens = 0U, num_middle_hyphens = 0U, num_digits = 0U;
+		unsigned num_leading_hyphens = 0U, num_digits = 0U;
 
 		if(*ch == 'T') {
 			//There is no date here, only a time. Set the date to now; then we'll parse the time.
@@ -351,7 +351,6 @@ static BOOL is_leap_year(unsigned year) {
 				case 2:
 					switch(num_leading_hyphens) {
 						case 0:
-						parseYear:
 							if(*ch == '-') {
 								//Implicit century
 								year  = [now yearOfCommonEra];
@@ -365,7 +364,6 @@ static BOOL is_leap_year(unsigned year) {
 								} else {
 									//Get month and/or date.
 									segment = read_segment_4digits(ch, &ch, &num_digits);
-								parseMonth:
 									NSLog(@"(%@) parsing month; segment is %u and ch is %s", str, segment, ch);
 									switch(num_digits) {
 										case 4: //YY-MMDD
@@ -430,9 +428,9 @@ static BOOL is_leap_year(unsigned year) {
 							if(num_digits == 1U) //implied decade
 								year += century - (current_year % 10U);
 
-							if(*ch == '-')
-							{
-								month_or_week = read_segment_2digits(++ch, &ch);
+							if(*ch == '-') {
+								++ch;
+								month_or_week = read_segment_2digits(ch, &ch);
 								NSLog(@"(%@) month is %u", str, month_or_week);
 							}
 
@@ -442,8 +440,10 @@ static BOOL is_leap_year(unsigned year) {
 						case 2: //--MM; --MM-DD
 							year = [now yearOfCommonEra];
 							month_or_week = segment;
-							if(*ch == '-')
-								day = read_segment_2digits(++ch, &ch);
+							if(*ch == '-') {
+								++ch;
+								day = read_segment_2digits(ch, &ch);
+							}
 							break;
 
 						case 3: //---DD
@@ -456,21 +456,6 @@ static BOOL is_leap_year(unsigned year) {
 							isValidDate = NO;
 					} //switch(num_leading_hyphens) (2 digits)
 					break;
-
-	#if 0
-				case 1:
-					if(num_leading_hyphens == 1U) //-Y (implicit decade)
-						goto parseYear;
-					else if(num_leading_hyphens == 2U) { //--M(-DD) (implicit year) (extension)
-						year = [now yearOfCommonEra];
-						goto parseMonth;
-					} else if(num_leading_hyphens == 0U) {
-						if(*ch == '-') ++ch;
-						if(!isdigit(*ch))
-							goto centuryOnly;
-					}
-					break;
-	#endif //0
 
 				case 7: //YYYY DDD (ordinal date)
 					if(num_leading_hyphens > 0U)
@@ -508,12 +493,15 @@ static BOOL is_leap_year(unsigned year) {
 			if(isdigit(*ch)) {
 				hour = read_segment_2digits(ch, &ch);
 				if(*ch == ':') {
-					minute = read_double(++ch, &ch);
+					++ch;
+					minute = read_double(ch, &ch);
 					second = modf(minute, &minute);
 					if(second > DBL_EPSILON)
 						second *= 60.0; //Convert fraction (e.g. .5) into seconds (e.g. 30).
-					else if(*ch == ':')
-						second = read_double(++ch, &ch);
+					else if(*ch == ':') {
+						++ch;
+						second = read_double(ch, &ch);
+					}
 				}
 
 				switch(*ch) {
