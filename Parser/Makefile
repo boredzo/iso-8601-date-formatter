@@ -1,4 +1,4 @@
-CFLAGS+=-std=c99
+CFLAGS+=-std=c99 -Wall
 LDFLAGS+=-framework Foundation
 
 testprog: testprog.o NSCalendarDate+ISO8601Parsing.o
