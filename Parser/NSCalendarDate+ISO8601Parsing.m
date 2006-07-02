@@ -206,7 +206,7 @@ static BOOL is_leap_year(unsigned year) {
 		start_of_date = ch;
 
 		unsigned segment;
-		unsigned num_leading_hyphens = 0U, num_middle_hyphens = 0U, num_digits = 0U;
+		unsigned num_leading_hyphens = 0U, num_digits = 0U;
 
 		if(*ch == 'T') {
 			//There is no date here, only a time. Set the date to now; then we'll parse the time.
