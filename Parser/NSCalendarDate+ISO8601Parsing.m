@@ -430,9 +430,9 @@ static BOOL is_leap_year(unsigned year) {
 							if(num_digits == 1U) //implied decade
 								year += century - (current_year % 10U);
 
-							if(*ch == '-')
-							{
-								month_or_week = read_segment_2digits(++ch, &ch);
+							if(*ch == '-') {
+								++ch;
+								month_or_week = read_segment_2digits(ch, &ch);
 								NSLog(@"(%@) month is %u", str, month_or_week);
 							}
 
@@ -442,8 +442,10 @@ static BOOL is_leap_year(unsigned year) {
 						case 2: //--MM; --MM-DD
 							year = [now yearOfCommonEra];
 							month_or_week = segment;
-							if(*ch == '-')
-								day = read_segment_2digits(++ch, &ch);
+							if(*ch == '-') {
+								++ch;
+								day = read_segment_2digits(ch, &ch);
+							}
 							break;
 
 						case 3: //---DD
@@ -508,12 +510,15 @@ static BOOL is_leap_year(unsigned year) {
 			if(isdigit(*ch)) {
 				hour = read_segment_2digits(ch, &ch);
 				if(*ch == ':') {
-					minute = read_double(++ch, &ch);
+					++ch;
+					minute = read_double(ch, &ch);
 					second = modf(minute, &minute);
 					if(second > DBL_EPSILON)
 						second *= 60.0; //Convert fraction (e.g. .5) into seconds (e.g. 30).
-					else if(*ch == ':')
-						second = read_double(++ch, &ch);
+					else if(*ch == ':') {
+						++ch;
+						second = read_double(ch, &ch);
+					}
 				}
 
 				switch(*ch) {
