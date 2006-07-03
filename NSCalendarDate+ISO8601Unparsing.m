@@ -18,9 +18,19 @@ static BOOL is_leap_year(unsigned year) {
 #pragma mark Public methods
 
 - (NSString *)ISO8601DateStringWithTime:(BOOL)includeTime {
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:(includeTime ? @"%Y-%m-%dT%H:%M:%S%z" : @"%Y-%m-%d") allowNaturalLanguage:NO];
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:(includeTime ? @"%Y-%m-%dT%H:%M:%S" : @"%Y-%m-%d") allowNaturalLanguage:NO];
 	NSString *str = [formatter stringForObjectValue:self];
 	[formatter release];
+	if(includeTime) {
+		int offset = [[self timeZone] secondsFromGMT];
+		offset /= 60;  //bring down to minutes
+		if(offset == 0)
+			str = [str stringByAppendingString:@"Z"];
+		if(offset < 0)
+			str = [str stringByAppendingFormat:@"-%02d:%02d", -offset / 60, offset % 60];
+		else
+			str = [str stringByAppendingFormat:@"+%02d:%02d", offset / 60, offset % 60];
+	}
 	return str;
 }
 /*Adapted from:
