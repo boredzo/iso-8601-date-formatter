@@ -19,6 +19,9 @@
  *A full list of these extensions is in the README file.
  */
 
+//The default separator for time values. Currently, this is ':'.
+extern unichar ISO8601DefaultTimeSeparatorCharacter;
+
 @interface NSCalendarDate(ISO8601Parsing)
 
 //This method is the one that does all the work. All the others are convenience methods.

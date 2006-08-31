@@ -12,6 +12,7 @@
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
 #endif
+unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 static unsigned read_segment(const unsigned char *str, const unsigned char **next, unsigned *out_num_digits) {
 	unsigned num_digits = 0U;
@@ -186,7 +187,8 @@ static BOOL is_leap_year(unsigned year) {
 		dateOnly
 	} dateSpecification = monthAndDate;
 
-	if(strict) timeSep = DEFAULT_TIME_SEPARATOR;
+	if(strict) timeSep = ISO8601DefaultTimeSeparatorCharacter;
+	NSParameterAssert(timeSep != '\0', @"Time separator must not be NUL.");
 
 	BOOL isValidDate = ([str length] > 0U);
 	NSTimeZone *timeZone = nil;
@@ -622,7 +624,7 @@ static BOOL is_leap_year(unsigned year) {
 	return [self calendarDateWithString:str strictly:strict getRange:NULL];
 }
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict getRange:(out NSRange *)outRange {
-	return [self calendarDateWithString:str strictly:strict timeSeparator:DEFAULT_TIME_SEPARATOR getRange:NULL];
+	return [self calendarDateWithString:str strictly:strict timeSeparator:ISO8601DefaultTimeSeparatorCharacter getRange:NULL];
 }
 
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str timeSeparator:(unichar)timeSep getRange:(out NSRange *)outRange {
@@ -632,7 +634,7 @@ static BOOL is_leap_year(unsigned year) {
 	return [self calendarDateWithString:str strictly:NO timeSeparator:timeSep getRange:NULL];
 }
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str getRange:(out NSRange *)outRange {
-	return [self calendarDateWithString:str strictly:NO timeSeparator:DEFAULT_TIME_SEPARATOR getRange:outRange];
+	return [self calendarDateWithString:str strictly:NO timeSeparator:ISO8601DefaultTimeSeparatorCharacter getRange:outRange];
 }
 
 @end
