@@ -90,7 +90,7 @@ static double read_double(const unsigned char *str, const unsigned char **next) 
 		}
 		value = int_value;
 
-		if((*str == ',') || (*str == '.')) {
+		if(((*str == ',') || (*str == '.'))) {
 			++str;
 
 			register double multiplier, multiplier_multiplier;
@@ -500,13 +500,26 @@ static BOOL is_leap_year(unsigned year) {
 				hour = read_segment_2digits(ch, &ch);
 				if(*ch == timeSep) {
 					++ch;
-					minute = read_double(ch, &ch);
-					second = modf(minute, &minute);
-					if(second > DBL_EPSILON)
-						second *= 60.0; //Convert fraction (e.g. .5) into seconds (e.g. 30).
-					else if(*ch == timeSep) {
-						++ch;
-						second = read_double(ch, &ch);
+					if((timeSep == ',') || (timeSep == '.')) {
+						//We can't do fractional minutes when '.' is the segment separator.
+						//Only allow whole minutes and whole seconds.
+						minute = read_segment_2digits(ch, &ch);
+						if(*ch == timeSep) {
+							++ch;
+							second = read_segment_2digits(ch, &ch);
+						}
+					} else {
+						//Allow a fractional minute.
+						//If we don't get a fraction, look for a seconds segment.
+						//Otherwise, the fraction of a minute is the seconds.
+						minute = read_double(ch, &ch);
+						second = modf(minute, &minute);
+						if(second > DBL_EPSILON)
+							second *= 60.0; //Convert fraction (e.g. .5) into seconds (e.g. 30).
+						else if(*ch == timeSep) {
+							++ch;
+							second = read_double(ch, &ch);
+						}
 					}
 				}
 
