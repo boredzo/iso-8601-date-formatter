@@ -23,11 +23,12 @@
 
 //This method is the one that does all the work. All the others are convenience methods.
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict getRange:(out NSRange *)outRange;
-
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict;
 
 //Strictly: NO.
-+ (NSCalendarDate *)calendarDateWithString:(NSString *)str;
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str timeSeparator:(unichar)timeSep getRange:(out NSRange *)outRange;
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str timeSeparator:(unichar)timeSep;
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str getRange:(out NSRange *)outRange;
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str;
 
 @end

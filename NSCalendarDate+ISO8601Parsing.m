@@ -9,6 +9,10 @@
 
 #import "NSCalendarDate+ISO8601Parsing.h"
 
+#ifndef DEFAULT_TIME_SEPARATOR
+#	define DEFAULT_TIME_SEPARATOR ':'
+#endif
+
 static unsigned read_segment(const unsigned char *str, const unsigned char **next, unsigned *out_num_digits) {
 	unsigned num_digits = 0U;
 	unsigned value = 0U;
@@ -160,7 +164,7 @@ static BOOL is_leap_year(unsigned year) {
  * //Day only of implied week
  *  -W-d
  */
-+ (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict getRange:(out NSRange *)outRange {
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict timeSeparator:(unichar)timeSep getRange:(out NSRange *)outRange {
 	NSCalendarDate *now = [NSCalendarDate calendarDate];
 	unsigned
 		//Date
@@ -181,6 +185,8 @@ static BOOL is_leap_year(unsigned year) {
 		week,
 		dateOnly
 	} dateSpecification = monthAndDate;
+
+	if(strict) timeSep = DEFAULT_TIME_SEPARATOR;
 
 	BOOL isValidDate = ([str length] > 0U);
 	NSTimeZone *timeZone = nil;
@@ -492,13 +498,13 @@ static BOOL is_leap_year(unsigned year) {
 
 			if(isdigit(*ch)) {
 				hour = read_segment_2digits(ch, &ch);
-				if(*ch == ':') {
+				if(*ch == timeSep) {
 					++ch;
 					minute = read_double(ch, &ch);
 					second = modf(minute, &minute);
 					if(second > DBL_EPSILON)
 						second *= 60.0; //Convert fraction (e.g. .5) into seconds (e.g. 30).
-					else if(*ch == ':') {
+					else if(*ch == timeSep) {
 						++ch;
 						second = read_double(ch, &ch);
 					}
@@ -523,7 +529,7 @@ static BOOL is_leap_year(unsigned year) {
 							if(negative) tz_hour = -tz_hour;
 
 							//Optional separator.
-							if(*ch == ':') ++ch;
+							if(*ch == timeSep) ++ch;
 
 							if(isdigit(*ch)) {
 								//Read minute offset.
@@ -602,9 +608,18 @@ static BOOL is_leap_year(unsigned year) {
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict {
 	return [self calendarDateWithString:str strictly:strict getRange:NULL];
 }
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str strictly:(BOOL)strict getRange:(out NSRange *)outRange {
+	return [self calendarDateWithString:str strictly:strict timeSeparator:DEFAULT_TIME_SEPARATOR getRange:NULL];
+}
 
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str timeSeparator:(unichar)timeSep getRange:(out NSRange *)outRange {
+	return [self calendarDateWithString:str strictly:NO timeSeparator:timeSep getRange:outRange];
+}
++ (NSCalendarDate *)calendarDateWithString:(NSString *)str timeSeparator:(unichar)timeSep {
+	return [self calendarDateWithString:str strictly:NO timeSeparator:timeSep getRange:NULL];
+}
 + (NSCalendarDate *)calendarDateWithString:(NSString *)str getRange:(out NSRange *)outRange {
-	return [self calendarDateWithString:str strictly:NO getRange:outRange];
+	return [self calendarDateWithString:str strictly:NO timeSeparator:DEFAULT_TIME_SEPARATOR getRange:outRange];
 }
 
 @end
