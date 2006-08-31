@@ -6,7 +6,7 @@ int main(int argc, const char **argv) {
 
 	while(--argc) {
 		NSString *arg = [NSString stringWithUTF8String:*++argv];
-		printf("%s\n", [[NSString stringWithFormat:@"%@:\t%@", arg, [[NSCalendarDate calendarDateWithString:arg] ISO8601DateStringWithTime:NO]] UTF8String]);
+		printf("%s\n", [[NSString stringWithFormat:@"%@:\t%@", arg, [[NSCalendarDate calendarDateWithString:arg] ISO8601DateStringWithTime:YES]] UTF8String]);
 	}
 
 	[pool release];
