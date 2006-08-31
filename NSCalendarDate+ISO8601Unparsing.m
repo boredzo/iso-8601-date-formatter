@@ -6,6 +6,11 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef DEFAULT_TIME_SEPARATOR
+#	define DEFAULT_TIME_SEPARATOR ':'
+#endif
+unichar ISO8601UnparserDefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
+
 static BOOL is_leap_year(unsigned year) {
 	return \
 	    ((year %   4U) == 0U)
@@ -13,12 +18,20 @@ static BOOL is_leap_year(unsigned year) {
 	||  ((year % 400U) == 0U));
 }
 
+@interface NSString(ISO8601Unparsing)
+
+//Replace all occurrences of ':' with timeSep.
+- (NSString *)prepareDateFormatWithTimeSeparator:(unichar)timeSep;
+
+@end
+
 @implementation NSCalendarDate(ISO8601Unparsing)
 
 #pragma mark Public methods
 
-- (NSString *)ISO8601DateStringWithTime:(BOOL)includeTime {
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:(includeTime ? @"%Y-%m-%dT%H:%M:%S" : @"%Y-%m-%d") allowNaturalLanguage:NO];
+- (NSString *)ISO8601DateStringWithTime:(BOOL)includeTime timeSeparator:(unichar)timeSep {
+	NSString *dateFormat = [(includeTime ? @"%Y-%m-%dT%H:%M:%S" : @"%Y-%m-%d") prepareDateFormatWithTimeSeparator:timeSep];
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:dateFormat allowNaturalLanguage:NO];
 	NSString *str = [formatter stringForObjectValue:self];
 	[formatter release];
 	if(includeTime) {
@@ -38,7 +51,7 @@ static BOOL is_leap_year(unsigned year) {
  *	Rick McCarty, 1999
  *	http://personal.ecu.edu/mccartyr/ISOwdALG.txt
  */
-- (NSString *)ISO8601WeekDateStringWithTime:(BOOL)includeTime {
+- (NSString *)ISO8601WeekDateStringWithTime:(BOOL)includeTime timeSeparator:(unichar)timeSep {
 	enum {
 		monday, tuesday, wednesday, thursday, friday, saturday, sunday
 	};
@@ -82,7 +95,7 @@ static BOOL is_leap_year(unsigned year) {
 
 	NSString *timeString;
 	if(includeTime) {
-		NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:@"T%H:%M:%S%z" allowNaturalLanguage:NO];
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:[@"T%H:%M:%S%z" prepareDateFormatWithTimeSeparator:timeSep] allowNaturalLanguage:NO];
 		timeString = [formatter stringForObjectValue:self];
 		[formatter release];
 	} else
@@ -90,10 +103,10 @@ static BOOL is_leap_year(unsigned year) {
 
 	return [NSString stringWithFormat:@"%u-W%02u-%02u%@", year, week, dayOfWeek + 1U, timeString];
 }
-- (NSString *)ISO8601OrdinalDateStringWithTime:(BOOL)includeTime {
+- (NSString *)ISO8601OrdinalDateStringWithTime:(BOOL)includeTime timeSeparator:(unichar)timeSep {
 	NSString *timeString;
 	if(includeTime) {
-		NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:@"T%H:%M:%S%z" allowNaturalLanguage:NO];
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] initWithDateFormat:[@"T%H:%M:%S%z" prepareDateFormatWithTimeSeparator:timeSep] allowNaturalLanguage:NO];
 		timeString = [formatter stringForObjectValue:self];
 		[formatter release];
 	} else
@@ -104,14 +117,56 @@ static BOOL is_leap_year(unsigned year) {
 
 #pragma mark -
 
+- (NSString *)ISO8601DateStringWithTime:(BOOL)includeTime {
+	return [self ISO8601DateStringWithTime:includeTime timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
+}
+- (NSString *)ISO8601WeekDateStringWithTime:(BOOL)includeTime {
+	return [self ISO8601WeekDateStringWithTime:includeTime timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
+}
+- (NSString *)ISO8601OrdinalDateStringWithTime:(BOOL)includeTime {
+	return [self ISO8601OrdinalDateStringWithTime:includeTime timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
+}
+
+#pragma mark -
+
+- (NSString *)ISO8601DateStringWithTimeSeparator:(unichar)timeSep {
+	return [self ISO8601DateStringWithTime:YES timeSeparator:timeSep];
+}
+- (NSString *)ISO8601WeekDateStringWithTimeSeparator:(unichar)timeSep {
+	return [self ISO8601WeekDateStringWithTime:YES timeSeparator:timeSep];
+}
+- (NSString *)ISO8601OrdinalDateStringWithTimeSeparator:(unichar)timeSep {
+	return [self ISO8601OrdinalDateStringWithTime:YES timeSeparator:timeSep];
+}
+
+#pragma mark -
+
 - (NSString *)ISO8601DateString {
-	return [self ISO8601DateStringWithTime:YES];
+	return [self ISO8601DateStringWithTime:YES timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
 }
 - (NSString *)ISO8601WeekDateString {
-	return [self ISO8601WeekDateStringWithTime:YES];
+	return [self ISO8601WeekDateStringWithTime:YES timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
 }
 - (NSString *)ISO8601OrdinalDateString {
-	return [self ISO8601OrdinalDateStringWithTime:YES];
+	return [self ISO8601OrdinalDateStringWithTime:YES timeSeparator:ISO8601UnparserDefaultTimeSeparatorCharacter];
+}
+
+@end
+
+@implementation NSString(ISO8601Unparsing)
+
+//Replace all occurrences of ':' with timeSep.
+- (NSString *)prepareDateFormatWithTimeSeparator:(unichar)timeSep {
+	NSString *dateFormat = self;
+	if(timeSep != ':') {
+		NSMutableString *dateFormatMutable = [[dateFormat mutableCopy] autorelease];
+		[dateFormatMutable replaceOccurrencesOfString:@":"
+		                               	   withString:[NSString stringWithCharacters:&timeSep length:1U]
+	                                      	  options:NSBackwardsSearch | NSLiteralSearch
+	                                        	range:(NSRange){ 0U, [dateFormat length] }];
+		dateFormat = dateFormatMutable;
+	}
+	return dateFormat;
 }
 
 @end
