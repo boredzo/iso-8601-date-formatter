@@ -20,7 +20,7 @@
  */
 
 //The default separator for time values. Currently, this is ':'.
-extern unichar ISO8601DefaultTimeSeparatorCharacter;
+extern unichar ISO8601ParserDefaultTimeSeparatorCharacter;
 
 @interface NSCalendarDate(ISO8601Parsing)
 
