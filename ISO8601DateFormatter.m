@@ -684,41 +684,41 @@ static BOOL is_leap_year(unsigned year);
 		monday, tuesday, wednesday, thursday, friday, saturday, sunday
 	};
 	enum {
-		january = 1U, february, march,
+		january = 1, february, march,
 		april, may, june,
 		july, august, september,
 		october, november, december
 	};
 
-	unsigned year = components.year;
-	unsigned week = 0U;
+	int year = components.year;
+	int week = 0;
 	//The old unparser added 6 to [calendarDate dayOfWeek], which was zero-based; components.weekday is one-based, so we now add only 5.
-	unsigned dayOfWeek = (components.weekday + 5U) % 7U;
-	unsigned dayOfYear = ordinalComponents.day;
+	int dayOfWeek = (components.weekday + 5) % 7;
+	int dayOfYear = ordinalComponents.day;
 
-	unsigned prevYear = year - 1U;
+	int prevYear = year - 1;
 
 	BOOL yearIsLeapYear = is_leap_year(year);
 	BOOL prevYearIsLeapYear = is_leap_year(prevYear);
 
-	unsigned YY = prevYear % 100U;
-	unsigned C = prevYear - YY;
-	unsigned G = YY + YY / 4U;
-	unsigned Jan1Weekday = (((((C / 100U) % 4U) * 5U) + G) % 7U);
+	int YY = prevYear % 100;
+	int C = prevYear - YY;
+	int G = YY + YY / 4;
+	int Jan1Weekday = (((((C / 100) % 4) * 5) + G) % 7);
 
-	unsigned weekday = ((dayOfYear + Jan1Weekday) - 1U) % 7U;
+	int weekday = ((dayOfYear + Jan1Weekday) - 1) % 7;
 
-	if((dayOfYear <= (7U - Jan1Weekday)) && (Jan1Weekday > thursday)) {
-		week = 52U + ((Jan1Weekday == friday) || ((Jan1Weekday == saturday) && prevYearIsLeapYear));
+	if((dayOfYear <= (7 - Jan1Weekday)) && (Jan1Weekday > thursday)) {
+		week = 52 + ((Jan1Weekday == friday) || ((Jan1Weekday == saturday) && prevYearIsLeapYear));
 		--year;
 	} else {
-		unsigned lengthOfYear = 365U + yearIsLeapYear;
+		int lengthOfYear = 365 + yearIsLeapYear;
 		if((lengthOfYear - dayOfYear) < (thursday - weekday)) {
 			++year;
-			week = 1U;
+			week = 1;
 		} else {
-			unsigned J = dayOfYear + (sunday - weekday) + Jan1Weekday;
-			week = J / 7U - (Jan1Weekday > thursday);
+			int J = dayOfYear + (sunday - weekday) + Jan1Weekday;
+			week = J / 7 - (Jan1Weekday > thursday);
 		}
 	}
 
@@ -735,7 +735,7 @@ static BOOL is_leap_year(unsigned year);
 	} else
 		timeString = @"";
 
-	return [NSString stringWithFormat:@"%u-W%02u-%02u%@", year, week, dayOfWeek + 1U, timeString];
+	return [NSString stringWithFormat:@"%u-W%02u-%02u%@", (unsigned)year, (unsigned)week, ((unsigned)dayOfWeek) + 1U, timeString];
 }
 
 @end
