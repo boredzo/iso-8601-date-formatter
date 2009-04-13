@@ -51,7 +51,16 @@ Notes
 Version history
 ---------------
 
-This version is 0.3. Changes from 0.2:
+This version is 0.5. Changes from 0.4:
+* Rewrote as an NSFormatter subclass using NSCalendar.
+  * Making it a formatter makes it much easier to use with Bindings.
+  * Using NSCalendar means we're no longer using NSCalendarDate, which Apple has said they will deprecate at some point.
+* Fixed a bug in week date generation: One subtraction could give a negative result, which was a problem because my implementation of the algorithm used unsigned integers. I've changed it to use signed integers, so the result truly is negative now. I also added a test case for this.
+
+Changes in 0.4 from 0.3:
+* Added the ability to use a time separator other than ':'.
+
+Changes in 0.3 from 0.2:
 * Colin Barrett noticed that I used %m instead of %M when creating the time strings. Oops.
 * Colin also noticed that I had the ?: in -ISO8601DateStringWithTime: the wrong way around. Oops again.
 
