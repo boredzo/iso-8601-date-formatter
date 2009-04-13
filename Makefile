@@ -7,7 +7,7 @@ parser-test: testparser testparser.sh
 	./testparser.sh
 unparser-test: testunparser.sh unparse-weekdate unparse-ordinaldate unparse-date
 	./testunparser.sh > testunparser.out
-	diff -qs testunparser.out testunparser-expected.out
+	diff -qs test_files/testunparser-expected.out testunparser.out
 .PHONY: all test parser-test unparser-test
 
 testparser: testparser.o NSCalendarDate+ISO8601Parsing.o
