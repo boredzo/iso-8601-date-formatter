@@ -6,24 +6,25 @@ Add the source files to your project.
 Parsing
 -------
 
-Call +[NSCalendarDate calendarDateWithString:myString]. The method will return either an NSCalendarDate or nil.
+Create an ISO 8601 date formatter, then call [formatter dateFromString:myString]. The method will return either an NSDate or nil.
 
-There are a total of four parser methods. The one that contains the actual parser is +[NSCalendarDate calendarDateWithString:strictly:getRange:]. The other three are based on this one.
+There are a total of six parser methods. The one that contains the actual parser is -[ISO8601DateFormatter dateComponentsFromString:timeZone:range:]. The other five are based on this one.
 
-The "strict" option, when set to YES, enforces sanity checks on the string; without it, or when set to NO, the parser will afford you quite a bit of leeway.
+The "outTimeZone" parameter, when not set to NULL, is a pointer to an NSTimeZone *variable. If the string specified a time zone, you'll receive the time zone object in that variable. If the string didn't specify a time zone, you'll receive nil.
 
 The "outRange" parameter, when not set to NULL, is a pointer to NSRange storage. You will receive the range of the parsed substring in that storage.
 
 Unparsing
 ---------
 
-When you want to unparse a calendar date to ISO 8601 date format, call [myDate ISO8601DateString].
+Create an ISO 8601 date formatter, then call [formatter stringFromDate:myDate]. The method will return a string.
 
-When you want to unparse a calendar date to ISO 8601 week-date format, call [myDate ISO8601WeekDateString].
+The formatter has several properties that control its behavior:
 
-When you want to unparse a calendar date to ISO 8601 ordinal-date format, call [myDate ISO8601OrdinalDateString].
-
-All three methods give you the time as well as the date. All three versions also come in versions that let you not get the time; for example, ISO8601DateStringWithTime:. Pass NO to not get the time.
+* You can set the format of the resulting strings. By default, the formatter will generate calendar-date strings; your other options are week dates and ordinal dates.
+* You can set a default time zone; by default, it will use [NSTimeZone defaultTimeZone].
+* You can enable a strict mode, wherein the formatter enforces sanity checks on the string. By default, the parser will afford you quite a bit of leeway.
+* You can set whether to include the time in the string, and if so, what hour-minute separator to use (default ':').
 
 How to test that this code works
 ================================
@@ -91,7 +92,7 @@ Bugs
 Parsing
 -------
 
-* This method won't extract a date from just anywhere in a string, only immediately after the start of the string (or any leading whitespace). There are two solutions: either require that -calendarDateValue be invoked on a string that is only an ISO 8601 date, with nothing before or after (bad for parsing purposes), or find an ISO 8601 date as a substring. I won't do the first one, and barring a patch, I probably won't do the second one either.
+* This method won't extract a date from just anywhere in a string, only immediately after the start of the string (or any leading whitespace). There are two solutions: either require you to invoke the parser on a string that is only an ISO 8601 date, with nothing before or after (bad for parsing purposes), or make the parser able to find an ISO 8601 date as a substring. I won't do the first one, and barring a patch, I probably won't do the second one either.
 
 * Date ranges (also specified by ISO 8601) are not supported; this method will only return one date. To handle ranges would require at least one more method.
 

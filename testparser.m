@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "NSCalendarDate+ISO8601Parsing.h"
+#import "ISO8601DateFormatter.h"
 
 int main(int argc, const char **argv) {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -10,10 +10,13 @@ int main(int argc, const char **argv) {
 		parseStrictly = YES;
 	}
 
+	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+	formatter.parsesStrictly = parseStrictly;
+
 	while(--argc) {
 		NSString *str = [NSString stringWithUTF8String:*++argv];
 		NSLog(@"Parsing strictly: %hhi", parseStrictly);
-		NSDate *date = [NSCalendarDate calendarDateWithString:str strictly:parseStrictly];
+		NSDate *date = [formatter dateFromString:str];
 		fputs([[NSString stringWithFormat:@"%@ %C %@\n", str, 0x2192, date] UTF8String], stdout);
 	}
 

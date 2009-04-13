@@ -1,12 +1,15 @@
-#import "NSCalendarDate+ISO8601Parsing.h"
-#import "NSCalendarDate+ISO8601Unparsing.h"
+#import "ISO8601DateFormatter.h"
 
 int main(int argc, const char **argv) {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 
+	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+	formatter.format = ISO8601DateFormatCalendar;
+
 	while(--argc) {
 		NSString *arg = [NSString stringWithUTF8String:*++argv];
-		printf("%s\n", [[NSString stringWithFormat:@"%@:\t%@", arg, [[NSCalendarDate calendarDateWithString:arg] ISO8601DateStringWithTime:NO]] UTF8String]);
+		NSTimeZone *timeZone = nil;
+		printf("%s\n", [[NSString stringWithFormat:@"%@:\t%@", arg, [formatter stringFromDate:[formatter dateFromString:arg timeZone:&timeZone] timeZone:timeZone]] UTF8String]);
 	}
 
 	[pool release];

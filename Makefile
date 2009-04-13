@@ -10,11 +10,11 @@ unparser-test: testunparser.sh unparse-weekdate unparse-ordinaldate unparse-date
 	diff -qs test_files/testunparser-expected.out testunparser.out
 .PHONY: all test parser-test unparser-test
 
-testparser: testparser.o NSCalendarDate+ISO8601Parsing.o
+testparser: testparser.o ISO8601DateFormatter.o
 
 testparser.sh: testparser.sh.in
 	python testparser.sh.py
 
-unparse-weekdate: unparse-weekdate.o NSCalendarDate+ISO8601Parsing.o NSCalendarDate+ISO8601Unparsing.o
-unparse-ordinaldate: unparse-ordinaldate.o NSCalendarDate+ISO8601Parsing.o NSCalendarDate+ISO8601Unparsing.o
-unparse-date: unparse-date.o NSCalendarDate+ISO8601Parsing.o NSCalendarDate+ISO8601Unparsing.o
+unparse-weekdate: unparse-weekdate.o ISO8601DateFormatter.o ISO8601DateFormatter.o
+unparse-ordinaldate: unparse-ordinaldate.o ISO8601DateFormatter.o ISO8601DateFormatter.o
+unparse-date: unparse-date.o ISO8601DateFormatter.o ISO8601DateFormatter.o
