@@ -481,6 +481,10 @@ static BOOL is_leap_year(unsigned year);
 					}
 				}
 
+				if (!strict) {
+					if (isspace(*ch)) ++ch;
+				}
+
 				switch(*ch) {
 					case 'Z':
 						timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
