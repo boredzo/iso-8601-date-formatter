@@ -731,7 +731,7 @@ static BOOL is_leap_year(unsigned year);
 		if (!timeSep) timeSep = ISO8601DefaultTimeSeparatorCharacter;
 		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_WITH_TIMEZONE_FORMAT withTimeSeparator:timeSep];
 
-		timeString = [formatter stringForObjectValue:self];
+		timeString = [formatter stringForObjectValue:date];
 
 		[formatter release];
 	} else
