@@ -527,8 +527,8 @@ static BOOL is_leap_year(NSUInteger year);
 			components.year = year;
 			components.day = day;
 			components.hour = hour;
-			components.minute = minute;
-			components.second = second;
+			components.minute = (NSInteger)minute;
+			components.second = (NSInteger)second;
 
 			switch(dateSpecification) {
 				case monthAndDate:
