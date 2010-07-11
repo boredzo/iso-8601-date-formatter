@@ -1,5 +1,5 @@
 CLANG=/Developer/usr/bin/clang
-CFLAGS+=-std=c99 -g -Wall
+CFLAGS+=-std=c99 -g -Werror -Wmissing-field-initializers -Wreturn-type -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wunused-variable -Wunused-value -Wshadow -Wsign-compare -Wnewline-eof -Wshorten-64-to-32 -Wundeclared-selector
 LDFLAGS+=-framework Foundation
 
 all: testparser unparse-weekdate unparse-ordinaldate unparse-date
