@@ -126,8 +126,8 @@ static BOOL is_leap_year(NSUInteger year);
 	NSUInteger
 		//Date
 		year,
-		month_or_week,
-		day,
+		month_or_week = 0U,
+		day = 0U,
 		//Time
 		hour = 0U;
 	NSTimeInterval
@@ -155,7 +155,7 @@ static BOOL is_leap_year(NSUInteger year);
 	const unsigned char *ch = (const unsigned char *)[string UTF8String];
 
 	NSRange range = { 0U, 0U };
-	const unsigned char *start_of_date;
+	const unsigned char *start_of_date = NULL;
 	if (strict && isspace(*ch)) {
 		range.location = NSNotFound;
 		isValidDate = NO;
