@@ -10,6 +10,8 @@ int main(int argc, const char **argv) {
 		parseStrictly = YES;
 	}
 
+	[NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
+
 	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
 	formatter.parsesStrictly = parseStrictly;
 
