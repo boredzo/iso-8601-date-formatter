@@ -24,5 +24,7 @@ unparse-weekdate: unparse-weekdate.o ISO8601DateFormatter.o ISO8601DateFormatter
 unparse-ordinaldate: unparse-ordinaldate.o ISO8601DateFormatter.o ISO8601DateFormatter.o
 unparse-date: unparse-date.o ISO8601DateFormatter.o ISO8601DateFormatter.o
 
+testunparsewithtime: testunparsewithtime.o ISO8601DateFormatter.o
+
 ISO8601DateFormatter-analysis.plist: ISO8601DateFormatter.m
 	$(CLANG) $^ --analyze -o /dev/null
