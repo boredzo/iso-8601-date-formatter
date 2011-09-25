@@ -10,8 +10,9 @@ int main(void) {
 	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:336614400.0];
 	NSLog(@"2011-09-01 at 5 PM ET: %@", [formatter stringFromDate:date]);
 
-	testFormatStrings(2, 6);
 	testFormatStrings(11, 6);
+	testFormatStrings(2, 6);
+	testFormatStrings(-2, 6);
 
 	[pool drain];
 	return EXIT_SUCCESS;
