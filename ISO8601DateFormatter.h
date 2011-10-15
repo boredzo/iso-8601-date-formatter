@@ -36,6 +36,9 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
 @interface ISO8601DateFormatter: NSFormatter
 {
+	NSString *lastUsedFormatString;
+	NSDateFormatter *unparsingFormatter;
+
 	NSTimeZone *defaultTimeZone;
 	ISO8601DateFormat format;
 	unichar timeSeparator;

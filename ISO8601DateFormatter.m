@@ -44,6 +44,10 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 }
 - (void) dealloc {
 	[defaultTimeZone release];
+
+	[unparsingFormatter release];
+	[lastUsedFormatString release];
+
 	[super dealloc];
 }
 
@@ -636,17 +640,25 @@ static BOOL is_leap_year(NSUInteger year);
 	if (includeTime)
 		dateFormat = [dateFormat stringByAppendingFormat:@"'T'%@", [self replaceColonsInString:ISO_TIME_FORMAT withTimeSeparator:self.timeSeparator]];
 
-	NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-	calendar.firstWeekday = 2; //Monday
+	if (dateFormat != lastUsedFormatString) {
+		[unparsingFormatter release];
+		unparsingFormatter = nil;
 
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	formatter.formatterBehavior = NSDateFormatterBehavior10_4;
-	formatter.dateFormat = dateFormat;
-	formatter.calendar = calendar;
+		[lastUsedFormatString release];
+		lastUsedFormatString = [dateFormat retain];
+	}
 
-	NSString *str = [formatter stringForObjectValue:date];
+	if (!unparsingFormatter) {
+		NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+		calendar.firstWeekday = 2; //Monday
 
-	[formatter release];
+		unparsingFormatter = [[NSDateFormatter alloc] init];
+		unparsingFormatter.formatterBehavior = NSDateFormatterBehavior10_4;
+		unparsingFormatter.dateFormat = dateFormat;
+		unparsingFormatter.calendar = calendar;
+	}
+
+	NSString *str = [unparsingFormatter stringForObjectValue:date];
 
 	if (includeTime) {
 		NSInteger offset = [timeZone secondsFromGMT];
