@@ -22,9 +22,9 @@ int main(void) {
 		if (outString) ++numResults;
 	}
 	end = [NSDate date];
-	NSLog(@"Time taken: %f", [end timeIntervalSinceDate:start]);
+	NSLog(@"Time taken: %f seconds", [end timeIntervalSinceDate:start]);
 	NSLog(@"Number of dates and strings computed: %lu each", (unsigned long)numResults);
-	NSLog(@"Time taken per date: %f", [end timeIntervalSinceDate:start] / numReps);
+	NSLog(@"Time taken per date: %f seconds", [end timeIntervalSinceDate:start] / numReps);
 
 	[pool drain];
 	pool = [[NSAutoreleasePool alloc] init];
@@ -57,9 +57,9 @@ int main(void) {
 		if (outString) ++numResults;
 	}
 	end = [NSDate date];
-	NSLog(@"Time taken: %f", [end timeIntervalSinceDate:start]);
+	NSLog(@"Time taken: %f seconds", [end timeIntervalSinceDate:start]);
 	NSLog(@"Number of dates and strings computed: %lu each", (unsigned long)numResults);
-	NSLog(@"Time taken per date: %f", [end timeIntervalSinceDate:start] / numReps);
+	NSLog(@"Time taken per date: %f seconds", [end timeIntervalSinceDate:start] / numReps);
 
 	sleep(1);
 
