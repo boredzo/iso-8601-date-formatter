@@ -28,3 +28,5 @@ testunparsewithtime: testunparsewithtime.o ISO8601DateFormatter.o
 
 ISO8601DateFormatter-analysis.plist: ISO8601DateFormatter.m
 	$(CLANG) $^ --analyze -o /dev/null
+
+timetrial: timetrial.o ISO8601DateFormatter.o
