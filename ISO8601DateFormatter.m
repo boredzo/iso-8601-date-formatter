@@ -41,6 +41,12 @@ static NSMutableDictionary *timeZonesByOffset;
 	}
 }
 
++ (void) purgeGlobalCaches {
+	NSMutableDictionary *oldCache = timeZonesByOffset;
+	timeZonesByOffset = nil;
+	[oldCache release];
+}
+
 - (NSCalendar *) makeCalendarWithDesiredConfiguration {
 	NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 	calendar.firstWeekday = 2; //Monday
