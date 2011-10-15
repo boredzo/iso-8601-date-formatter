@@ -5,6 +5,8 @@
 int main(void) {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+	sleep(1);
+
 	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
 	NSString *inString = @"2011-04-12T13:15:17-0800";
 	NSUInteger numResults = 0;
@@ -24,6 +26,8 @@ int main(void) {
 
 	[pool drain];
 	pool = [[NSAutoreleasePool alloc] init];
+
+	sleep(1);
 
 	numResults = 0;
 
@@ -52,6 +56,8 @@ int main(void) {
 	NSLog(@"Time taken: %f", [end timeIntervalSinceDate:start]);
 	NSLog(@"Number of dates and strings computed: %lu each", (unsigned long)numResults);
 	NSLog(@"Time taken per date: %f", [end timeIntervalSinceDate:start] / numReps);
+
+	sleep(1);
 
 	[pool drain];
 	return EXIT_SUCCESS;
