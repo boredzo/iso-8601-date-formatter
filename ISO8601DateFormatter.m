@@ -51,6 +51,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 	[unparsingFormatter release];
 	[lastUsedFormatString release];
+	[calendar release];
 
 	[super dealloc];
 }
