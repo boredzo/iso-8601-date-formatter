@@ -39,6 +39,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 	NSString *lastUsedFormatString;
 	NSDateFormatter *unparsingFormatter;
 
+	NSCalendar *calendar;
 	NSTimeZone *defaultTimeZone;
 	ISO8601DateFormat format;
 	unichar timeSeparator;
@@ -46,7 +47,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 	BOOL parsesStrictly;
 }
 
-@property(retain) NSTimeZone *defaultTimeZone;
+@property(nonatomic, retain) NSTimeZone *defaultTimeZone;
 
 #pragma mark Parsing
 
