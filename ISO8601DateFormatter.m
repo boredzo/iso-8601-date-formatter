@@ -33,11 +33,17 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 @implementation ISO8601DateFormatter
 
+- (NSCalendar *) makeCalendarWithDesiredConfiguration {
+	NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+	calendar.firstWeekday = 2; //Monday
+	calendar.timeZone = [NSTimeZone defaultTimeZone];
+	return calendar;
+}
+
 - (id) init {
 	if ((self = [super init])) {
-		calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-		calendar.firstWeekday = 2; //Monday
-		calendar.timeZone = [NSTimeZone defaultTimeZone];
+		parsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
+		unparsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
 
 		format = ISO8601DateFormatCalendar;
 		timeSeparator = ISO8601DefaultTimeSeparatorCharacter;
@@ -51,7 +57,8 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 	[unparsingFormatter release];
 	[lastUsedFormatString release];
-	[calendar release];
+	[parsingCalendar release];
+	[unparsingCalendar release];
 
 	[super dealloc];
 }
@@ -62,7 +69,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 		[defaultTimeZone release];
 		defaultTimeZone = [tz retain];
 
-		calendar.timeZone = defaultTimeZone;
+		unparsingCalendar.timeZone = defaultTimeZone;
 	}
 }
 
@@ -136,7 +143,7 @@ static BOOL is_leap_year(NSUInteger year);
 	NSDate *now = [NSDate date];
 
 	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
-	NSDateComponents *nowComponents = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:now];
+	NSDateComponents *nowComponents = [parsingCalendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:now];
 
 	NSUInteger
 		//Date
@@ -594,9 +601,9 @@ static BOOL is_leap_year(NSUInteger year);
 	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange];
 	if (outTimeZone)
 		*outTimeZone = timeZone;
-	calendar.timeZone = timeZone;
+	parsingCalendar.timeZone = timeZone;
 
-	return [calendar dateFromComponents:components];
+	return [parsingCalendar dateFromComponents:components];
 }
 
 - (BOOL)getObjectValue:(id *)outValue forString:(NSString *)string errorDescription:(NSString **)error {
@@ -648,7 +655,7 @@ static BOOL is_leap_year(NSUInteger year);
 	if (includeTime)
 		dateFormat = [dateFormat stringByAppendingFormat:@"'T'%@", [self replaceColonsInString:ISO_TIME_FORMAT withTimeSeparator:self.timeSeparator]];
 
-	calendar.timeZone = timeZone;
+	unparsingCalendar.timeZone = timeZone;
 
 	if (dateFormat != lastUsedFormatString) {
 		[unparsingFormatter release];
@@ -662,7 +669,7 @@ static BOOL is_leap_year(NSUInteger year);
 		unparsingFormatter = [[NSDateFormatter alloc] init];
 		unparsingFormatter.formatterBehavior = NSDateFormatterBehavior10_4;
 		unparsingFormatter.dateFormat = dateFormat;
-		unparsingFormatter.calendar = calendar;
+		unparsingFormatter.calendar = unparsingCalendar;
 	}
 
 	NSString *str = [unparsingFormatter stringForObjectValue:date];
@@ -677,7 +684,7 @@ static BOOL is_leap_year(NSUInteger year);
 	}
 
 	//Undo the change we made earlier
-	calendar.timeZone = self.defaultTimeZone;
+	unparsingCalendar.timeZone = self.defaultTimeZone;
 
 	return str;
 }
@@ -694,14 +701,14 @@ static BOOL is_leap_year(NSUInteger year);
  *	http://personal.ecu.edu/mccartyr/ISOwdALG.txt
  */
 - (NSString *) weekDateStringForDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone {
-	calendar.timeZone = timeZone;
-	NSDateComponents *components = [calendar components:NSYearCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:date];
+	unparsingCalendar.timeZone = timeZone;
+	NSDateComponents *components = [unparsingCalendar components:NSYearCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:date];
 
 	//Determine the ordinal date.
-	NSDateComponents *startOfYearComponents = [calendar components:NSYearCalendarUnit fromDate:date];
+	NSDateComponents *startOfYearComponents = [unparsingCalendar components:NSYearCalendarUnit fromDate:date];
 	startOfYearComponents.month = 1;
 	startOfYearComponents.day = 1;
-	NSDateComponents *ordinalComponents = [calendar components:NSDayCalendarUnit fromDate:[calendar dateFromComponents:startOfYearComponents] toDate:date options:0];
+	NSDateComponents *ordinalComponents = [unparsingCalendar components:NSDayCalendarUnit fromDate:[unparsingCalendar dateFromComponents:startOfYearComponents] toDate:date options:0];
 	ordinalComponents.day += 1;
 
 	enum {

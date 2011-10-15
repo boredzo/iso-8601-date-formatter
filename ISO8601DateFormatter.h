@@ -39,7 +39,8 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 	NSString *lastUsedFormatString;
 	NSDateFormatter *unparsingFormatter;
 
-	NSCalendar *calendar;
+	NSCalendar *parsingCalendar, *unparsingCalendar;
+
 	NSTimeZone *defaultTimeZone;
 	ISO8601DateFormat format;
 	unichar timeSeparator;
