@@ -13,6 +13,8 @@ int main(void) {
 	NSDate *start, *end;
 	enum { numReps = 10000 };
 
+	NSLog(@"Timing ISO8601DateFormatter");
+
 	start = [NSDate date];
 	for (NSUInteger i = 10000; i > 0; --i) {
 		NSDate *date = [formatter dateFromString:inString];
@@ -30,6 +32,8 @@ int main(void) {
 	sleep(1);
 
 	numResults = 0;
+
+	NSLog(@"Timing C standard library parsing and unparsing");
 
 	struct tm timeInfo;
 	time_t then;
