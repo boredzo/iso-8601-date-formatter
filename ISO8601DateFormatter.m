@@ -31,7 +31,15 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 @end
 
+static NSMutableDictionary *timeZonesByOffset;
+
 @implementation ISO8601DateFormatter
+
++ (void) initialize {
+	if (!timeZonesByOffset) {
+		timeZonesByOffset = [[NSMutableDictionary alloc] init];
+	}
+}
 
 - (NSCalendar *) makeCalendarWithDesiredConfiguration {
 	NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
@@ -539,7 +547,14 @@ static BOOL is_leap_year(NSUInteger year);
 								if (negative) tz_minute = -tz_minute;
 							}
 
-							timeZone = [NSTimeZone timeZoneForSecondsFromGMT:(tz_hour * 3600) + (tz_minute * 60)];
+							NSTimeInterval timeZoneOffset = (tz_hour * 3600) + (tz_minute * 60);
+							NSNumber *offsetNum = [NSNumber numberWithDouble:timeZoneOffset];
+							timeZone = [timeZonesByOffset objectForKey:offsetNum];
+							if (!timeZone) {
+								timeZone = [NSTimeZone timeZoneForSecondsFromGMT:timeZoneOffset];
+								if (timeZone)
+									[timeZonesByOffset setObject:timeZone forKey:offsetNum];
+							}
 						}
 				}
 			}
