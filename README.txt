@@ -51,7 +51,20 @@ Notes
 Version history
 ---------------
 
-This version is 0.5. Changes from 0.4:
+This version is 0.6. Changes from 0.5:
+* When not set to strict parsing, allow a space before the time-zone specification, for greater compatibility with NSDate output (`description`) and input (`dateWithString:`). 27603efc8a77
+* Bug fix: We no longer try to format the formatter. 83415de9f527
+* Bug fix: Hours are now zero-padded correctly ([#4](https://bitbucket.org/boredzo/iso-8601-parser-unparser/issue/4/time-zones-are-emitted-without-leading)). a5608e189ebe af0c6b397428
+* Fixed many various compiler warnings. Some fixes contributed by Sparks. 8be3d6f7c6f2 78ae31de2170 68dc351e9fdb e7ea87db8621 873f499ae6db
+* Now 75 times faster. 6a023812bd2b 05dc35d6b505 3b2225e0ce8c d59720ad015a 10f526956963 297b8dae4095 796be11aa596 cadf0f0c8199 61d2959c6921
+* iOS users can now tell the ISO 8601 date formatter class to drop its caches (which you should do when you receive a memory warning). 2bb1725914b1
+* Added a couple of command-line options to the calendar-format-unparser test tool. c644aadb2b14
+* The parser test tool now displays parsed dates in GMT rather than the local time zone. 788c1455ecb1
+* Added a test tool to test unparsing with the time included. a89a9a8b3d61
+* You can now “make analysis” to run the Clang Static Analyzer on the date formatter. b3dd33841f42
+* The test tools are now built using Clang. 0723d3aa6596
+
+Changes in 0.5 from 0.4:
 * Rewrote as an NSFormatter subclass using NSCalendar.
   * Making it a formatter makes it much easier to use with Bindings.
   * Using NSCalendar means we're no longer using NSCalendarDate, which Apple has said they will deprecate at some point.
@@ -110,4 +123,4 @@ Parsing
 Copyright
 =========
 
-This code is copyright 2006 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
+This code is copyright 2006–2011 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
