@@ -45,10 +45,10 @@ static NSMutableDictionary *timeZonesByOffset;
 + (void) purgeGlobalCaches {
 	NSMutableDictionary *oldCache = timeZonesByOffset;
 	timeZonesByOffset = nil;
+    #if __has_feature(objc_arc)
+    [oldCache removeAllObjects];
+    #endif
 	SAFE_ARC_RELEASE(oldCache);
-	#if __has_feature(objc_arc)
-	[oldCache removeAllObjects];
-	#endif
 }
 
 - (NSCalendar *) makeCalendarWithDesiredConfiguration {
