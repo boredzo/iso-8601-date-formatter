@@ -1,4 +1,8 @@
-CLANG=/Developer/usr/bin/clang
+ifeq ($(wildcard /Developer/usr/bin/clang),)
+	CLANG=/usr/bin/clang
+else
+	CLANG=/Developer/usr/bin/clang
+endif
 CC=$(CLANG)
 CFLAGS+=-std=c99 -g -Werror -Wmissing-field-initializers -Wreturn-type -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wunused-variable -Wunused-value -Wshadow -Wsign-compare -Wnewline-eof -Wshorten-64-to-32 -Wundeclared-selector -Wmissing-prototypes -Wformat -Wunknown-pragmas
 LDFLAGS+=-framework Foundation
