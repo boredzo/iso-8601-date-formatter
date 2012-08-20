@@ -1,9 +1,10 @@
 #import "ISO8601DateFormatter.h"
+#import "ARCMacros.h"
 
 int main(int argc, const char **argv) {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	SAFE_ARC_AUTORELEASE_POOL_START()
 
-	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+	ISO8601DateFormatter *formatter = SAFE_ARC_AUTORELEASE([[ISO8601DateFormatter alloc] init]);
 	formatter.format = ISO8601DateFormatWeek;
 
 	while(--argc) {
@@ -12,6 +13,6 @@ int main(int argc, const char **argv) {
 		printf("%s\n", [[NSString stringWithFormat:@"%@:\t%@", arg, [formatter stringFromDate:[formatter dateFromString:arg timeZone:&timeZone] timeZone:timeZone]] UTF8String]);
 	}
 
-	[pool release];
+	SAFE_ARC_AUTORELEASE_POOL_END()
 	return 0;
 }

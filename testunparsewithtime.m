@@ -1,11 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "ISO8601DateFormatter.h"
+#import "ARCMacros.h"
 
 static void testFormatStrings(int hour, int minute);
 
 int main(void) {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+	SAFE_ARC_AUTORELEASE_POOL_START()
+	ISO8601DateFormatter *formatter = SAFE_ARC_AUTORELEASE([[ISO8601DateFormatter alloc] init]);
 	formatter.includeTime = YES;
 	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:336614400.0];
 	NSLog(@"2011-09-01 at 5 PM ET: %@", [formatter stringFromDate:date]);
@@ -14,7 +15,7 @@ int main(void) {
 	testFormatStrings(2, 6);
 	testFormatStrings(-2, 6);
 
-	[pool drain];
+	SAFE_ARC_AUTORELEASE_POOL_END()
 	return EXIT_SUCCESS;
 }
 
@@ -32,7 +33,7 @@ static void testFormatStrings(int hour, int minute) {
 	}
 	printf("Testing with printf:\n");
 	for (NSString *format in formatStrings) {
-		format = [format stringByReplacingOccurrencesOfString:@"%@" withString:@"%s"];
-		printf([[format stringByAppendingString:@"\n"] UTF8String], [format UTF8String], hour, minute);
+		NSString *cFormat = [format stringByReplacingOccurrencesOfString:@"%@" withString:@"%s"];
+		printf([[cFormat stringByAppendingString:@"\n"] UTF8String], [cFormat UTF8String], hour, minute);
 	}
 }

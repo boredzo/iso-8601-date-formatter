@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "ISO8601DateFormatter.h"
+#import "ARCMacros.h"
 
 int main(int argc, const char **argv) {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	SAFE_ARC_AUTORELEASE_POOL_START()
 
 	BOOL parseStrictly = NO;
 	if((argc > 1) && (strcmp(argv[1], "--strict") == 0)) {
@@ -12,7 +13,7 @@ int main(int argc, const char **argv) {
 
 	[NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
 
-	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+	ISO8601DateFormatter *formatter = SAFE_ARC_AUTORELEASE([[ISO8601DateFormatter alloc] init]);
 	formatter.parsesStrictly = parseStrictly;
 
 	while(--argc) {
@@ -22,6 +23,6 @@ int main(int argc, const char **argv) {
 		fputs([[NSString stringWithFormat:@"%@ %C %@\n", str, 0x2192, date] UTF8String], stdout);
 	}
 
-	[pool release];
+	SAFE_ARC_AUTORELEASE_POOL_END()
 	return 0;
 }

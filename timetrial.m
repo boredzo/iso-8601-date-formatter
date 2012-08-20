@@ -1,13 +1,13 @@
 #import <Foundation/Foundation.h>
 
 #import "ISO8601DateFormatter.h"
+#import "ARCMacros.h"
 
-int main(void) {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-	sleep(1);
-
-	ISO8601DateFormatter *formatter = [[[ISO8601DateFormatter alloc] init] autorelease];
+void test_part_one(void);
+void test_part_one(void)
+{
+	SAFE_ARC_AUTORELEASE_POOL_START()
+	ISO8601DateFormatter *formatter = SAFE_ARC_AUTORELEASE([[ISO8601DateFormatter alloc] init]);
 	NSString *inString = @"2011-04-12T13:15:17-0800";
 	NSUInteger numResults = 0;
 	NSDate *start, *end;
@@ -26,12 +26,23 @@ int main(void) {
 	NSLog(@"Number of dates and strings computed: %lu each", (unsigned long)numResults);
 	NSLog(@"Time taken per date: %f seconds", [end timeIntervalSinceDate:start] / numReps);
 
-	[pool drain];
-	pool = [[NSAutoreleasePool alloc] init];
+	SAFE_ARC_AUTORELEASE_POOL_END()
+}
+
+int main(void) {
 
 	sleep(1);
 
-	numResults = 0;
+	test_part_one();
+
+	SAFE_ARC_AUTORELEASE_POOL_START()
+
+	sleep(1);
+
+	NSString *inString = @"2011-04-12T13:15:17-0800";
+	NSUInteger numResults = 0;
+	NSDate *start, *end;
+	enum { numReps = 10000 };
 
 	NSLog(@"Timing C standard library parsing and unparsing");
 
@@ -63,6 +74,6 @@ int main(void) {
 
 	sleep(1);
 
-	[pool drain];
+	SAFE_ARC_AUTORELEASE_POOL_END()
 	return EXIT_SUCCESS;
 }
