@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ISO8601DateFormatter.h"
+#import "ARCMacros.h"
 
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
@@ -44,11 +45,14 @@ static NSMutableDictionary *timeZonesByOffset;
 + (void) purgeGlobalCaches {
 	NSMutableDictionary *oldCache = timeZonesByOffset;
 	timeZonesByOffset = nil;
-	[oldCache release];
+	#if __has_feature(objc_arc)
+	[oldCache removeAllObjects];
+	#endif
+	SAFE_ARC_RELEASE(oldCache);
 }
 
 - (NSCalendar *) makeCalendarWithDesiredConfiguration {
-	NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+	NSCalendar *calendar = SAFE_ARC_AUTORELEASE([[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]);
 	calendar.firstWeekday = 2; //Monday
 	calendar.timeZone = [NSTimeZone defaultTimeZone];
 	return calendar;
@@ -56,8 +60,8 @@ static NSMutableDictionary *timeZonesByOffset;
 
 - (id) init {
 	if ((self = [super init])) {
-		parsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
-		unparsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
+		parsingCalendar = SAFE_ARC_RETAIN([self makeCalendarWithDesiredConfiguration]);
+		unparsingCalendar = SAFE_ARC_RETAIN([self makeCalendarWithDesiredConfiguration]);
 
 		format = ISO8601DateFormatCalendar;
 		timeSeparator = ISO8601DefaultTimeSeparatorCharacter;
@@ -67,21 +71,21 @@ static NSMutableDictionary *timeZonesByOffset;
 	return self;
 }
 - (void) dealloc {
-	[defaultTimeZone release];
+	SAFE_ARC_RELEASE(defaultTimeZone);
 
-	[unparsingFormatter release];
-	[lastUsedFormatString release];
-	[parsingCalendar release];
-	[unparsingCalendar release];
+	SAFE_ARC_RELEASE(unparsingFormatter);
+	SAFE_ARC_RELEASE(lastUsedFormatString);
+	SAFE_ARC_RELEASE(parsingCalendar);
+	SAFE_ARC_RELEASE(unparsingCalendar);
 
-	[super dealloc];
+	SAFE_ARC_SUPER_DEALLOC();
 }
 
 @synthesize defaultTimeZone;
 - (void) setDefaultTimeZone:(NSTimeZone *)tz {
 	if (defaultTimeZone != tz) {
-		[defaultTimeZone release];
-		defaultTimeZone = [tz retain];
+		SAFE_ARC_RELEASE(defaultTimeZone);
+		defaultTimeZone = SAFE_ARC_RETAIN(tz);
 
 		unparsingCalendar.timeZone = defaultTimeZone;
 	}
@@ -105,7 +109,7 @@ static BOOL is_leap_year(NSUInteger year);
  *YYYY-MM-DD
  *YYYY-MM
  *YYYY
- *YY //century 
+ *YY //century
  * //Implied century: YY is 00-99
  *  YYMMDD
  *  YY-MM-DD
@@ -156,7 +160,7 @@ static BOOL is_leap_year(NSUInteger year);
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange {
 	NSDate *now = [NSDate date];
 
-	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+	NSDateComponents *components = SAFE_ARC_AUTORELEASE([[NSDateComponents alloc] init]);
 	NSDateComponents *nowComponents = [parsingCalendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:now];
 
 	NSUInteger
@@ -642,7 +646,7 @@ static BOOL is_leap_year(NSUInteger year);
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep {
 	if (timeSep != ':') {
-		NSMutableString *timeFormatMutable = [[timeFormat mutableCopy] autorelease];
+		NSMutableString *timeFormatMutable = SAFE_ARC_AUTORELEASE([timeFormat mutableCopy]);
 		[timeFormatMutable replaceOccurrencesOfString:@":"
 		                               	   withString:[NSString stringWithCharacters:&timeSep length:1U]
 	                                      	  options:NSBackwardsSearch | NSLiteralSearch
@@ -667,7 +671,7 @@ static BOOL is_leap_year(NSUInteger year);
 		case ISO8601DateFormatOrdinal:
 			return [self stringFromDate:date formatString:ISO_ORDINAL_DATE_FORMAT timeZone:timeZone];
 		default:
-			[NSException raise:NSInternalInconsistencyException format:@"self.format was %ld, not calendar (%d), week (%d), or ordinal (%d)", self.format, ISO8601DateFormatCalendar, ISO8601DateFormatWeek, ISO8601DateFormatOrdinal];
+			[NSException raise:NSInternalInconsistencyException format:@"self.format was %u, not calendar (%d), week (%d), or ordinal (%d)", self.format, ISO8601DateFormatCalendar, ISO8601DateFormatWeek, ISO8601DateFormatOrdinal];
 			return nil;
 	}
 }
@@ -679,11 +683,11 @@ static BOOL is_leap_year(NSUInteger year);
 	unparsingCalendar.timeZone = timeZone;
 
 	if (dateFormat != lastUsedFormatString) {
-		[unparsingFormatter release];
+		SAFE_ARC_RELEASE(unparsingFormatter);
 		unparsingFormatter = nil;
 
-		[lastUsedFormatString release];
-		lastUsedFormatString = [dateFormat retain];
+		SAFE_ARC_RELEASE(lastUsedFormatString);
+		lastUsedFormatString = SAFE_ARC_RETAIN(dateFormat);
 	}
 
 	if (!unparsingFormatter) {
@@ -701,7 +705,7 @@ static BOOL is_leap_year(NSUInteger year);
 		if (offset == 0)
 			str = [str stringByAppendingString:ISO_TIMEZONE_UTC_FORMAT];
 		else
-			str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT, (int)(offset / 60), (int)(offset % 60)];
+			str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT, (int)offset / 60, (int)offset % 60];
 	}
 
 	//Undo the change we made earlier
@@ -783,7 +787,7 @@ static BOOL is_leap_year(NSUInteger year);
 
 		timeString = [formatter stringForObjectValue:date];
 
-		[formatter release];
+		SAFE_ARC_RELEASE(formatter);
 	} else
 		timeString = @"";
 
