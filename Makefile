@@ -34,3 +34,16 @@ ISO8601DateFormatter-analysis.plist: ISO8601DateFormatter.m
 	$(CLANG) $^ --analyze -o /dev/null
 
 timetrial: timetrial.o ISO8601DateFormatter.o
+
+clean:
+	rm *.o
+	rm *.out
+	rm testparser
+	rm testparser.sh
+	rm testunparsewithtime
+	rm timetrial
+	rm unparse-date
+	rm unparse-ordinaldate
+	rm unparse-weekdate
+
+alltests: test testunparsewithtime timetrial
