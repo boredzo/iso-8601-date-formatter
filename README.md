@@ -93,12 +93,12 @@ All of the frills of ISO 8601 are supported, except for extended dates (years lo
 
 ISO 8601 leaves quite a bit up to the parties exchanging dates. I hope I've chosen reasonable defaults. For example (note that I'm writing this on 2006-02-24):
 
-• If the month or month and date are missing, 1 is assumed. "2006" == "2006-01-01".
-• If the year or year and month are missing, the current ones are assumed. "--02-01" == "2006-02-01". "---28" == "2006-02-28".
-• In the case of week-based dates, with  the day missing, this implementation returns the first day of that week: 2006-W1 is 2006-01-01, 2006-W2 is 2006-01-08, etc.
-• For any date without a time, midnight on that date is used.
-• ISO 8601 permits the choice of either T0 or T24 for midnight. This implementation uses T0. T24 will get you T0 on the following day.
-• If no time-zone is specified, local time (as returned by [NSTimeZone localTimeZone]) is used.
+* If the month or month and date are missing, 1 is assumed. "2006" == "2006-01-01".
+* If the year or year and month are missing, the current ones are assumed. "--02-01" == "2006-02-01". "---28" == "2006-02-28".
+* In the case of week-based dates, with  the day missing, this implementation returns the first day of that week: 2006-W1 is 2006-01-01, 2006-W2 is 2006-01-08, etc.
+* For any date without a time, midnight on that date is used.
+* ISO 8601 permits the choice of either T0 or T24 for midnight. This implementation uses T0. T24 will get you T0 on the following day.
+* If no time-zone is specified, local time (as returned by [NSTimeZone localTimeZone]) is used.
 
 When a date is parsed that has a year but no century, this implementation adds the current century.
 
