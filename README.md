@@ -52,6 +52,7 @@ Version history
 ---------------
 
 This version is 0.6. Changes from 0.5:
+
 * When not set to strict parsing, allow a space before the time-zone specification, for greater compatibility with NSDate output (`description`) and input (`dateWithString:`). 27603efc8a77
 * Bug fix: We no longer try to format the formatter. 83415de9f527
 * Bug fix: Hours are now zero-padded correctly ([#4](https://bitbucket.org/boredzo/iso-8601-parser-unparser/issue/4/time-zones-are-emitted-without-leading)). a5608e189ebe af0c6b397428
@@ -65,19 +66,23 @@ This version is 0.6. Changes from 0.5:
 * The test tools are now built using Clang. 0723d3aa6596
 
 Changes in 0.5 from 0.4:
+
 * Rewrote as an NSFormatter subclass using NSCalendar.
   * Making it a formatter makes it much easier to use with Bindings.
   * Using NSCalendar means we're no longer using NSCalendarDate, which Apple has said they will deprecate at some point.
 * Fixed a bug in week date generation: One subtraction could give a negative result, which was a problem because my implementation of the algorithm used unsigned integers. I've changed it to use signed integers, so the result truly is negative now. I also added a test case for this.
 
 Changes in 0.4 from 0.3:
+
 * Added the ability to use a time separator other than ':'.
 
 Changes in 0.3 from 0.2:
+
 * Colin Barrett noticed that I used %m instead of %M when creating the time strings. Oops.
 * Colin also noticed that I had the ?: in -ISO8601DateStringWithTime: the wrong way around. Oops again.
 
 Changes in 0.2 from 0.1:
+
 * The unparser is new. The  has been munged to allow both components together, 
 * The parser has not changed.
 
