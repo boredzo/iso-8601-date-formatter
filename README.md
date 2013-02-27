@@ -1,10 +1,14 @@
-How to use in your program
-==========================
+# ISO 8601: The only date format worth using
+
+Obligatory relevant [xkcd](http://xkcd.com/):
+
+[![Seriously now. "ISO 8601 was published on 06/05/88 and most recently amended on 12/01/04."](http://imgs.xkcd.com/comics/iso_8601.png)](http://xkcd.com/1179/)
+
+## How to use this code in your program
 
 Add the source files to your project.
 
-Parsing
--------
+### Parsing
 
 Create an ISO 8601 date formatter, then call [formatter dateFromString:myString]. The method will return either an NSDate or nil.
 
@@ -14,8 +18,7 @@ The "outTimeZone" parameter, when not set to NULL, is a pointer to an NSTimeZone
 
 The "outRange" parameter, when not set to NULL, is a pointer to NSRange storage. You will receive the range of the parsed substring in that storage.
 
-Unparsing
----------
+### Unparsing
 
 Create an ISO 8601 date formatter, then call [formatter stringFromDate:myDate]. The method will return a string.
 
@@ -26,30 +29,25 @@ The formatter has several properties that control its behavior:
 * You can enable a strict mode, wherein the formatter enforces sanity checks on the string. By default, the parser will afford you quite a bit of leeway.
 * You can set whether to include the time in the string, and if so, what hour-minute separator to use (default ':').
 
-How to test that this code works
-================================
+## How to test that this code works
 
 'make test' will perform all tests. If you want to perform only *some* tests:
 
-Parsing
--------
+### Parsing
 
 Type 'make parser-test'. make will build the test program (testparser), then invoke testparser.sh.py to generate testparser.sh. Then make will invoke testparser.sh, which will invoke the test program with various dates.
 
 If you don't want to use my tests, 'make testparser' will create the test program without running it. You can then invoke testparser yourself with any date you want to. If it doesn't give you the result you expected, contact me, making sure to provide me with both the input and the output.
 
-Unparsing
----------
+### Unparsing
 
 Type 'make unparser-test'. make will build the test programs, then invoke testunparser.sh. This shell script invokes each test program for -01-01 of every year from 1991 to 2010, writing the output to a file, and then runs diff -qs between that file (testunparser.out) and a file (testunparser-expected.out) containing known correct output. diff should report that the files are identical.
 
 Three test programs are included: unparse-date, unparse-weekdate, and unparse-ordinal date. If you don't want to use my tests, you can make these test programs separately. Each takes a date specified by ISO 8601 (parsed with my own ISO 8601 parser), and outputs a string that should represent the same date.
 
-Notes
-=====
+## Notes
 
-Version history
----------------
+### Version history
 
 This version is 0.6. Changes from 0.5:
 
@@ -86,8 +84,8 @@ Changes in 0.2 from 0.1:
 * The unparser is new. The  has been munged to allow both components together, 
 * The parser has not changed.
 
-Parsing
--------
+## Implementation details
+### Parsing
 
 Whitespace before a date, and anything after a date, is ignored. Thus, "    T23 and all's well" is a valid date for the purpose of this method. (Yes, T23 is a valid ISO 8601 date. It means 23:00:00, or 11 PM.)
 
@@ -108,16 +106,13 @@ The implementation is tolerant of out-of-range numbers. For example, "2005-13-40
 
 As mentioned above, there is a "strict" mode that enforces sanity checks. In particular, the date must be the entire contents of the string, and numbers are range-checked. If you have any suggestions on how to make this mode more strict, contact me.
 
-Unparsing
----------
+### Unparsing
 
-I use Rick McCarty's algorithm for converting calendar dates to week dates (http://personal.ecu.edu/mccartyr/ISOwdAlg.txt), slightly tweaked.
+I use [Rick McCarty's algorithm for converting calendar dates to week dates](http://personal.ecu.edu/mccartyr/ISOwdAlg.txt), slightly tweaked.
 
-Bugs
-====
+## Bugs
 
-Parsing
--------
+### Parsing
 
 * This method won't extract a date from just anywhere in a string, only immediately after the start of the string (or any leading whitespace). There are two solutions: either require you to invoke the parser on a string that is only an ISO 8601 date, with nothing before or after (bad for parsing purposes), or make the parser able to find an ISO 8601 date as a substring. I won't do the first one, and barring a patch, I probably won't do the second one either.
 
@@ -125,7 +120,6 @@ Parsing
 
 * There is no method to analyze a date string and tell you what was found in it (year, month, week, day, ordinal day, etc.). Feel free to submit a patch.
 
-Copyright
-=========
+## Copyright
 
 This code is copyright 2006–2011 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
