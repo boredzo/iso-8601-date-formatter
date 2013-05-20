@@ -31,6 +31,12 @@ enum {
 };
 typedef NSUInteger ISO8601DateFormat;
 
+enum {
+	ISO8601DateFormatterTimeZoneSeparatorNone,
+	ISO8601DateFormatterTimeZoneSeparatorColon,
+};
+typedef NSUInteger ISO8601DateFormatterTimeZoneSeparator;
+
 //The default separator for time values. Currently, this is ':'.
 extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
@@ -72,6 +78,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 @property ISO8601DateFormat format;
 @property BOOL includeTime;
 @property unichar timeSeparator;
+@property ISO8601DateFormatterTimeZoneSeparator timeZoneSeparator; // Default is no separator between the time zone components
 
 - (NSString *) stringFromDate:(NSDate *)date;
 - (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone;
