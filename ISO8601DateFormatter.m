@@ -678,7 +678,7 @@ static BOOL is_leap_year(NSUInteger year);
 
 	unparsingCalendar.timeZone = timeZone;
 
-	if (dateFormat != lastUsedFormatString) {
+	if ([dateFormat isEqualToString:lastUsedFormatString] == NO) {
 		[unparsingFormatter release];
 		unparsingFormatter = nil;
 
