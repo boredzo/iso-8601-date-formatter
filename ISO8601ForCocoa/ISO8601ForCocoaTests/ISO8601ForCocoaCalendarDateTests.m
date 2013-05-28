@@ -78,7 +78,15 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testParsingDateInGreenwichMeanTime {
+	static NSTimeInterval const expectedTimeIntervalSinceReferenceDate = 381373261.0;
+	static NSTimeInterval const expectedHoursFromGMT = -0.0;
 
+	[self attemptToParseString:@"2013-02-01T01:01:01-0000"
+		expectTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate
+		expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
+	[self attemptToParseString:@"2013-02-01T01:01:01Z"
+		expectTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate
+		expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testUnparsingDateInGreenwichMeanTime {
