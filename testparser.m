@@ -19,7 +19,7 @@ int main(int argc, const char **argv) {
 		NSString *str = [NSString stringWithUTF8String:*++argv];
 		NSLog(@"Parsing strictly: %hhi", parseStrictly);
 		NSDate *date = [formatter dateFromString:str];
-		fputs([[NSString stringWithFormat:@"%@ %C %@\n", str, 0x2192, date] UTF8String], stdout);
+		fputs([[NSString stringWithFormat:@"%@ %C %@\n", str, (unsigned short)0x2192, date] UTF8String], stdout);
 	}
 
 	[pool release];

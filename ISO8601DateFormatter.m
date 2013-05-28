@@ -696,7 +696,7 @@ static BOOL is_leap_year(NSUInteger year);
 	NSString *str = [unparsingFormatter stringForObjectValue:date];
 
 	if (includeTime) {
-		NSInteger offset = [timeZone secondsFromGMT];
+		NSInteger offset = [timeZone secondsFromGMTForDate:date];
 		offset /= 60;  //bring down to minutes
 		if (offset == 0)
 			str = [str stringByAppendingString:ISO_TIMEZONE_UTC_FORMAT];
