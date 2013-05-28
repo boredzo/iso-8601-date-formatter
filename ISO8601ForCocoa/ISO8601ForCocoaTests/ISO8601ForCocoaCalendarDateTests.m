@@ -52,6 +52,20 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	STAssertEquals(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %ld seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
 
+- (void) attemptToUnparseDateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)timeIntervalSinceReferenceDate
+                                                   timeZoneName:(NSString *)tzName
+			                                   expectDateString:(NSString *)expectedDateString
+							                        includeTime:(bool)includeTime
+{
+	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
+	NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:tzName];
+	_iso8601DateFormatter.includeTime = includeTime;
+
+	NSString *dateString = [_iso8601DateFormatter stringFromDate:date timeZone:timeZone];
+	STAssertNotNil(dateString, @"Unparsing a date should return a string");
+	STAssertEqualObjects(dateString, expectedDateString, @"Got unexpected output for date with time interval since reference date %f in time zone %@", timeIntervalSinceReferenceDate, timeZone);
+}
+
 - (void) testParsingDateInPacificStandardTime {
 	static NSString *const dateString = @"2013-01-01T01:01:01-0800";
 	static NSTimeInterval const expectedTimeIntervalSinceReferenceDate = 378723661.0;
@@ -62,6 +76,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testUnparsingDateInPacificStandardTime {
+	NSTimeInterval timeIntervalSinceReferenceDate = 378723661.0;
+	NSString *expectedDateString = @"2013-01-01T01:01:01-0800";
+	NSString *tzName = @"America/Los_Angeles";
+
+	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
+		timeZoneName:tzName
+		expectDateString:expectedDateString
+		includeTime:true];
 }
 
 - (void) testParsingDateInPacificDaylightTime {
@@ -74,7 +96,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testUnparsingDateInPacificDaylightTime {
+	NSTimeInterval timeIntervalSinceReferenceDate = 397036861.0;
+	NSString *expectedDateString = @"2013-08-01T01:01:01-0700";
+	NSString *tzName = @"America/Los_Angeles";
 
+	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
+		timeZoneName:tzName
+		expectDateString:expectedDateString
+		includeTime:true];
 }
 
 - (void) testParsingDateInGreenwichMeanTime {
@@ -90,7 +119,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testUnparsingDateInGreenwichMeanTime {
+	NSTimeInterval timeIntervalSinceReferenceDate = 381373261.0;
+	NSString *expectedDateString = @"2013-02-01T01:01:01Z";
+	NSString *tzName = @"GMT";
 
+	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
+		timeZoneName:tzName
+		expectDateString:expectedDateString
+		includeTime:true];
 }
 
 @end
