@@ -151,9 +151,9 @@ static BOOL is_leap_year(NSUInteger year);
 	return [self dateComponentsFromString:string timeZone:NULL];
 }
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone {
-	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL];
+	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL milliseconds:NULL];
 }
-- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange {
+- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange milliseconds:(NSTimeInterval *)outMilliseconds {
 	NSDate *now = [NSDate date];
 
 	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
@@ -572,6 +572,11 @@ static BOOL is_leap_year(NSUInteger year);
 			components.hour = hour;
 			components.minute = (NSInteger)minute;
 			components.second = (NSInteger)second;
+      
+      NSTimeInterval milliseconds = second - components.second;
+      if (milliseconds > 0) {
+        *outMilliseconds = milliseconds;
+      }
 
 			switch(dateSpecification) {
 				case monthAndDate:
@@ -619,12 +624,20 @@ static BOOL is_leap_year(NSUInteger year);
 }
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange {
 	NSTimeZone *timeZone = nil;
-	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange];
+  NSTimeInterval parsedMilliseconds = 0;
+  
+	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange milliseconds:&parsedMilliseconds];
 	if (outTimeZone)
 		*outTimeZone = timeZone;
 	parsingCalendar.timeZone = timeZone;
 
-	return [parsingCalendar dateFromComponents:components];
+	NSDate *parsedDate = [parsingCalendar dateFromComponents:components];
+  
+  if (parsedMilliseconds > 0) {
+    parsedDate = [parsedDate dateByAddingTimeInterval:parsedMilliseconds];
+  }
+  
+  return parsedDate;
 }
 
 - (BOOL)getObjectValue:(id *)outValue forString:(NSString *)string errorDescription:(NSString **)error {
