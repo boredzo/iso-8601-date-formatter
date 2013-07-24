@@ -132,4 +132,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 		includeTime:true];
 }
 
+- (void) testCanParseDateWithMillisecondsWithoutLosingPrecision
+{
+  NSDate *referenceDate = [_iso8601DateFormatter dateFromString:@"2013-02-01T01:01:01-0000"];
+  NSDate *referenceDateWithAddedMilliseconds = [_iso8601DateFormatter dateFromString:@"2013-02-01T01:01:01.123-0000"];
+  
+  NSTimeInterval differenceBetweenDates = [referenceDateWithAddedMilliseconds timeIntervalSinceDate:referenceDate];
+  
+  STAssertEquals(differenceBetweenDates, 123.0, @"Expected parsed dates to reflect difference in milliseconds");
+}
+
 @end
