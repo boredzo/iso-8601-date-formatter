@@ -541,7 +541,7 @@ static BOOL is_leap_year(NSUInteger year);
 							if (negative) tz_hour = -tz_hour;
 
 							//Optional separator.
-							if (*ch == timeSep) ++ch;
+							if (*ch == self.timeZoneSeparator) ++ch;
 
 							if (isdigit(*ch)) {
 								//Read minute offset.
