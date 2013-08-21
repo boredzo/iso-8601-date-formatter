@@ -627,6 +627,9 @@ static BOOL is_leap_year(NSUInteger year);
 	return [self dateFromString:string timeZone:outTimeZone range:NULL];
 }
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange {
+	
+	if (!string) return nil;
+	
 	NSTimeZone *timeZone = nil;
 	NSTimeInterval parsedFractionOfSecond = 0.0;
   
