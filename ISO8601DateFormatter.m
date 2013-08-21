@@ -20,7 +20,8 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIME_WITH_TIMEZONE_FORMAT  ISO_TIME_FORMAT @"Z"
 //printf formats.
 #define ISO_TIMEZONE_UTC_FORMAT @"Z"
-#define ISO_TIMEZONE_OFFSET_FORMAT @"%+.2d%.2d"
+#define ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR @"%+.2d%.2d"
+#define ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR @"%+.2d%C%.2d"
 
 @interface ISO8601DateFormatter(UnparsingPrivate)
 
@@ -713,8 +714,14 @@ static BOOL is_leap_year(NSUInteger year);
 		offset /= 60;  //bring down to minutes
 		if (offset == 0)
 			str = [str stringByAppendingString:ISO_TIMEZONE_UTC_FORMAT];
-		else
-			str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT, (int)(offset / 60), (int)(offset % 60)];
+		else {
+			int timeZoneOffsetHour = (int)(offset / 60);
+			int timeZoneOffsetMinute = (int)(offset % 60);
+			if (self.timeZoneSeparator)
+				str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR, timeZoneOffsetHour, self.timeZoneSeparator, timeZoneOffsetMinute];
+			else
+				str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR, timeZoneOffsetHour, timeZoneOffsetMinute];
+		}
 	}
 
 	//Undo the change we made earlier

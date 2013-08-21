@@ -72,6 +72,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 @property ISO8601DateFormat format;
 @property BOOL includeTime;
 @property unichar timeSeparator;
+@property unichar timeZoneSeparator;
 
 - (NSString *) stringFromDate:(NSDate *)date;
 - (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone;

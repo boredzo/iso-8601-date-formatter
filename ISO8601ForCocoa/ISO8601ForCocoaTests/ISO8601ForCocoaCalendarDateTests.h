@@ -24,4 +24,6 @@
 - (void) testParsingDateWithUnusualTimeSeparator;
 - (void) testUnparsingDateWithUnusualTimeSeparator;
 
+- (void) testUnparsingDateWithTimeZoneSeparator;
+
 @end

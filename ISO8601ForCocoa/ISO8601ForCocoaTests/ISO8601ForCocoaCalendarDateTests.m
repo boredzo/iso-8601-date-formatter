@@ -170,4 +170,17 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+- (void) testUnparsingDateWithTimeZoneSeparator {
+	_iso8601DateFormatter.timeZoneSeparator = ':';
+
+	NSTimeInterval timeIntervalSinceReferenceDate = 378723661.0;
+	NSString *expectedDateString = @"2013-01-01T01:01:01-08:00";
+	NSString *tzName = @"America/Los_Angeles";
+
+	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
+	                                                timeZoneName:tzName
+				                                expectDateString:expectedDateString
+								                     includeTime:true];
+}
+
 @end
