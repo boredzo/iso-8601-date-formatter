@@ -139,7 +139,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
   
   NSTimeInterval differenceBetweenDates = [referenceDateWithAddedMilliseconds timeIntervalSinceDate:referenceDate];
   
-  STAssertEqualsWithAccuracy(differenceBetweenDates, 0.123, 3, @"Expected parsed dates to reflect difference in milliseconds");
+  STAssertEqualsWithAccuracy(differenceBetweenDates, 0.123, 1e-3, @"Expected parsed dates to reflect difference in milliseconds");
 }
 
 @end
