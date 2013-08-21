@@ -170,6 +170,17 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+- (void) testParsingDateWithTimeZoneSeparator {
+	_iso8601DateFormatter.timeZoneSeparator = SNOWMAN;
+
+	static NSString *const dateString = @"2013-08-01T01:01:01-07☃30";
+	static NSTimeInterval const expectedTimeIntervalSinceReferenceDate = 397038661.0;
+	static NSTimeInterval const expectedHoursFromGMT = -7.5;
+
+	[self attemptToParseString:dateString expectTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate
+expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
+}
+
 - (void) testUnparsingDateWithTimeZoneSeparator {
 	_iso8601DateFormatter.timeZoneSeparator = ':';
 
