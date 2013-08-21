@@ -689,7 +689,7 @@ static BOOL is_leap_year(NSUInteger year);
 	if (includeTime)
 		dateFormat = [dateFormat stringByAppendingFormat:@"'T'%@", [self replaceColonsInString:ISO_TIME_FORMAT withTimeSeparator:self.timeSeparator]];
 
-	if (dateFormat != lastUsedFormatString) {
+	if ([dateFormat isEqualToString:lastUsedFormatString] == NO) {
 		[unparsingFormatter release];
 		unparsingFormatter = nil;
 
