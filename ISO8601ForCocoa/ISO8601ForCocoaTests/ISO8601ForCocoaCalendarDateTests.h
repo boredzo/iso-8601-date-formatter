@@ -21,4 +21,7 @@
 
 - (void) testParsingDateWithFractionOfSecondWithoutLosingPrecision;
 
+- (void) testParsingDateWithUnusualTimeSeparator;
+- (void) testUnparsingDateWithUnusualTimeSeparator;
+
 @end
