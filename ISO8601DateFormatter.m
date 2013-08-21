@@ -364,7 +364,7 @@ static BOOL is_leap_year(NSUInteger year);
 								} else {
 									//Get month and/or date.
 									segment = read_segment_4digits(ch, &ch, &num_digits);
-									NSLog(@"(%@) parsing month; segment is %lu and ch is %@", string, (unsigned long)segment, [NSString stringWithCString:ch encoding:NSUnicodeStringEncoding]);
+									NSLog(@"(%@) parsing month; segment is %lu and ch is %@", string, (unsigned long)segment, [NSString stringWithCString:(const char *)ch encoding:NSUnicodeStringEncoding]);
 									switch(num_digits) {
 										case 4: //YY-MMDD
 											day = segment % 100U;
