@@ -676,8 +676,6 @@ static BOOL is_leap_year(NSUInteger year);
 	if (includeTime)
 		dateFormat = [dateFormat stringByAppendingFormat:@"'T'%@", [self replaceColonsInString:ISO_TIME_FORMAT withTimeSeparator:self.timeSeparator]];
 
-	unparsingCalendar.timeZone = timeZone;
-
 	if (dateFormat != lastUsedFormatString) {
 		[unparsingFormatter release];
 		unparsingFormatter = nil;
@@ -693,6 +691,8 @@ static BOOL is_leap_year(NSUInteger year);
 		unparsingFormatter.calendar = unparsingCalendar;
 	}
 
+	unparsingCalendar.timeZone = timeZone;
+	unparsingFormatter.timeZone = timeZone;
 	NSString *str = [unparsingFormatter stringForObjectValue:date];
 
 	if (includeTime) {
@@ -706,6 +706,7 @@ static BOOL is_leap_year(NSUInteger year);
 
 	//Undo the change we made earlier
 	unparsingCalendar.timeZone = self.defaultTimeZone;
+	unparsingFormatter.timeZone = self.defaultTimeZone;
 
 	return str;
 }
