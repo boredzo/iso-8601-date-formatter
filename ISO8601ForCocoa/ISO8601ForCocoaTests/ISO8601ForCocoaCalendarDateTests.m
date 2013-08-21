@@ -10,6 +10,10 @@
 #import "ISO8601ForCocoaCalendarDateTests.h"
 #import "ISO8601DateFormatter.h"
 
+typedef NS_ENUM(unichar, PRHNamedCharacter) {
+	SNOWMAN = 0x2603
+};
+
 static const NSTimeInterval gSecondsPerHour = 3600.0;
 
 @interface ISO8601ForCocoaCalendarDateTests ()
@@ -139,6 +143,31 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
   NSTimeInterval differenceBetweenDates = [referenceDateWithAddedMilliseconds timeIntervalSinceDate:referenceDate];
   
   STAssertEqualsWithAccuracy(differenceBetweenDates, 0.123, 1e-3, @"Expected parsed dates to reflect difference in milliseconds");
+}
+
+- (void) testParsingDateWithUnusualTimeSeparator {
+	_iso8601DateFormatter.parsesStrictly = false;
+	_iso8601DateFormatter.timeSeparator = SNOWMAN;
+
+	static NSString *const dateString = @"2013-01-01T01☃01☃01-0800";
+	static NSTimeInterval const expectedTimeIntervalSinceReferenceDate = 378723661.0;
+	static NSTimeInterval const expectedHoursFromGMT = -8.0;
+
+	[self attemptToParseString:dateString expectTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate
+expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
+}
+
+- (void) testUnparsingDateWithUnusualTimeSeparator {
+	_iso8601DateFormatter.timeSeparator = SNOWMAN;
+
+	NSTimeInterval timeIntervalSinceReferenceDate = 378723661.0;
+	NSString *expectedDateString = @"2013-01-01T01☃01☃01-0800";
+	NSString *tzName = @"America/Los_Angeles";
+
+	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
+	                                                timeZoneName:tzName
+				                                expectDateString:expectedDateString
+								                     includeTime:true];
 }
 
 @end
