@@ -19,4 +19,6 @@
 - (void) testParsingDateInGreenwichMeanTime;
 - (void) testUnparsingDateInGreenwichMeanTime;
 
+- (void) testParsingDateWithFractionOfSecondWithoutLosingPrecision;
+
 @end

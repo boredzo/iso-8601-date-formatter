@@ -151,9 +151,9 @@ static BOOL is_leap_year(NSUInteger year);
 	return [self dateComponentsFromString:string timeZone:NULL];
 }
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone {
-	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL milliseconds:NULL];
+	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL fractionOfSecond:NULL];
 }
-- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange milliseconds:(NSTimeInterval *)outMilliseconds {
+- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange fractionOfSecond:(out NSTimeInterval *)outFractionOfSecond {
 	NSDate *now = [NSDate date];
 
 	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
@@ -573,10 +573,10 @@ static BOOL is_leap_year(NSUInteger year);
 			components.minute = (NSInteger)minute;
 			components.second = (NSInteger)second;
       
-      NSTimeInterval milliseconds = second - components.second;
-      if (milliseconds > 0) {
-        *outMilliseconds = milliseconds;
-      }
+			NSTimeInterval fractionOfSecond = second - components.second;
+			if (fractionOfSecond > 0.0) {
+				*outFractionOfSecond = fractionOfSecond;
+			}
 
 			switch(dateSpecification) {
 				case monthAndDate:
@@ -624,18 +624,18 @@ static BOOL is_leap_year(NSUInteger year);
 }
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange {
 	NSTimeZone *timeZone = nil;
-  NSTimeInterval parsedMilliseconds = 0;
+	NSTimeInterval parsedFractionOfSecond = 0.0;
   
-	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange milliseconds:&parsedMilliseconds];
+	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange fractionOfSecond:&parsedFractionOfSecond];
 	if (outTimeZone)
 		*outTimeZone = timeZone;
 	parsingCalendar.timeZone = timeZone;
 
 	NSDate *parsedDate = [parsingCalendar dateFromComponents:components];
-  
-  if (parsedMilliseconds > 0) {
-    parsedDate = [parsedDate dateByAddingTimeInterval:parsedMilliseconds];
-  }
+
+	if (parsedFractionOfSecond > 0.0) {
+		parsedDate = [parsedDate dateByAddingTimeInterval:parsedFractionOfSecond];
+	}
   
   return parsedDate;
 }

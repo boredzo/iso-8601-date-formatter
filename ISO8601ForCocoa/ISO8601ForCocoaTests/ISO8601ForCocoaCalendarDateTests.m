@@ -132,8 +132,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 		includeTime:true];
 }
 
-- (void) testCanParseDateWithMillisecondsWithoutLosingPrecision
-{
+- (void) testParsingDateWithFractionOfSecondWithoutLosingPrecision {
   NSDate *referenceDate = [_iso8601DateFormatter dateFromString:@"2013-02-01T01:01:01-0000"];
   NSDate *referenceDateWithAddedMilliseconds = [_iso8601DateFormatter dateFromString:@"2013-02-01T01:01:01.123-0000"];
   
