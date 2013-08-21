@@ -93,10 +93,10 @@ static NSMutableDictionary *timeZonesByOffset;
 
 @synthesize parsesStrictly;
 
-static NSUInteger read_segment(const unsigned char *str, const unsigned char **next, NSUInteger *out_num_digits);
-static NSUInteger read_segment_4digits(const unsigned char *str, const unsigned char **next, NSUInteger *out_num_digits);
-static NSUInteger read_segment_2digits(const unsigned char *str, const unsigned char **next);
-static double read_double(const unsigned char *str, const unsigned char **next);
+static NSUInteger read_segment(const unichar *str, const unichar **next, NSUInteger *out_num_digits);
+static NSUInteger read_segment_4digits(const unichar *str, const unichar **next, NSUInteger *out_num_digits);
+static NSUInteger read_segment_2digits(const unichar *str, const unichar **next);
+static double read_double(const unichar *str, const unichar **next);
 static BOOL is_leap_year(NSUInteger year);
 
 /*Valid ISO 8601 date formats:
@@ -188,10 +188,10 @@ static BOOL is_leap_year(NSUInteger year);
 	BOOL isValidDate = ([string length] > 0U);
 	NSTimeZone *timeZone = nil;
 
-	const unsigned char *ch = (const unsigned char *)[string UTF8String];
+	const unichar *ch = (const unichar *)[string cStringUsingEncoding:NSUnicodeStringEncoding];
 
 	NSRange range = { 0U, 0U };
-	const unsigned char *start_of_date = NULL;
+	const unichar *start_of_date = NULL;
 	if (strict && isspace(*ch)) {
 		range.location = NSNotFound;
 		isValidDate = NO;
@@ -364,7 +364,7 @@ static BOOL is_leap_year(NSUInteger year);
 								} else {
 									//Get month and/or date.
 									segment = read_segment_4digits(ch, &ch, &num_digits);
-									NSLog(@"(%@) parsing month; segment is %lu and ch is %s", string, (unsigned long)segment, ch);
+									NSLog(@"(%@) parsing month; segment is %lu and ch is %@", string, (unsigned long)segment, [NSString stringWithCString:ch encoding:NSUnicodeStringEncoding]);
 									switch(num_digits) {
 										case 4: //YY-MMDD
 											day = segment % 100U;
@@ -806,7 +806,7 @@ static BOOL is_leap_year(NSUInteger year);
 
 @end
 
-static NSUInteger read_segment(const unsigned char *str, const unsigned char **next, NSUInteger *out_num_digits) {
+static NSUInteger read_segment(const unichar *str, const unichar **next, NSUInteger *out_num_digits) {
 	NSUInteger num_digits = 0U;
 	NSUInteger value = 0U;
 
@@ -822,7 +822,7 @@ static NSUInteger read_segment(const unsigned char *str, const unsigned char **n
 
 	return value;
 }
-static NSUInteger read_segment_4digits(const unsigned char *str, const unsigned char **next, NSUInteger *out_num_digits) {
+static NSUInteger read_segment_4digits(const unichar *str, const unichar **next, NSUInteger *out_num_digits) {
 	NSUInteger num_digits = 0U;
 	NSUInteger value = 0U;
 
@@ -854,7 +854,7 @@ static NSUInteger read_segment_4digits(const unsigned char *str, const unsigned 
 
 	return value;
 }
-static NSUInteger read_segment_2digits(const unsigned char *str, const unsigned char **next) {
+static NSUInteger read_segment_2digits(const unichar *str, const unichar **next) {
 	NSUInteger value = 0U;
 
 	if (isdigit(*str))
@@ -871,7 +871,7 @@ static NSUInteger read_segment_2digits(const unsigned char *str, const unsigned 
 }
 
 //strtod doesn't support ',' as a separator. This does.
-static double read_double(const unsigned char *str, const unsigned char **next) {
+static double read_double(const unichar *str, const unichar **next) {
 	double value = 0.0;
 
 	if (str) {
