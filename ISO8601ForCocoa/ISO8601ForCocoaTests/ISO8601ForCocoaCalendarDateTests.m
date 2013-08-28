@@ -207,7 +207,6 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
-//Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/6
 - (void) testUnparsingDateInDaylightSavingTime {
 	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"Europe/Prague"];
 	_iso8601DateFormatter.includeTime = YES;
