@@ -226,4 +226,20 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(string, expectedString, @"Got wrong string for second date in DST in Prague #1 (check whether DST is included in TZ offset)");
 }
 
+- (void) testUnparsingDateWithinBritishSummerTimeAsUTC {
+	_iso8601DateFormatter.includeTime = YES;
+
+	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:354987473.0];
+	NSString *expectedString = @"2012-04-01T15:37:53Z";
+	NSString *string;
+	NSTimeZone *UTCTimeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+
+	string = [_iso8601DateFormatter stringFromDate:date timeZone:UTCTimeZone];
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for date in UTC (check whether DST is included in TZ offset)");
+
+	_iso8601DateFormatter.defaultTimeZone = UTCTimeZone;
+	string = [_iso8601DateFormatter stringFromDate:date];
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for date in UTC-as-default (check whether DST is included in TZ offset)");
+}
+
 @end
