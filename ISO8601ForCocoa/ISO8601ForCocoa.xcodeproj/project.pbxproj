@@ -322,7 +322,7 @@
 				ORGANIZATIONNAME = "Peter Hosey";
 				TargetAttributes = {
 					31AEAFDC17546BC800BD292F = {
-						TestTargetID = 31AEAFC817546BC800BD292F /* ISO8601ForCocoa */;
+						TestTargetID = 31AEAFC817546BC800BD292F;
 					};
 				};
 			};
@@ -556,7 +556,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -581,7 +580,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -592,6 +590,7 @@
 				GCC_PREFIX_HEADER = "ISO8601ForCocoa/ISO8601ForCocoa-Prefix.pch";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -602,6 +601,7 @@
 				GCC_PREFIX_HEADER = "ISO8601ForCocoa/ISO8601ForCocoa-Prefix.pch";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
