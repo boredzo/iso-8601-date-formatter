@@ -207,4 +207,24 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+//Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/6
+- (void) testUnparsingDateInDaylightSavingTime {
+	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"Europe/Prague"];
+	_iso8601DateFormatter.includeTime = YES;
+
+	NSDate *date;
+	NSString *string;
+	NSString *expectedString;
+
+	date = [NSDate dateWithTimeIntervalSinceReferenceDate:365464800.0];
+	string = [_iso8601DateFormatter stringFromDate:date];
+	expectedString = @"2012-08-01T00:00:00+0200";
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for first date in DST in Prague #1 (check whether DST is included in TZ offset)");
+
+	date = [NSDate dateWithTimeIntervalSinceReferenceDate:373417200.0];
+	string = [_iso8601DateFormatter stringFromDate:date];
+	expectedString = @"2012-11-01T00:00:00+0100";
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for second date in DST in Prague #1 (check whether DST is included in TZ offset)");
+}
+
 @end
