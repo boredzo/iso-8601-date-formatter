@@ -110,6 +110,19 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 		includeTime:true];
 }
 
+- (void) testUnparsingDateAtRiskOfAccidentalPM {
+	_iso8601DateFormatter.includeTime = YES;
+	NSTimeInterval timeIntervalSinceReferenceDate = 397143300.0;
+	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
+	NSTimeZone *tz;
+
+	tz = [NSTimeZone timeZoneWithName:@"GMT"];
+	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-08-02T13:35:00Z", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+
+	tz = [NSTimeZone timeZoneWithName:@"Europe/London"];
+	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-08-02T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+}
+
 - (void) testParsingDateInGreenwichMeanTime {
 	static NSTimeInterval const expectedTimeIntervalSinceReferenceDate = 381373261.0;
 	static NSTimeInterval const expectedHoursFromGMT = -0.0;

@@ -16,6 +16,9 @@
 - (void) testParsingDateInPacificDaylightTime;
 - (void) testUnparsingDateInPacificDaylightTime;
 
+//Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/15
+- (void) testUnparsingDateAtRiskOfAccidentalPM;
+
 - (void) testParsingDateInGreenwichMeanTime;
 - (void) testUnparsingDateInGreenwichMeanTime;
 
