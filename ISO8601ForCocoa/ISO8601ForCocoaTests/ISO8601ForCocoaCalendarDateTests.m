@@ -9,6 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "ISO8601ForCocoaCalendarDateTests.h"
 #import "ISO8601DateFormatter.h"
+#import "NSLocale+UnitTestSwizzling.h"
 
 typedef NS_ENUM(unichar, PRHNamedCharacter) {
 	SNOWMAN = 0x2603
@@ -111,6 +112,9 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testUnparsingDateAtRiskOfAccidentalPM {
+    // swizzle [NSLocale currentLocale] with a method that returns a mock object which forces "12 hour mode" on the de_DE locale which naturally uses 24 hour formatting.
+    SwizzleClassMethod([NSLocale class], @selector(currentLocale), @selector(mockCurrentLocale));
+
 	_iso8601DateFormatter.includeTime = YES;
 	NSTimeInterval timeIntervalSinceReferenceDate = 397143300.0;
 	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
@@ -121,6 +125,9 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 
 	tz = [NSTimeZone timeZoneWithName:@"Europe/London"];
 	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-08-02T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+    
+    // swizzle back so only this test is affected
+    SwizzleClassMethod([NSLocale class], @selector(currentLocale), @selector(mockCurrentLocale));
 }
 
 - (void) testParsingDateInGreenwichMeanTime {
