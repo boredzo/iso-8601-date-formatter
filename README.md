@@ -31,6 +31,8 @@ The formatter has several properties that control its behavior:
 
 ## How to test that this code works
 
+UPDATE from the year 2013: Conversion from the old make-based test monsters to modern OCUnit-based tests is underway. Contributions of new and old test cases will be greatly appreciated.
+
 'make test' will perform all tests. If you want to perform only *some* tests:
 
 ### Parsing
