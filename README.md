@@ -2,7 +2,7 @@
 
 Obligatory relevant [xkcd](http://xkcd.com/):
 
-[![Seriously now. "ISO 8601 was published on 06/05/88 and most recently amended on 12/01/04."](http://imgs.xkcd.com/comics/iso_8601.png)](http://xkcd.com/1179/)
+[![Seriously now. “ISO 8601 was published on 06/05/88 and most recently amended on 12/01/04.”](http://imgs.xkcd.com/comics/iso_8601.png)](http://xkcd.com/1179/)
 
 ## How to use this code in your program
 
