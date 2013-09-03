@@ -12,3 +12,12 @@ xcuserdata
 profile
 *.moved-aside
 .DS_Store
+
+# `make test` artifacts
+*.o
+*.out
+testparser.sh
+testparser
+unparse-date
+unparse-ordinaldate
+unparse-weekdate
