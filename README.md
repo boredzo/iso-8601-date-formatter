@@ -10,24 +10,24 @@ Add the source files to your project.
 
 ### Parsing
 
-Create an ISO 8601 date formatter, then call [formatter dateFromString:myString]. The method will return either an NSDate or nil.
+Create an ISO 8601 date formatter, then call `[formatter dateFromString:myString]`. The method will return either an NSDate or `nil`.
 
-There are a total of six parser methods. The one that contains the actual parser is -[ISO8601DateFormatter dateComponentsFromString:timeZone:range:]. The other five are based on this one.
+There are a total of six parser methods. The one that contains the actual parser is `-[ISO8601DateFormatter dateComponentsFromString:timeZone:range:]`. The other five are based on this one.
 
-The "outTimeZone" parameter, when not set to NULL, is a pointer to an NSTimeZone *variable. If the string specified a time zone, you'll receive the time zone object in that variable. If the string didn't specify a time zone, you'll receive nil.
+The “`outTimeZone`” parameter, when not set to `NULL`, is a pointer to an `NSTimeZone *`variable. If the string specified a time zone, you'll receive the time zone object in that variable. If the string didn't specify a time zone, you'll receive `nil`.
 
-The "outRange" parameter, when not set to NULL, is a pointer to NSRange storage. You will receive the range of the parsed substring in that storage.
+The “`outRange`” parameter, when not set to `NULL`, is a pointer to `NSRange` storage. You will receive the range of the parsed substring in that storage.
 
 ### Unparsing
 
-Create an ISO 8601 date formatter, then call [formatter stringFromDate:myDate]. The method will return a string.
+Create an ISO 8601 date formatter, then call `[formatter stringFromDate:myDate]`. The method will return a string.
 
 The formatter has several properties that control its behavior:
 
 * You can set the format of the resulting strings. By default, the formatter will generate calendar-date strings; your other options are week dates and ordinal dates.
-* You can set a default time zone; by default, it will use [NSTimeZone defaultTimeZone].
+* You can set a default time zone; by default, it will use `[NSTimeZone defaultTimeZone]`.
 * You can enable a strict mode, wherein the formatter enforces sanity checks on the string. By default, the parser will afford you quite a bit of leeway.
-* You can set whether to include the time in the string, and if so, what hour-minute separator to use (default ':').
+* You can set whether to include the time in the string, and if so, what hour-minute separator to use (default `':'`).
 
 ## How to test that this code works
 
@@ -76,8 +76,8 @@ Changes in 0.4 from 0.3:
 
 Changes in 0.3 from 0.2:
 
-* Colin Barrett noticed that I used %m instead of %M when creating the time strings. Oops.
-* Colin also noticed that I had the ?: in -ISO8601DateStringWithTime: the wrong way around. Oops again.
+* Colin Barrett noticed that I used `%m` instead of `%M` when creating the time strings. Oops.
+* Colin also noticed that I had the `?:` in `ISO8601DateStringWithTime:` the wrong way around. Oops again.
 
 Changes in 0.2 from 0.1:
 
