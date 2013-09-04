@@ -20,6 +20,20 @@
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "31A271C317CE9B5B00E3FA7D"
+               BuildableName = "ISO8601ForCocoaTouchTests.octest"
+               BlueprintName = "ISO8601ForCocoaTouchTests"
+               ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
