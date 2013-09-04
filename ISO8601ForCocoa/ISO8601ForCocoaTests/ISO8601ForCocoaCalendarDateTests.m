@@ -259,4 +259,13 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(string, expectedString, @"Got wrong string for September date in UTC-as-default (check whether DST is included in TZ offset)");
 }
 
+- (void) testStrictModeRejectsSlashyDates {
+	_iso8601DateFormatter.parsesStrictly = true;
+
+	NSString *dateString = @"11/27/1982";
+	NSDate *date = [_iso8601DateFormatter dateFromString:dateString];
+
+	STAssertNil(date, @"Slashy date string '%@' should not have been parsed as anything, let alone %@", dateString, date);
+}
+
 @end
