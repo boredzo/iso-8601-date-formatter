@@ -229,17 +229,27 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 - (void) testUnparsingDateWithinBritishSummerTimeAsUTC {
 	_iso8601DateFormatter.includeTime = YES;
 
-	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:354987473.0];
-	NSString *expectedString = @"2012-04-01T15:37:53Z";
+	NSDate *date;
+	NSString *expectedString;
 	NSString *string;
 	NSTimeZone *UTCTimeZone = [NSTimeZone timeZoneWithName:@"UTC"];
 
+	date = [NSDate dateWithTimeIntervalSinceReferenceDate:354987473.0];
+	expectedString = @"2012-04-01T15:37:53Z";
+
 	string = [_iso8601DateFormatter stringFromDate:date timeZone:UTCTimeZone];
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for date in UTC (check whether DST is included in TZ offset)");
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC (check whether DST is included in TZ offset)");
 
 	_iso8601DateFormatter.defaultTimeZone = UTCTimeZone;
 	string = [_iso8601DateFormatter stringFromDate:date];
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for date in UTC-as-default (check whether DST is included in TZ offset)");
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC-as-default (check whether DST is included in TZ offset)");
+
+	//Date https://github.com/boredzo/iso-8601-date-formatter/issues/3 was filed.
+	date = [NSDate dateWithTimeIntervalSinceReferenceDate:370245466.0];
+	expectedString = @"2012-09-25T05:57:46Z";
+
+	string = [_iso8601DateFormatter stringFromDate:date];
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for September date in UTC-as-default (check whether DST is included in TZ offset)");
 }
 
 @end

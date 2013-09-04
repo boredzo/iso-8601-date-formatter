@@ -33,7 +33,7 @@
 //Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/6
 - (void) testUnparsingDateInDaylightSavingTime;
 
-//Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/5
+//Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/3 and https://github.com/boredzo/iso-8601-date-formatter/issues/5
 - (void) testUnparsingDateWithinBritishSummerTimeAsUTC;
 
 @end
