@@ -1,1 +1,3 @@
 language: objective-c
+before_script:
+    - cd ISO8601ForCocoa
