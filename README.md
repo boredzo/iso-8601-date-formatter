@@ -1,5 +1,7 @@
 # ISO 8601: The only date format worth using
 
+[![Image: Travis CI Status](https://travis-ci.org/boredzo/iso-8601-date-formatter.png?branch=master)](https://travis-ci.org/boredzo/iso-8601-date-formatter)
+
 Obligatory relevant [xkcd](http://xkcd.com/):
 
 [![Seriously now. “ISO 8601 was published on 06/05/88 and most recently amended on 12/01/04.”](http://imgs.xkcd.com/comics/iso_8601.png)](http://xkcd.com/1179/)
