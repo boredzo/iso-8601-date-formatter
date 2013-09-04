@@ -634,8 +634,12 @@ static BOOL is_leap_year(NSUInteger year);
 	NSTimeInterval parsedFractionOfSecond = 0.0;
   
 	NSDateComponents *components = [self dateComponentsFromString:string timeZone:&timeZone range:outRange fractionOfSecond:&parsedFractionOfSecond];
+
 	if (outTimeZone)
 		*outTimeZone = timeZone;
+	if (components == nil)
+		return nil;
+
 	parsingCalendar.timeZone = timeZone;
 
 	NSDate *parsedDate = [parsingCalendar dateFromComponents:components];
