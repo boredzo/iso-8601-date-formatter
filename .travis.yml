@@ -1,5 +1,4 @@
 language: objective-c
-xcode_project: ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj
-xcode_scheme: ISO8601ForCocoaTouch
 script:
-    - xctool test
+    - xctool -project ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj -scheme ISO8601ForCocoa test
+    - xctool -project ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj -scheme ISO8601ForCocoaTouch test
