@@ -1,4 +1,6 @@
 language: objective-c
+before_script:
+    - cd ISO8601ForCocoa
 script:
-    - xctool -project ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj -scheme ISO8601ForCocoa test
-    - xctool -project ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj -scheme ISO8601ForCocoaTouch test
+    - xcodebuild test -scheme 'ISO8601ForCocoa'
+    - xcodebuild -arch i386 -target ISO8601ForCocoaTouchTests -configuration Debug -sdk iphonesimulator6.1 ONLY_ACTIVE_ARCH=NO TEST_AFTER_BUILD=YES clean build
