@@ -334,7 +334,7 @@
 				ORGANIZATIONNAME = "Peter Hosey";
 				TargetAttributes = {
 					31AEAFDC17546BC800BD292F = {
-						TestTargetID = 31AEAFC817546BC800BD292F;
+						TestTargetID = 31AEAFC817546BC800BD292F /* ISO8601ForCocoa */;
 					};
 				};
 			};

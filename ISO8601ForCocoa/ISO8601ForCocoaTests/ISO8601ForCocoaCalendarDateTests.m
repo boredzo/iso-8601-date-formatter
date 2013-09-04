@@ -214,6 +214,28 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+- (void) testUnparsingDatesWithoutTime {
+	_iso8601DateFormatter.includeTime = false;
+
+	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	STAssertNotNil(calendar, @"Couldn't create Gregorian calendar with which to set up date-unparsing tests");
+	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+	STAssertNotNil(calendar, @"Couldn't create C/POSIX locale with which to set up date-unparsing tests");
+	calendar.locale = locale;
+
+	NSDateComponents *components = [NSDateComponents new];
+	components.month = 1;
+	components.day = 1;
+	for (NSUInteger year = 1990; year < 2020; ++year) {
+		components.year = year;
+
+		NSDate *date = [calendar dateFromComponents:components];
+		NSString *expectedString = [NSString stringWithFormat:@"%04ld-%02ld-%02ld", components.year, components.month, components.day];
+		NSString *string = [_iso8601DateFormatter stringFromDate:date];
+		STAssertEqualObjects(string, expectedString, @"Got surprising string for January 1, %lu", year);
+	}
+}
+
 - (void) testUnparsingDateInDaylightSavingTime {
 	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"Europe/Prague"];
 	_iso8601DateFormatter.includeTime = YES;
