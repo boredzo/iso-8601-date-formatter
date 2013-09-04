@@ -155,7 +155,8 @@ static BOOL is_leap_year(NSUInteger year);
 	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL fractionOfSecond:NULL];
 }
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange fractionOfSecond:(out NSTimeInterval *)outFractionOfSecond {
-	if (string == nil)
+    // Bail immediately if asked to parse a `nil` string or if the string contains a slash delimiter (we don't support ISO-8601 intervals)
+	if (string == nil || [string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]].location != NSNotFound)
 		return nil;
 
 	NSDate *now = [NSDate date];
