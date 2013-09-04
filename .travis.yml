@@ -3,3 +3,4 @@ before_script:
     - cd ISO8601ForCocoa
 script:
     - xcodebuild test -scheme 'ISO8601ForCocoa'
+    - xcodebuild test -scheme 'ISO8601ForCocoaTouch'
