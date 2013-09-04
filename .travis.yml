@@ -1,3 +1,5 @@
 language: objective-c
 before_script:
     - cd ISO8601ForCocoa
+script:
+    - xcodebuild test -scheme 'All Mac tests'
