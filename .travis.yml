@@ -1,7 +1,4 @@
 language: objective-c
-before_install:
-    - brew update
-    - brew install xctool
 xcode_project: ISO8601ForCocoa/ISO8601ForCocoa.xcodeproj
 xcode_scheme: ISO8601ForCocoaTouch
 script:
