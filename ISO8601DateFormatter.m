@@ -706,6 +706,7 @@ static BOOL is_leap_year(NSUInteger year);
 		unparsingFormatter.formatterBehavior = NSDateFormatterBehavior10_4;
 		unparsingFormatter.dateFormat = dateFormat;
 		unparsingFormatter.calendar = unparsingCalendar;
+        unparsingFormatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
 	}
 
 	unparsingCalendar.timeZone = timeZone;

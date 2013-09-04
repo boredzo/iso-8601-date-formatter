@@ -21,6 +21,10 @@
 		31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */; };
 		31AEAFF717546BFB00BD292F /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */; };
 		31AEAFF817546BFB00BD292F /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2417CF34AE003603D1 /* MBMockLocale.m */; };
+		3904FF2817CF34AE003603D1 /* MBMockLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2417CF34AE003603D1 /* MBMockLocale.m */; };
+		3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */; };
+		3904FF2A17CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,10 @@
 		31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaCalendarDateTests.m; sourceTree = "<group>"; };
 		31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		3904FF2317CF34AE003603D1 /* MBMockLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockLocale.h; sourceTree = "<group>"; };
+		3904FF2417CF34AE003603D1 /* MBMockLocale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockLocale.m; sourceTree = "<group>"; };
+		3904FF2517CF34AE003603D1 /* NSLocale+UnitTestSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTestSwizzling.h"; sourceTree = "<group>"; };
+		3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTestSwizzling.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +218,10 @@
 		31AEAFE417546BC800BD292F /* ISO8601ForCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
+				3904FF2317CF34AE003603D1 /* MBMockLocale.h */,
+				3904FF2417CF34AE003603D1 /* MBMockLocale.m */,
+				3904FF2517CF34AE003603D1 /* NSLocale+UnitTestSwizzling.h */,
+				3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */,
 				31AEAFEA17546BC800BD292F /* ISO8601ForCocoaCalendarDateTests.h */,
 				31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */,
 				31AEAFE517546BC800BD292F /* Supporting Files */,
@@ -408,6 +420,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				31A271DB17CE9C3A00E3FA7D /* ISO8601ForCocoaCalendarDateTests.m in Sources */,
+				3904FF2817CF34AE003603D1 /* MBMockLocale.m in Sources */,
+				3904FF2A17CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +438,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */,
+				3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */,
+				3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
