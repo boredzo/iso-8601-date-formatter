@@ -311,6 +311,8 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 - (void) testParsingInvalidStrings {
 	[self attemptToParseInvalidString:@""];
 	[self attemptToParseInvalidString:@"T"];
+	[self attemptToParseInvalidString:@"Why aren't you all using ISO 8601 yet?!"];
+	[self attemptToParseInvalidString:@"\U0001F47E"];
 	[self attemptToParseInvalidString:@"-2006-02-24T02:43:24"];
 	[self attemptToParseInvalidString:@"-2006-02-24T22:43:24"];
 	[self attemptToParseInvalidString:@"-2006-02-24T22:63:24"];
