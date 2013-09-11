@@ -621,6 +621,8 @@ static BOOL is_leap_year(NSUInteger year);
 	if (outTimeZone) {
 		*outTimeZone = timeZone;
 	}
+	if (!isValidDate)
+		components = nil;
 
 	return components;
 }
