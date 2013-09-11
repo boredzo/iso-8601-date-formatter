@@ -30,6 +30,7 @@
 - (void) testParsingDateWithTimeZoneSeparator;
 - (void) testUnparsingDateWithTimeZoneSeparator;
 
+- (void) testParsingDateWithIncompleteTime;
 - (void) testParsingDateWithTimeOnly;
 
 - (void) testUnparsingDatesWithoutTime;

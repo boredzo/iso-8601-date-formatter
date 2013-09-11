@@ -214,6 +214,31 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+- (void) testParsingDateWithIncompleteTime {
+	NSString *string;
+	NSTimeInterval expectedTimeIntervalSinceReferenceDate;
+	NSDate *date;
+	NSDate *expectedDate;
+
+	string = @"2013-09-10T21:41:05Z";
+	expectedTimeIntervalSinceReferenceDate = 400542065.0;
+	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
+	date = [_iso8601DateFormatter dateFromString:string];
+	STAssertEqualObjects(date, expectedDate, @"Date %@ doesn't match string %@", date, string);
+
+	string = @"2013-09-10T21:41Z";
+	expectedTimeIntervalSinceReferenceDate = 400542060.0;
+	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
+	date = [_iso8601DateFormatter dateFromString:string];
+	STAssertEqualObjects(date, expectedDate, @"Date %@ doesn't match string %@", date, string);
+
+	string = @"2013-09-10T21Z";
+	expectedTimeIntervalSinceReferenceDate = 400539600.0;
+	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
+	date = [_iso8601DateFormatter dateFromString:string];
+	STAssertEqualObjects(date, expectedDate, @"Date %@ doesn't match string %@", date, string);
+}
+
 - (void) testParsingDateWithTimeOnly {
 	NSString *timeOnlyString;
 	NSTimeInterval expectedSecondsFromGMT;
