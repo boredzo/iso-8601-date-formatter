@@ -39,6 +39,8 @@
 - (void) testParsingDateWithTimeOnly;
 #endif
 
+- (void) testParsingInvalidStrings;
+
 - (void) testUnparsingDatesWithoutTime;
 
 //Test case for https://github.com/boredzo/iso-8601-date-formatter/issues/6

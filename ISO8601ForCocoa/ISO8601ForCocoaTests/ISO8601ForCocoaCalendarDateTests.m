@@ -304,6 +304,31 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 #endif
 
+- (void) attemptToParseInvalidString:(NSString *)string {
+	NSDate *date = [_iso8601DateFormatter dateFromString:string];
+	STAssertNil(date, @"Expected to be unable to parse '%@'; instead, got %@", string, date);
+}
+- (void) testParsingInvalidStrings {
+	[self attemptToParseInvalidString:@""];
+	[self attemptToParseInvalidString:@"T"];
+	[self attemptToParseInvalidString:@"-2006-02-24T02:43:24"];
+	[self attemptToParseInvalidString:@"-2006-02-24T22:43:24"];
+	[self attemptToParseInvalidString:@"-2006-02-24T22:63:24"];
+	[self attemptToParseInvalidString:@"-2006-12T12:34"];
+	[self attemptToParseInvalidString:@"-2006T22"];
+	[self attemptToParseInvalidString:@"-60224"];
+	[self attemptToParseInvalidString:@"--2006-02-24T02:43:24"];
+	[self attemptToParseInvalidString:@"--2006-02-24T22:43:24"];
+	[self attemptToParseInvalidString:@"--2006-02-24T22:63:24"];
+	[self attemptToParseInvalidString:@"--2006-12T12:34"];
+	[self attemptToParseInvalidString:@"--2006T22"];
+	[self attemptToParseInvalidString:@"---2006-02-24T02:43:24"];
+	[self attemptToParseInvalidString:@"---2006-02-24T22:43:24"];
+	[self attemptToParseInvalidString:@"---2006-02-24T22:63:24"];
+	[self attemptToParseInvalidString:@"---2006-12T12:34"];
+	[self attemptToParseInvalidString:@"---2006T22"];
+}
+
 - (void) testUnparsingDatesWithoutTime {
 	_iso8601DateFormatter.includeTime = false;
 
