@@ -1,6 +1,7 @@
 # ISO 8601: The only date format worth using
 
-[![Image: Travis CI Status](https://travis-ci.org/boredzo/iso-8601-date-formatter.png?branch=master)](https://travis-ci.org/boredzo/iso-8601-date-formatter)
+[![Image: Status of most recent build and test attempt.](https://travis-ci.org/boredzo/iso-8601-date-formatter.png?branch=master)](https://travis-ci.org/boredzo/iso-8601-date-formatter)
+[![Image: Test code coverage percentage.](https://coveralls.io/repos/boredzo/iso-8601-date-formatter/badge.png?branch=master)](https://coveralls.io/r/boredzo/iso-8601-date-formatter?branch=master)
 
 Obligatory relevant [xkcd](http://xkcd.com/):
 
