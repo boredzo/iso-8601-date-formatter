@@ -239,6 +239,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(date, expectedDate, @"Date %@ doesn't match string %@", date, string);
 }
 
+#if POST_DATE_COMPONENTS_REFACTOR
 - (void) testParsingDateWithTimeOnly {
 	NSString *timeOnlyString;
 	NSTimeInterval expectedSecondsFromGMT;
@@ -301,6 +302,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEquals(components.minute, (NSInteger)2, @"Expected minute of '%@' to be 2", timeOnlyString);
 	STAssertEquals(components.second, (NSInteger)2, @"Expected second of '%@' to be 2", timeOnlyString);
 }
+#endif
 
 - (void) testUnparsingDatesWithoutTime {
 	_iso8601DateFormatter.includeTime = false;
