@@ -579,10 +579,12 @@ static BOOL is_leap_year(NSUInteger year);
 			components.hour = hour;
 			components.minute = (NSInteger)minute;
 			components.second = (NSInteger)second;
-      
-			NSTimeInterval fractionOfSecond = second - components.second;
-			if (fractionOfSecond > 0.0) {
-				*outFractionOfSecond = fractionOfSecond;
+
+			if (outFractionOfSecond != NULL) {
+				NSTimeInterval fractionOfSecond = second - components.second;
+				if (fractionOfSecond > 0.0) {
+					*outFractionOfSecond = fractionOfSecond;
+				}
 			}
 
 			switch(dateSpecification) {
