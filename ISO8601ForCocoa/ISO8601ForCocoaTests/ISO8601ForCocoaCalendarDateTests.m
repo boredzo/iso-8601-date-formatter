@@ -214,6 +214,69 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 								                     includeTime:true];
 }
 
+- (void) testParsingDateWithTimeOnly {
+	NSString *timeOnlyString;
+	NSTimeInterval expectedSecondsFromGMT;
+	NSDateComponents *components;
+	NSTimeZone *timeZone;
+
+	timeOnlyString = @"T22:63:24-11:21";
+	expectedSecondsFromGMT = -11.0 * 3600.0 + -21.0 * 60.0;
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString timeZone:&timeZone];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)63, @"Expected minute of '%@' to be 63", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)24, @"Expected second of '%@' to be 24", timeOnlyString);
+	STAssertNotNil(timeZone, @"Expected '%@' to yield a time zone", timeOnlyString);
+	STAssertEquals(timeZone.secondsFromGMT, (NSInteger)expectedSecondsFromGMT, @"Expected time zone offset of '%@' to be 11 hours and 21 minutes west of GMT", timeOnlyString);
+
+	timeOnlyString = @"T22:63:24+50:70";
+	expectedSecondsFromGMT = +50.0 * 3600.0 + +70.0 * 60.0;
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString timeZone:&timeZone];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)63, @"Expected minute of '%@' to be 63", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)24, @"Expected second of '%@' to be 24", timeOnlyString);
+	STAssertNotNil(timeZone, @"Expected '%@' to yield a time zone", timeOnlyString);
+	STAssertEquals(timeZone.secondsFromGMT, (NSInteger)expectedSecondsFromGMT, @"Expected time zone offset of '%@' to be 50 hours and 70 minutes east of GMT", timeOnlyString);
+
+	timeOnlyString = @"T22:1:2";
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)1, @"Expected minute of '%@' to be 1", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)2, @"Expected second of '%@' to be 2", timeOnlyString);
+
+	timeOnlyString = @"T22:1Z";
+	expectedSecondsFromGMT = 0.0;
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString timeZone:&timeZone];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)1, @"Expected minute of '%@' to be 1", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)NSUndefinedDateComponent, @"Expected second of '%@' to be undefined", timeOnlyString);
+	STAssertEquals(timeZone.secondsFromGMT, (NSInteger)expectedSecondsFromGMT, @"Expected time zone offset of '%@' to be zero (GMT)", timeOnlyString);
+
+	timeOnlyString = @"T22:";
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)NSUndefinedDateComponent, @"Expected minute of '%@' to be undefined", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)NSUndefinedDateComponent, @"Expected second of '%@' to be undefined", timeOnlyString);
+
+	timeOnlyString = @"T22";
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString];
+	STAssertEquals(components.hour, (NSInteger)22, @"Expected hour of '%@' to be 22", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)NSUndefinedDateComponent, @"Expected minute of '%@' to be undefined", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)NSUndefinedDateComponent, @"Expected second of '%@' to be undefined", timeOnlyString);
+
+	timeOnlyString = @"T2";
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString];
+	STAssertEquals(components.hour, (NSInteger)2, @"Expected hour of '%@' to be 2", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)NSUndefinedDateComponent, @"Expected minute of '%@' to be undefined", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)NSUndefinedDateComponent, @"Expected second of '%@' to be undefined", timeOnlyString);
+
+	timeOnlyString = @"T2:2:2";
+	components = [_iso8601DateFormatter dateComponentsFromString:timeOnlyString];
+	STAssertEquals(components.hour, (NSInteger)2, @"Expected hour of '%@' to be 2", timeOnlyString);
+	STAssertEquals(components.minute, (NSInteger)2, @"Expected minute of '%@' to be 2", timeOnlyString);
+	STAssertEquals(components.second, (NSInteger)2, @"Expected second of '%@' to be 2", timeOnlyString);
+}
+
 - (void) testUnparsingDatesWithoutTime {
 	_iso8601DateFormatter.includeTime = false;
 
