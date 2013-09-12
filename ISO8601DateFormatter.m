@@ -815,6 +815,7 @@ static BOOL is_leap_year(NSUInteger year);
 		if (!timeSep) timeSep = ISO8601DefaultTimeSeparatorCharacter;
 		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_WITH_TIMEZONE_FORMAT withTimeSeparator:timeSep];
 		formatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
+		formatter.timeZone = timeZone;
 
 		timeString = [formatter stringForObjectValue:date];
 
