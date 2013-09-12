@@ -242,6 +242,17 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
 }
 
+- (void) testUnparsingDateWithoutTime {
+	_iso8601DateFormatter.format = ISO8601DateFormatWeek;
+	_iso8601DateFormatter.includeTime = false;
+
+	NSString *expectedString = @"2007-W01-01";
+	NSTimeInterval timeIntervalSinceReferenceDate = 189302400.0;
+	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
+	NSString *string = [_iso8601DateFormatter stringFromDate:date];
+	STAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
+}
+
 - (void) testUnparsingDateInDaylightSavingTime {
 	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"Europe/Prague"];
 	_iso8601DateFormatter.includeTime = YES;
