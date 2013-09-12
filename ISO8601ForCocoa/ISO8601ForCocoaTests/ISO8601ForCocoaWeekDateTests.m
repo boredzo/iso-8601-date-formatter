@@ -83,7 +83,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 
 - (void) testUnparsingDateInPacificStandardTime {
 	NSTimeInterval timeIntervalSinceReferenceDate = 189379496.0;
-	NSString *expectedDateString = @"2013-W01-01T13:24:56-0800";
+	NSString *expectedDateString = @"2007-W01-01T13:24:56-0800";
 	NSString *tzName = @"America/Los_Angeles";
 
 	[self attemptToUnparseDateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate
