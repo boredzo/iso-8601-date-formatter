@@ -124,10 +124,10 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	NSTimeZone *tz;
 
 	tz = [NSTimeZone timeZoneWithName:@"GMT"];
-	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-04T13:35:00Z", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T13:35:00Z", @"Unexpected date string for 13:35 on 2 August 2013 in London");
 
 	tz = [NSTimeZone timeZoneWithName:@"Europe/London"];
-	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-04T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
 
     // swizzle back so only this test is affected
     SwizzleClassMethod([NSLocale class], @selector(currentLocale), @selector(mockCurrentLocale));
