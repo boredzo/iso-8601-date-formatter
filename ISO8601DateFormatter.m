@@ -807,6 +807,8 @@ static BOOL is_leap_year(NSUInteger year);
 		}
 	}
 
+	NSString *string = [NSString stringWithFormat:@"%lu-W%02lu-%02lu", (unsigned long)year, (unsigned long)week, ((unsigned long)dayOfWeek) + 1U];
+
 	NSString *timeString;
 	if(includeTime) {
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -836,10 +838,11 @@ static BOOL is_leap_year(NSUInteger year);
 				timeString = [timeString stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR,
 				                                                 timeZoneOffsetHour, timeZoneOffsetMinute];
 		}
-	} else
-		timeString = @"";
 
-	return [NSString stringWithFormat:@"%lu-W%02lu-%02luT%@", (unsigned long)year, (unsigned long)week, ((unsigned long)dayOfWeek) + 1U, timeString];
+		string = [string stringByAppendingFormat:@"T%@", timeString];
+	}
+
+	return string;
 }
 
 @end
