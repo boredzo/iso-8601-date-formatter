@@ -17,7 +17,6 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 //#define ISO_WEEK_DATE_FORMAT @"YYYY-'W'ww-ee" //Doesn't actually work because NSDateComponents counts the weekday starting at 1.
 #define ISO_ORDINAL_DATE_FORMAT @"yyyy-DDD"
 #define ISO_TIME_FORMAT @"HH:mm:ss"
-#define ISO_TIME_WITH_TIMEZONE_FORMAT  ISO_TIME_FORMAT @"Z"
 //printf formats.
 #define ISO_TIMEZONE_UTC_FORMAT @"Z"
 #define ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR @"%+.2d%.2d"
@@ -813,13 +812,30 @@ static BOOL is_leap_year(NSUInteger year);
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 		unichar timeSep = self.timeSeparator;
 		if (!timeSep) timeSep = ISO8601DefaultTimeSeparatorCharacter;
-		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_WITH_TIMEZONE_FORMAT withTimeSeparator:timeSep];
+		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_FORMAT withTimeSeparator:timeSep];
 		formatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
 		formatter.timeZone = timeZone;
 
 		timeString = [formatter stringForObjectValue:date];
 
 		[formatter release];
+
+		//TODO: This is copied from the calendar-date code. It should be isolated in a method.
+		NSInteger offset = [timeZone secondsFromGMTForDate:date];
+		offset /= 60;  //bring down to minutes
+		if (offset == 0)
+			timeString = [timeString stringByAppendingString:ISO_TIMEZONE_UTC_FORMAT];
+		else {
+			int timeZoneOffsetHour = (int)(offset / 60);
+			int timeZoneOffsetMinute = (int)(offset % 60);
+			if (self.timeZoneSeparator)
+				timeString = [timeString stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR,
+				                                                 timeZoneOffsetHour, self.timeZoneSeparator,
+				                                                 timeZoneOffsetMinute];
+			else
+				timeString = [timeString stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR,
+				                                                 timeZoneOffsetHour, timeZoneOffsetMinute];
+		}
 	} else
 		timeString = @"";
 
