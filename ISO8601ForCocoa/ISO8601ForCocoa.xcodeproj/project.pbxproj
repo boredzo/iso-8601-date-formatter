@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
+		31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		31A271B717CE9B5A00E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B617CE9B5A00E3FA7D /* Foundation.framework */; };
 		31A271C517CE9B5B00E3FA7D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFDE17546BC800BD292F /* SenTestingKit.framework */; };
 		31A271C817CE9B5B00E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B617CE9B5A00E3FA7D /* Foundation.framework */; };
@@ -57,6 +59,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaWeekDateTests.h; sourceTree = "<group>"; };
+		31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaWeekDateTests.m; sourceTree = "<group>"; };
 		31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISO8601ForCocoaTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A271B617CE9B5A00E3FA7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		31A271BA17CE9B5B00E3FA7D /* ISO8601ForCocoaTouch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISO8601ForCocoaTouch-Prefix.pch"; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */,
 				31AEAFEA17546BC800BD292F /* ISO8601ForCocoaCalendarDateTests.h */,
 				31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */,
+				31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */,
+				31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */,
 				31AEAFE517546BC800BD292F /* Supporting Files */,
 			);
 			path = ISO8601ForCocoaTests;
@@ -422,6 +428,7 @@
 				31A271DB17CE9C3A00E3FA7D /* ISO8601ForCocoaCalendarDateTests.m in Sources */,
 				3904FF2817CF34AE003603D1 /* MBMockLocale.m in Sources */,
 				3904FF2A17CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
+				31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +447,7 @@
 				31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */,
 				3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */,
 				3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
+				31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
