@@ -822,7 +822,7 @@ static BOOL is_leap_year(NSUInteger year);
 	} else
 		timeString = @"";
 
-	return [NSString stringWithFormat:@"%lu-W%02lu-%02lu%@", (unsigned long)year, (unsigned long)week, ((unsigned long)dayOfWeek) + 1U, timeString];
+	return [NSString stringWithFormat:@"%lu-W%02lu-%02luT%@", (unsigned long)year, (unsigned long)week, ((unsigned long)dayOfWeek) + 1U, timeString];
 }
 
 @end
