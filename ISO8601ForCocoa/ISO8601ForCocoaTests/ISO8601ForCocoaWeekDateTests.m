@@ -245,6 +245,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 - (void) testUnparsingDateWithoutTime {
 	_iso8601DateFormatter.format = ISO8601DateFormatWeek;
 	_iso8601DateFormatter.includeTime = false;
+	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"UTC"];
 
 	NSString *expectedString = @"2007-W01-01";
 	NSTimeInterval timeIntervalSinceReferenceDate = 189302400.0;
