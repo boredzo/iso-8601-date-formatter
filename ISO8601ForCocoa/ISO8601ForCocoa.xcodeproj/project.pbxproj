@@ -647,6 +647,7 @@
 				INFOPLIST_FILE = "ISO8601ForCocoaTests/ISO8601ForCocoaTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -663,6 +664,7 @@
 				INFOPLIST_FILE = "ISO8601ForCocoaTests/ISO8601ForCocoaTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
