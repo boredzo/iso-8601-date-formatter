@@ -744,7 +744,8 @@ static BOOL is_leap_year(NSUInteger year);
 }
 
 - (NSString *) stringForObjectValue:(id)value {
-	NSParameterAssert([value isKindOfClass:[NSDate class]]);
+	if ( ! [value isKindOfClass:[NSDate class]])
+		return nil;
 
 	return [self stringFromDate:(NSDate *)value];
 }
