@@ -621,7 +621,7 @@ static BOOL is_leap_year(NSUInteger year);
 		*outTimeZone = timeZone;
 	}
 
-	return components;
+	return isValidDate ? components : nil;
 }
 
 - (NSDate *) dateFromString:(NSString *)string {
