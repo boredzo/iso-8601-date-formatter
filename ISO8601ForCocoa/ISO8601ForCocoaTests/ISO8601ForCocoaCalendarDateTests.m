@@ -390,4 +390,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertNil(date, @"dateFromString:nil returned should have returned nil, but returned %@", date);
 }
 
+- (void) testStringFromInapplicableObjectValues {
+	NSString *string = nil;
+	STAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:@42]), @"stringForObjectValue:@42 threw an exception");
+	STAssertNil(string, @"stringForObjectValue:@42 should have returned nil, but returned %@", string);
+	STAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:[NSFileManager defaultManager]]), @"stringForObjectValue:[NSFileManager] failed to throw an exception");
+	STAssertNil(string, @"stringForObjectValue:[NSFileManager] should have returned nil, but returned %@", string);
+	STAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:self]), @"stringForObjectValue:%@ failed to throw an exception", self);
+	STAssertNil(string, @"stringForObjectValue:self should have returned nil, but returned %@", string);
+}
+
 @end

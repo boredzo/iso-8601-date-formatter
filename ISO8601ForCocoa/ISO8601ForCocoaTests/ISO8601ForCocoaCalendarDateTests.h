@@ -53,4 +53,6 @@
 - (void) testParseNilIntoDateComponents;
 - (void) testParseNilIntoDate;
 
+- (void) testStringFromInapplicableObjectValues;
+
 @end
