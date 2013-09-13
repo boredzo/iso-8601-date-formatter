@@ -10,6 +10,7 @@
 #import "ISO8601ForCocoaCalendarDateTests.h"
 #import "ISO8601DateFormatter.h"
 #import "NSLocale+UnitTestSwizzling.h"
+#include <vis.h>
 
 typedef NS_ENUM(unichar, PRHNamedCharacter) {
 	SNOWMAN = 0x2603
@@ -398,6 +399,54 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertNil(string, @"stringForObjectValue:[NSFileManager] should have returned nil, but returned %@", string);
 	STAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:self]), @"stringForObjectValue:%@ failed to throw an exception", self);
 	STAssertNil(string, @"stringForObjectValue:self should have returned nil, but returned %@", string);
+}
+
+- (void) testParsingDateWithSpaceInFrontOfItStrictly {
+	NSString *dateString = @"2013-09-12T23:40Z";
+	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:true];
+}
+- (void) testParsingDateWithSpaceInFrontOfItNonStrictly {
+	NSString *dateString = @"2013-09-12T23:40Z";
+	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:false];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:false];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:false];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:false];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:false];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:false];
+}
+
+- (void) attemptToParseDateString:(NSString *)dateString prefixedWithString:(NSString *)prefix strictMode:(bool)strict {
+	_iso8601DateFormatter.parsesStrictly = strict;
+	STAssertEquals(_iso8601DateFormatter.parsesStrictly, (typeof(_iso8601DateFormatter.parsesStrictly))strict, @"Date formatter %@ blew off an attempt to set whether it parses strictly to %@", _iso8601DateFormatter, strict ? @"true" : @"false");
+
+	NSString *string = [prefix stringByAppendingString:dateString];
+	NSDate *date = [_iso8601DateFormatter dateFromString:string];
+	if (strict) {
+		STAssertNil(date, @"Strictly parsing string '%@' should have returned nil, not %@", [self stringByEscapingString:string], date);
+	} else {
+		STAssertNotNil(date, @"Parsing string '%@' with strict mode off should have returned a date, not nil", [self stringByEscapingString:string]);
+	}
+}
+
+- (NSString *) stringByEscapingString:(NSString *)string {
+	NSData *unescapedData = [string dataUsingEncoding:NSUTF8StringEncoding];
+	NSUInteger length = unescapedData.length;
+
+	//NUL-terminate it.
+	{
+		NSMutableData *tempData = [unescapedData mutableCopy];
+		tempData.length = length + 1;
+		unescapedData = tempData;
+	}
+
+	NSMutableData *escapedData = [NSMutableData dataWithLength:length * 4UL + 1UL];
+	escapedData.length = (NSUInteger)strvis(escapedData.mutableBytes, unescapedData.bytes, VIS_WHITE | VIS_CSTYLE);
+	return [[NSString alloc] initWithData:escapedData encoding:NSASCIIStringEncoding];
 }
 
 @end

@@ -55,4 +55,7 @@
 
 - (void) testStringFromInapplicableObjectValues;
 
+- (void) testParsingDateWithSpaceInFrontOfItStrictly;
+- (void) testParsingDateWithSpaceInFrontOfItNonStrictly;
+
 @end
