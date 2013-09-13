@@ -403,24 +403,29 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 
 - (void) testParsingDateWithSpaceInFrontOfItStrictly {
 	NSString *dateString = @"2013-09-12T23:40Z";
-	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:true];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:true];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:true];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:true];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:true];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:true];
+	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:true expectedDate:nil];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:true expectedDate:nil];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:true expectedDate:nil];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:true expectedDate:nil];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:true expectedDate:nil];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:true expectedDate:nil];
 }
 - (void) testParsingDateWithSpaceInFrontOfItNonStrictly {
 	NSString *dateString = @"2013-09-12T23:40Z";
-	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:false];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:false];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:false];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:false];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:false];
-	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:false];
+	NSDate *expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:400722000.0];
+	[self attemptToParseDateString:dateString prefixedWithString:@" "  strictMode:false expectedDate:expectedDate];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\t" strictMode:false expectedDate:expectedDate];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\n" strictMode:false expectedDate:expectedDate];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\v" strictMode:false expectedDate:expectedDate];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\f" strictMode:false expectedDate:expectedDate];
+	[self attemptToParseDateString:dateString prefixedWithString:@"\r" strictMode:false expectedDate:expectedDate];
 }
 
-- (void) attemptToParseDateString:(NSString *)dateString prefixedWithString:(NSString *)prefix strictMode:(bool)strict {
+- (void) attemptToParseDateString:(NSString *)dateString
+	prefixedWithString:(NSString *)prefix
+	strictMode:(bool)strict
+	expectedDate:(NSDate *)expectedDate
+{
 	_iso8601DateFormatter.parsesStrictly = strict;
 	STAssertEquals(_iso8601DateFormatter.parsesStrictly, (typeof(_iso8601DateFormatter.parsesStrictly))strict, @"Date formatter %@ blew off an attempt to set whether it parses strictly to %@", _iso8601DateFormatter, strict ? @"true" : @"false");
 
@@ -430,6 +435,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 		STAssertNil(date, @"Strictly parsing string '%@' should have returned nil, not %@", [self stringByEscapingString:string], date);
 	} else {
 		STAssertNotNil(date, @"Parsing string '%@' with strict mode off should have returned a date, not nil", [self stringByEscapingString:string]);
+		STAssertEqualObjects(date, expectedDate, @"Parsing string '%@' with strict mode off returned wrong date (expected %f, got %f)", [self stringByEscapingString:string], expectedDate.timeIntervalSinceReferenceDate, date.timeIntervalSinceReferenceDate);
 	}
 }
 
