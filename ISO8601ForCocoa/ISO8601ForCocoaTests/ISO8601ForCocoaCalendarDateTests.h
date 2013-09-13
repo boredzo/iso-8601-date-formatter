@@ -50,4 +50,7 @@
 //Test case for https://github.com/boredzo/iso-8601-date-formatter/pull/20
 - (void) testStrictModeRejectsSlashyDates;
 
+- (void) testParseNilIntoDateComponents;
+- (void) testParseNilIntoDate;
+
 @end

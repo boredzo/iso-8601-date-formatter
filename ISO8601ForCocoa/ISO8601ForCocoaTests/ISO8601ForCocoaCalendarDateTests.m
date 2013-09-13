@@ -380,4 +380,14 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertNil(date, @"Slashy date string '%@' should not have been parsed as anything, let alone %@", dateString, date);
 }
 
+- (void) testParseNilIntoDateComponents {
+	NSDateComponents *components = [_iso8601DateFormatter dateComponentsFromString:nil];
+	STAssertNil(components, @"dateComponentsFromString:nil should have returned nil, but returned %@", components);
+}
+
+- (void) testParseNilIntoDate {
+	NSDate *date = [_iso8601DateFormatter dateFromString:nil];
+	STAssertNil(date, @"dateFromString:nil returned should have returned nil, but returned %@", date);
+}
+
 @end
