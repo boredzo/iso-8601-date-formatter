@@ -204,10 +204,8 @@ static BOOL is_leap_year(NSUInteger year);
 	} else {
 		//Skip leading whitespace.
 		NSUInteger i = 0U;
-		for(NSUInteger len = strlen((const char *)ch); i < len; ++i) {
-			if (!isspace(ch[i]))
-				break;
-		}
+		while (isspace(ch[i]))
+			++i;
 
 		range.location = i;
 		ch += i;
