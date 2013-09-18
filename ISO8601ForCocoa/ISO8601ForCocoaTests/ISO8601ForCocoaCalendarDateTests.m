@@ -475,4 +475,19 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(escapedString, expectedString, @"Escaping a string of whitespace in order should produce escape sequences in order ('%@'), not '%@'", expectedString, escapedString);
 }
 
+- (void) testParsingSloppyDatesStrictly {
+	_iso8601DateFormatter.parsesStrictly = true;
+
+	NSString *string;
+	NSDate *date;
+
+	string = @"130918";
+	date = [_iso8601DateFormatter dateFromString:string];
+	STAssertNil(date, @"Parsing '%@' strictly should return nil, not %@ (%f)", string, date, date.timeIntervalSinceReferenceDate);
+
+	string = @"2013-0918";
+	date = [_iso8601DateFormatter dateFromString:string];
+	STAssertNil(date, @"Parsing '%@' strictly should return nil, not %@ (%f)", string, date, date.timeIntervalSinceReferenceDate);
+}
+
 @end

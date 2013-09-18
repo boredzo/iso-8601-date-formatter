@@ -58,4 +58,6 @@
 - (void) testParsingDateWithSpaceInFrontOfItStrictly;
 - (void) testParsingDateWithSpaceInFrontOfItNonStrictly;
 
+- (void) testParsingSloppyDatesStrictly;
+
 @end
