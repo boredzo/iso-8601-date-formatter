@@ -259,7 +259,7 @@ static BOOL is_leap_year(NSUInteger year);
 					break;
 
 				case 6: //YYMMDD (implicit century)
-					if (num_leading_hyphens > 0U)
+					if (num_leading_hyphens > 0U || strict)
 						isValidDate = NO;
 					else {
 						day = segment % 100U;
@@ -287,8 +287,12 @@ static BOOL is_leap_year(NSUInteger year);
 								segment = read_segment(ch, &ch, &num_digits);
 								switch(num_digits) {
 									case 4: //MMDD
-										day = segment % 100U;
-										month_or_week = segment / 100U;
+										if (strict)
+											isValidDate = NO;
+										else {
+											day = segment % 100U;
+											month_or_week = segment / 100U;
+										}
 										break;
 
 									case 2: //MM
