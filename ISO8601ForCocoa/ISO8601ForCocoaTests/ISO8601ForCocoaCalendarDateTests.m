@@ -455,4 +455,24 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	return [[NSString alloc] initWithData:escapedData encoding:NSASCIIStringEncoding];
 }
 
+//This is really only here because test code counts toward code coverage.
+- (void) testStringEscaping {
+	NSString *string;
+	NSString *escapedString;
+
+	string = @"foo";
+	escapedString = [self stringByEscapingString:string];
+	STAssertEqualObjects(escapedString, string, @"Escaping an all-letters string should effect no change, not produce '%@'", escapedString);
+
+	string = @"foo123";
+	escapedString = [self stringByEscapingString:string];
+	STAssertEqualObjects(escapedString, string, @"Escaping an alphanumeric string should effect no change, not produce '%@'", escapedString);
+
+	NSString *expectedString;
+	expectedString = @"\\t\\n\\v\\f\\r";
+	string = @"\t\n\v\f\r";
+	escapedString = [self stringByEscapingString:string];
+	STAssertEqualObjects(escapedString, expectedString, @"Escaping a string of whitespace in order should produce escape sequences in order ('%@'), not '%@'", expectedString, escapedString);
+}
+
 @end
