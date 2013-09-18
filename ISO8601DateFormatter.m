@@ -532,6 +532,7 @@ static BOOL is_leap_year(NSUInteger year);
 				switch(*ch) {
 					case 'Z':
 						timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+						++ch; //So that the Z is included in the range.
 						break;
 
 					case '+':
