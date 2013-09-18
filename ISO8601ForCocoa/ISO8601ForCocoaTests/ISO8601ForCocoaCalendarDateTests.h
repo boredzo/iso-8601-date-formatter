@@ -60,4 +60,6 @@
 
 - (void) testParsingSloppyDatesStrictly;
 
+- (void) testParsingDateFromSubstring;
+
 @end
