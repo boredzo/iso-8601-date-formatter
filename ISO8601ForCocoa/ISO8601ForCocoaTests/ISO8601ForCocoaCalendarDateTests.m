@@ -502,6 +502,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 
 #define PREFIX @" \t\t "
 #define DATE @"2013-09-18T04:18Z"
+#define NOT_A_DATE @"\u2603"
 #define SUFFIX @" \t\t "
 
 	string = PREFIX DATE;
@@ -532,6 +533,17 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	date = [_iso8601DateFormatter dateFromString:string timeZone:&timeZone range:&range];
 	STAssertEqualObjects(date, expectedDate, @"Date from substring of '%@' should be %@ (%f), not %@ (%f) (%+f seconds difference)", string, expectedDate, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate, [date timeIntervalSinceDate:expectedDate]);
 	STAssertEqualObjects(timeZone, expectedTimeZone, @"Time zone from substring of '%@' should be %@, not %@", string, expectedTimeZone, timeZone);
+	STAssertEquals(range, expectedRange, @"Range of date from substring of '%@' should be %@ ('%@'), not %@ ('%@')", string, NSStringFromRange(expectedRange), [string substringWithRange:expectedRange], NSStringFromRange(range), [string substringWithRange:range]);
+
+	string = PREFIX NOT_A_DATE SUFFIX;
+	//Note that timeZone and range are both set to previous results at this point. If dateFromString::: doesn't set them, that will cause a test failure.
+	expectedTimeIntervalSinceReferenceDate = 0.0;
+	expectedDate = nil;
+	expectedTimeZone = nil;
+	expectedRange = (NSRange){ NSNotFound, 0 };
+	date = [_iso8601DateFormatter dateFromString:string timeZone:&timeZone range:&range];
+	STAssertNil(date, @"Date from substring of '%@' should be nil, not %@ (%f)", string, date, date.timeIntervalSinceReferenceDate);
+	STAssertNil(timeZone, @"Time zone from substring of '%@' should be nil, not %@", string, timeZone);
 	STAssertEquals(range, expectedRange, @"Range of date from substring of '%@' should be %@ ('%@'), not %@ ('%@')", string, NSStringFromRange(expectedRange), [string substringWithRange:expectedRange], NSStringFromRange(range), [string substringWithRange:range]);
 }
 
