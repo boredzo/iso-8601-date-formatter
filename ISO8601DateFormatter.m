@@ -26,6 +26,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR @"%+.2d%C%.2d"
 
 @interface ISO8601DateFormatter ()
++ (void) createGlobalCachesThatDoNotAlreadyExist;
 //Used when a memory warning occurs (if at least one ISO 8601 Date Formatter exists at the time).
 + (void) purgeGlobalCaches;
 @end
@@ -53,6 +54,10 @@ bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
 @implementation ISO8601DateFormatter
 
 + (void) initialize {
+	[self createGlobalCachesThatDoNotAlreadyExist];
+}
+
++ (void) createGlobalCachesThatDoNotAlreadyExist {
 	if (!timeZonesByOffset) {
 		timeZonesByOffset = [[NSMutableDictionary alloc] init];
 	}
@@ -594,6 +599,8 @@ static BOOL is_leap_year(NSUInteger year);
 								tz_minute = segment;
 								if (negative) tz_minute = -tz_minute;
 							}
+
+							[[self class] createGlobalCachesThatDoNotAlreadyExist];
 
 							NSInteger timeZoneOffset = (tz_hour * 3600) + (tz_minute * 60);
 							NSNumber *offsetNum = [NSNumber numberWithInteger:timeZoneOffset];
