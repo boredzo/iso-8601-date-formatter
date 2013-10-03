@@ -5,6 +5,9 @@
  */
 
 #import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE
+#	import <UIKit/UIKit.h>
+#endif
 #import "ISO8601DateFormatter.h"
 
 #ifndef DEFAULT_TIME_SEPARATOR
@@ -77,10 +80,22 @@ bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
 		timeSeparator = ISO8601DefaultTimeSeparatorCharacter;
 		includeTime = NO;
 		parsesStrictly = NO;
+
+#if TARGET_OS_IPHONE
+		[[NSNotificationCenter defaultCenter] addObserver:self
+			selector:@selector(didReceiveMemoryWarning:)
+			name:UIApplicationDidReceiveMemoryWarningNotification
+			object:nil];
+#endif
 	}
 	return self;
 }
+
 - (void) dealloc {
+#if TARGET_OS_IPHONE
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+#endif
+
 	[defaultTimeZone release];
 
 	[unparsingFormatter release];
@@ -89,6 +104,10 @@ bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
 	[unparsingCalendar release];
 
 	[super dealloc];
+}
+
+- (void) didReceiveMemoryWarning:(NSNotification *)notification {
+	[[self class] purgeGlobalCaches];
 }
 
 @synthesize defaultTimeZone;
