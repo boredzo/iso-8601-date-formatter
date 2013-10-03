@@ -84,6 +84,12 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	STAssertEquals(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
 
+/*TODO: These tests are inherently flaky.
+ *You can't build a stable test on [NSDate date]—the results will vary according to the current date and are likely to vary by time zone.
+ *These tests should probably use some sort of “default date” property of the date formatter, and the date formatter should fill in from the current date if and only if its default date is not set.
+ *Additionally, the behavior we're testing is probably best modeled by dateComponentsFromString::, not dateFromString::, once dCFS:: is changed to return only the components that were specified by the string.
+ */
+
 - (void) testParsingStringWithOnlyHourMinuteSecondZulu {
 	NSTimeInterval hour = 14.0, minute = 23.0, second = 56.0;
 	NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -103,12 +109,6 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 		expectTimeIntervalSinceReferenceDate:timeInterval
 		expectTimeZoneWithHoursFromGMT:0.0];
 }
-
-/*TODO: These tests are inherently flaky.
- *You can't build a stable test on [NSDate date]—the results will vary according to the current date and are likely to vary by time zone.
- *These tests should probably use some sort of “default date” property of the date formatter, and the date formatter should fill in from the current date if and only if its default date is not set.
- *Additionally, the behavior we're testing is probably best modeled by dateComponentsFromString::, not dateFromString::, once dCFS:: is changed to return only the components that were specified by the string.
- */
 
 - (void) testParsingStringWithOnlyHourMinuteSecondAndTimeZone {
 	NSTimeInterval hour = 14.0, minute = 23.0, second = 56.0;
