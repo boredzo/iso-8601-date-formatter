@@ -33,6 +33,15 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 static NSMutableDictionary *timeZonesByOffset;
 
+#if ISO8601_TESTING_PURPOSES_ONLY
+//This method only exists for use by the project's test cases. DO NOT use this in an application.
+extern bool ISO8601DateFormatter_GlobalCachesAreWarm(void);
+
+bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
+	return (timeZonesByOffset != nil) && (timeZonesByOffset.count > 0);
+}
+#endif
+
 @implementation ISO8601DateFormatter
 
 + (void) initialize {
