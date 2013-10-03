@@ -22,6 +22,11 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR @"%+.2d%.2d"
 #define ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR @"%+.2d%C%.2d"
 
+@interface ISO8601DateFormatter ()
+//Used when a memory warning occurs (if at least one ISO 8601 Date Formatter exists at the time).
++ (void) purgeGlobalCaches;
+@end
+
 @interface ISO8601DateFormatter(UnparsingPrivate)
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep;
