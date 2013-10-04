@@ -10,8 +10,6 @@
 		3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3119ABEE17FCF8F0003412AE /* UIKit.framework */; };
 		31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
-		3179B3ED17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179B3EC17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m */; };
-		3179B3EE17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179B3EC17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m */; };
 		3198826517FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3198826417FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m */; };
 		31A271B717CE9B5A00E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B617CE9B5A00E3FA7D /* Foundation.framework */; };
 		31A271C517CE9B5B00E3FA7D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFDE17546BC800BD292F /* SenTestingKit.framework */; };
@@ -444,7 +442,6 @@
 				3904FF2817CF34AE003603D1 /* MBMockLocale.m in Sources */,
 				3904FF2A17CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
 				31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */,
-				3179B3EE17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */,
 				3198826517FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,7 +462,6 @@
 				3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */,
 				3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
 				31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */,
-				3179B3ED17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
