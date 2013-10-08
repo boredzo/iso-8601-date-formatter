@@ -20,22 +20,21 @@ typedef NS_ENUM(NSUInteger, ISO8601DateFormat) {
 extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 
 /*!
- *This class converts dates to and from ISO 8601 strings. A good introduction to ISO 8601 is [“A summary of the international standard date and time notation” by Markus Kuhn](http://www.cl.cam.ac.uk/~mgk25/iso-time.html).
+ *	@brief	This class converts dates to and from ISO 8601 strings.
  *
- *Parsing can be done strictly, or not.
+ *	@details	TL;DR: You want to use ISO 8601 for any and all dates you send or receive over the internet, unless the spec for the protocol or format you're working with specifically tells you otherwise. See http://xkcd.com/1179/ .
  *
- *When you parse strictly, the parser will only accept a string if the date is the entire string.
+ * ISO 8601 is most recognizable as “year-month-date” strings, such as “2013-09-08T15:06:11-0800”. Of course, as you might expect of a formal standard, it's more sophisticated (some might say complicated) than that.
  *
- *When you parse loosely, leading whitespace is ignored, as is anything after the date.
- *The loose parser will return an NSDate for this string: `@" \t\r\n\f\t  2006-03-02!!!"`
- *Some of the methods take a pointer to an NSRange, with which they will tell you what part of the string was the date.
+ * For one thing, ISO 8601 actually defines *three* different date formats. The most common one, shown above, is called the calendar date format. The other two are week dates, where the month is replaced by a week of the year and the day is a day-of-the-week (1 being Monday) rather than day-of-month, and ordinal dates, where the middle segment is dispensed with entirely and the day component is day-of-year (1–366).
  *
- *Leading non-whitespace is never ignored; the string will be rejected, and `nil` returned. See the README that came with this addition.
+ * The week format is the most bizarre of them, since 7 × 52 ≠ 365. The start and end of the year for purposes of week dates usually don't line up with the start and end of the calendar year. As a result, the first and/or last day of a year in the week-date “calendar” more often than not is on a different year from the first and/or last day of that year on the actual Gregorian calendar.
  *
- *The loose parser provides some extensions that the strict parser doesn't.
- *For example, the standard says for "-DDD" (an ordinal date in the implied year) that the logical representation (meaning, hierarchically) would be "--DDD", but because that extra hyphen is "superfluous", it was omitted.
- *The loose parser will accept the extra hyphen; the strict parser will not.
- *A full list of these extensions is in the README file.
+ * In practice, almost all ISO 8601 dates you see in the wild will be in the calendar format.
+ *
+ * At any rate, this formatter can both parse and unparse dates in all three formats. (By “unparse”, I mean “produce a string from”—the reverse of parsing.)
+ *
+ * For a good and more detailed introduction to ISO 8601, see [“A summary of the international standard date and time notation” by Markus Kuhn](http://www.cl.cam.ac.uk/~mgk25/iso-time.html). The actual standard itself can be found in PDF format online with a well-crafted web search.
  */
 
 @interface ISO8601DateFormatter: NSFormatter
@@ -49,7 +48,26 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 
 //As a formatter, this object converts strings to dates.
 
-///If set to `YES`, disables various leniencies in how the formatter parses strings. Does not affect unparsing.
+/*!
+ *	@brief	Disables various leniencies in how the formatter parses strings.
+ *
+ *	@details	By default, the parser allows these extensions to the ISO 8601 standard:
+ *
+ * - Whitespace is allowed before the date.
+ * - Numbers don't have to be within range for a component. For example, you can have a string that refers to the 56th day of the hundredth month.
+ * - Since 0.6, allows a single whitespace character before the time-zone specification. This extension provides compatibility with NSDate output (`description`) and input (`dateWithString:`).
+ * - “Superfluous” hyphens in date specifications such as “`--DDD`” (where DDD is an ordinal day-of-year number and the year is implied) are allowed. (The standard recommends writing such a date as “`-DDD`”, with only a single hyphen. This is consistent with ordinal dates having only two components: the year and the day-of-year, separated by one hyphen.)
+ * - The same goes for week dates such as “`--Www-DD`”. Again, the extra hyphen really is superfluous, but is allowed as an extension.
+ * - Calendar dates with no separator between month and day-of-month are allowed, at least when they total four digits. (For example, 2013-0908, which would be interpreted as 2013-09-08.)
+ * - Single-digit components are allowed. (If you wish to specify a date in a single-digit year with the strict parser, pad it with zeroes.)
+ * - “YYYY-W” (without a week number after the 'W') is allowed, interpreted as “YYYY-W01-01”.
+ *
+ * Setting this property to `YES` will disable all of those extensions.
+ *
+ * These extensions are intended to help you process degenerate input (received from programs and services that use broken date-formatting libraries); whenever *you* create ISO 8601 strings, you should generate strictly-conforming ones.
+ *
+ * This property does not affect unparsing. The formatter always creates valid ISO 8601 strings. Any invalid string (loosely, any string that would require turning this property off to re-parse) should be considered a bug; please report it.
+ */
 @property BOOL parsesStrictly;
 
 /*!
