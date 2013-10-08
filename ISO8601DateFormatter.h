@@ -180,7 +180,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  *	@details	Not all dates are representable in all time zones (because of historical calendar changes, such as transitions from the Julian to the Gregorian calendar).
  *	For an example, see http://stackoverflow.com/questions/18663407/date-formatter-returns-nil-for-june .
- *	The ISO 8601 formatter *should* return `nil` in such cases.
+ *	This method *should* return `nil` in such cases.
  *
  *	@sa	stringFromDate:
  */
