@@ -57,6 +57,8 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  *	@param	string	The string to parse. Must represent a date in one of the ISO 8601 formats.
  *	@returns	An NSDateComponents object containing most of the information parsed from the string, aside from the fraction of second and time zone (which are lost).
+ *	@sa	dateComponentsFromString:timeZone:
+ *	@sa	dateComponentsFromString:timeZone:range:fractionOfSecond:
  */
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string;
 /*!
@@ -65,6 +67,8 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@param	string	The string to parse. Must represent a date in one of the ISO 8601 formats.
  *	@param	outTimeZone	If non-`NULL`, an NSTimeZone object or `nil` will be stored here, depending on whether the string specified a time zone.
  *	@returns	An NSDateComponents object containing most of the information parsed from the string, aside from the fraction of second (which is lost) and time zone.
+ *	@sa	dateComponentsFromString:
+ *	@sa	dateComponentsFromString:timeZone:range:fractionOfSecond:
  */
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone;
 /*!
@@ -75,6 +79,8 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@param	outRange	If non-`NULL`, an NSRange structure will be stored here, identifying the substring of `string` that specified the date.
  *	@param	outFractionOfSecond	If non-`NULL`, an NSTimeInterval value will be stored here, containing the fraction of a second, if the string specified one. If it didn't, this will be set to zero.
  *	@returns	An NSDateComponents object containing most of the information parsed from the string, aside from the fraction of second and time zone.
+ *	@sa	dateComponentsFromString:
+ *	@sa	dateComponentsFromString:timeZone:
  */
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange fractionOfSecond:(NSTimeInterval *)outFractionOfSecond;
 
@@ -83,6 +89,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  *	@param	string	The string to parse. Must represent a date in one of the ISO 8601 formats.
  *	@returns	An NSDate object containing most of the information parsed from the string, aside from the time zone (which is lost).
+ *	@sa	dateComponentsFromString:
+ *	@sa	dateFromString:timeZone:
+ *	@sa	dateFromString:timeZone:range:
  */
 - (NSDate *) dateFromString:(NSString *)string;
 /*!
@@ -91,6 +100,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@param	string	The string to parse. Must represent a date in one of the ISO 8601 formats.
  *	@param	outTimeZone	If non-`NULL`, an NSTimeZone object or `nil` will be stored here, depending on whether the string specified a time zone.
  *	@returns	An NSDate object containing most of the information parsed from the string, aside from the time zone.
+ *	@sa	dateComponentsFromString:timeZone:
+ *	@sa	dateFromString:
+ *	@sa	dateFromString:timeZone:range:
  */
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone;
 /*!
@@ -100,6 +112,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@param	outTimeZone	If non-`NULL`, an NSTimeZone object or `nil` will be stored here, depending on whether the string specified a time zone.
  *	@param	outRange	If non-`NULL`, an NSRange structure will be stored here, identifying the substring of `string` that specified the date.
  *	@returns	An NSDate object containing most of the information parsed from the string, aside from the time zone.
+ *	@sa	dateComponentsFromString:timeZone:range:fractionOfSecond:
+ *	@sa	dateFromString:
+ *	@sa	dateFromString:timeZone:
  */
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange;
 
@@ -118,18 +133,27 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@brief	Whether strings should include time of day.
  *
  *	@details	If `NO`, strings include only the date, nothing after it.
+ *
+ *	@sa	timeSeparator
+ *	@sa	timeZoneSeparator
  */
 @property BOOL includeTime;
 /*!
  *	@brief	The character to use to separate components of the time of day.
  *
  *	@details	Defaults to ISO8601DefaultTimeSeparatorCharacter. Must not be zero, or unparsing methods will raise an exception.
+ *
+ *	@sa	includeTime
+ *	@sa	timeZoneSeparator
  */
 @property unichar timeSeparator;
 /*!
  *	@brief	The character to use to separate the hour and minute in a time zone specification.
  *
  *	@details	If zero, no separator is inserted into time zone specifications. Defaults to zero.
+ *
+ *	@sa	includeTime
+ *	@sa	timeSeparator
  */
 @property unichar timeZoneSeparator;
 
@@ -138,6 +162,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  *	@param	date	The string to parse. Must represent a date in one of the ISO 8601 formats.
  *	@returns	A string that represents the date in UTC.
+ *	@sa	stringFromDate:timeZone:
  */
 - (NSString *) stringFromDate:(NSDate *)date;
 /*!
@@ -150,6 +175,8 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@details	Not all dates are representable in all time zones (because of historical calendar changes, such as transitions from the Julian to the Gregorian calendar).
  *	For an example, see http://stackoverflow.com/questions/18663407/date-formatter-returns-nil-for-june .
  *	The ISO 8601 formatter *should* return `nil` in such cases.
+ *
+ *	@sa	stringFromDate:
  */
 - (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone;
 
