@@ -9,10 +9,7 @@
 #import "ISO8601ForCocoaWeekDateTests.h"
 #import "ISO8601DateFormatter.h"
 #import "NSLocale+UnitTestSwizzling.h"
-
-typedef NS_ENUM(unichar, PRHNamedCharacter) {
-	SNOWMAN = 0x2603
-};
+#import "PRHNamedCharacter.h"
 
 static const NSTimeInterval gSecondsPerHour = 3600.0;
 

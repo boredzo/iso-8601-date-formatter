@@ -10,11 +10,8 @@
 #import "ISO8601ForCocoaCalendarDateTests.h"
 #import "ISO8601DateFormatter.h"
 #import "NSLocale+UnitTestSwizzling.h"
+#import "PRHNamedCharacter.h"
 #include <vis.h>
-
-typedef NS_ENUM(unichar, PRHNamedCharacter) {
-	SNOWMAN = 0x2603
-};
 
 static const NSTimeInterval gSecondsPerHour = 3600.0;
 

@@ -61,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B2A62BE59D932056840CE25 /* PRHNamedCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRHNamedCharacter.h; sourceTree = "<group>"; };
 		3119ABEE17FCF8F0003412AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaWeekDateTests.h; sourceTree = "<group>"; };
 		31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaWeekDateTests.m; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 				31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */,
 				31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */,
 				31AEAFE517546BC800BD292F /* Supporting Files */,
+				1B2A62BE59D932056840CE25 /* PRHNamedCharacter.h */,
 			);
 			path = ISO8601ForCocoaTests;
 			sourceTree = "<group>";
