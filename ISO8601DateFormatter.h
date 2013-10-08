@@ -43,6 +43,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 @property(nonatomic, retain) NSTimeZone *defaultTimeZone;
 
 #pragma mark Parsing
+/*!
+ *	@name	Parsing
+ */
 
 //As a formatter, this object converts strings to dates.
 
@@ -101,6 +104,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 - (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange;
 
 #pragma mark Unparsing
+/*!
+ *	@name	Unparsing
+ */
 
 /*!
  *	@brief	Which ISO 8601 format to format dates in.
