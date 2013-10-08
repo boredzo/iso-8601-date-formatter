@@ -141,7 +141,9 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 /*!
  *	@brief	The character to use to separate components of the time of day.
  *
- *	@details	Defaults to ISO8601DefaultTimeSeparatorCharacter. Must not be zero, or unparsing methods will raise an exception.
+ *	@details	This is used in both parsing and unparsing.
+ *
+ * The default value is ISO8601DefaultTimeSeparatorCharacter.
  *
  *	@sa	includeTime
  *	@sa	timeZoneSeparator
@@ -150,7 +152,11 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 /*!
  *	@brief	The character to use to separate the hour and minute in a time zone specification.
  *
- *	@details	If zero, no separator is inserted into time zone specifications. Defaults to zero.
+ *	@details	This is used in both parsing and unparsing.
+ *
+ * If zero, no separator is inserted into time zone specifications.
+ *
+ * The default value is zero (no separator).
  *
  *	@sa	includeTime
  *	@sa	timeSeparator
