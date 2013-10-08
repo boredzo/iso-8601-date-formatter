@@ -145,6 +145,8 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  * The default value is ISO8601DefaultTimeSeparatorCharacter.
  *
+ * When parsesStrictly is set to `YES`, this property is ignored. Otherwise, the parser will raise an exception if this is set to zero.
+ *
  *	@sa	includeTime
  *	@sa	timeZoneSeparator
  */
