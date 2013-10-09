@@ -54,7 +54,35 @@ Three test programs are included: unparse-date, unparse-weekdate, and unparse-or
 
 ### Version history
 
-This version is 0.6. Changes from 0.5:
+This version is 0.7. Changes from 0.6:
+
+- Cocoa Touch is now officially supported. 4bc0a08 5d95233
+- `stringFromObjectValue:` now logs to the Console when you hand it a value that isn't an NSDate. Check your Console output after upgrading—you might have had a bug all this time without knowing! 4e05978
+- Added proper documentation in the header, compatible with [appledoc](http://gentlebytes.com/appledoc/). f17713f
+- Fixed nonsense date components/dates being returned when the input is not a valid date string. 288f757 93bb9df 0cb6442
+- Fixed a bug in unparsing where the time zone was wrong (#3). 0e355ee 8f8a2c3 (Thanks, Carl Lindberg)
+- Fixed a DST bug in unparsing where the time zone offset was computed in general rather than for the date being unparsed (#6). 5665132 (Thanks, Zachary West) 9e835c8 0d36057
+- Fixed AM/PM (or local equivalent) appearing in some locales on iOS devices (#15). 4bc0a08 3f697b5 249b3df (Thanks, Matthias Bauch)
+- Fixed another NSDateFormatter-rewriting-formats-to-12-hour-in-some-locales bug. 7c9907f (Thanks, Carl Lindberg)
+- (iOS) The class now purges its time zone cache automatically in response to a memory warning. You don't need to do that yourself, anymore, so the method to purge the caches is no longer public. 138e186 3224b32 a9b6973 3f3c3b8
+- Added support for strings that specify a fraction of a second. 1d3194b 0b0b1ea (Thanks, Luke Redpath)
+- Added support for non-ASCII time separator characters. 47d5035
+- Added support for a time zone separator. 8198f1b 3bd0c07 17c15ed (Thanks to Daniel Tull for the suggestion.)
+- Fixed the parser's response to being passed `nil`. 3c12abc 4980ee6
+- Fixed (I think) #5: dates being formatted with DST applied when they shouldn't. 7368fe8
+- Fixed `stringFromObjectValue:` to behave as NSFormatter's documentation says it should. 3846f80 9754438
+- Added real unit tests based on OCUnit. c847ddb aa1c2cb daf3cc9 9029991 d92aeb6 b412326 (Thanks, Luke Redpath) 45af6bd cfedd75 af0b93c 6a7fd88 9e835c8 9e835c8 0d36057 7368fe8 4bc0a08 3f697b5 8f8a2c3 51c1130 e888681 13a872d f49193c 10ed166 d5fdf51 4980ee6 3846f80 288f757 93bb9df daa45fb 2d61bd0 9f35c4a 8f95099 d62777a 138e186 2a63718
+- Fixed range computation for strings where the date portion ends with a 'Z'. 8f95099 efa095e 808e8c4
+- Fixed some formats with missing hyphens being wrongly accepted when strict mode is on. 9f35c4a c4e0f15
+- Fixed week date strings not having a 'T' between date and time. 7b6fd9f 6a1b66b
+- Fixed week date strings having wrong time zones. 9f6af7c
+- Strings that specify intervals (as specified by ISO 8601) are now explicitly rejected, at least for now (#20). 6d539db 51c1130 bf6a2db 6aef760 (Thanks, Blake Watters)
+- `ISO8601DefaultTimeSeparatorCharacter` is now declared as `const`. I hope none of you were relying on changing that. db9877c
+- Upgraded this README to Markdown. 103f666 fbd34b2 ebbf65a c0b9609
+- Added the above xkcd comic. fbd34b2 63ba50a da3ed65
+- Some light modernization (#25, #28). cdec3e9 8df32fd bb7c5c9
+
+Changes in 0.6 from 0.5:
 
 * When not set to strict parsing, allow a space before the time-zone specification, for greater compatibility with NSDate output (`description`) and input (`dateWithString:`). 27603efc8a77
 * Bug fix: We no longer try to format the formatter. 83415de9f527
