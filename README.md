@@ -57,6 +57,7 @@ Three test programs are included: unparse-date, unparse-weekdate, and unparse-or
 This version is 0.7. Changes from 0.6:
 
 - Cocoa Touch is now officially supported. 4bc0a08 5d95233
+- Added an Xcode project with static library targets. c847ddb 4bc0a08
 - `stringFromObjectValue:` now logs to the Console when you hand it a value that isn't an NSDate. Check your Console output after upgrading—you might have had a bug all this time without knowing! 4e05978
 - Added proper documentation in the header, compatible with [appledoc](http://gentlebytes.com/appledoc/). f17713f
 - Fixed nonsense date components/dates being returned when the input is not a valid date string. 288f757 93bb9df 0cb6442
