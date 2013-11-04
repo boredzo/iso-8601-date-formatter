@@ -706,6 +706,7 @@ static BOOL is_leap_year(NSUInteger year);
 @synthesize format;
 @synthesize includeTime;
 @synthesize timeSeparator;
+@synthesize timeZoneSeparator;
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep {
 	if (timeSep != ':') {
