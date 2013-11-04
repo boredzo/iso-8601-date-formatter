@@ -52,19 +52,6 @@ bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
 #endif
 
 @implementation ISO8601DateFormatter
-{
-	NSString *lastUsedFormatString;
-	NSDateFormatter *unparsingFormatter;
-
-	NSCalendar *parsingCalendar, *unparsingCalendar;
-
-	NSTimeZone *defaultTimeZone;
-	ISO8601DateFormat format;
-	unichar timeSeparator;
-	BOOL includeTime;
-	BOOL parsesStrictly;
-}
-
 + (void) initialize {
 	[self createGlobalCachesThatDoNotAlreadyExist];
 }
