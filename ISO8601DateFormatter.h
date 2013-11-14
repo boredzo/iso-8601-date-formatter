@@ -38,6 +38,19 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  */
 
 @interface ISO8601DateFormatter: NSFormatter
+{
+	NSString *lastUsedFormatString;
+	NSDateFormatter *unparsingFormatter;
+    
+	NSCalendar *parsingCalendar, *unparsingCalendar;
+    
+	NSTimeZone *defaultTimeZone;
+	ISO8601DateFormat format;
+	unichar timeSeparator;
+    unichar timeZoneSeparator;
+	BOOL includeTime;
+	BOOL parsesStrictly;
+}
 
 @property(nonatomic, retain) NSTimeZone *defaultTimeZone;
 
