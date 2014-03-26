@@ -369,6 +369,13 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertEqualObjects(string, expectedString, @"Got wrong string for September date in UTC-as-default (check whether DST is included in TZ offset)");
 }
 
+//https://github.com/boredzo/iso-8601-date-formatter/issues/31
+- (void) testParsingOctober9th2013 {
+	NSDate *date = [_iso8601DateFormatter dateFromString:@"2013-10-09T13:00:00Z"];
+	//#31 is a crash, so we shouldn't even get here.
+	STAssertNotNil(date, @"1 PM UTC on October 9th, 2013 should not be nil");
+}
+
 - (void) testStrictModeRejectsSlashyDates {
 	_iso8601DateFormatter.parsesStrictly = true;
 
