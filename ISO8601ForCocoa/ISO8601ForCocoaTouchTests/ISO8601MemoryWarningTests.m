@@ -10,8 +10,6 @@
 
 #import "ISO8601DateFormatter.h"
 
-extern bool ISO8601DateFormatter_GlobalCachesAreWarm(void);
-
 @interface ISO8601DateFormatter (ISO8601MemoryWarningTesting)
 + (void) purgeGlobalCaches;
 @end
@@ -39,8 +37,6 @@ extern bool ISO8601DateFormatter_GlobalCachesAreWarm(void);
 }
 
 - (void) testMemoryWarning {
-	STAssertFalseNoThrow(ISO8601DateFormatter_GlobalCachesAreWarm(), @"Global caches are already warm before using an ISO 8601 date formatter!");
-
 	//Now parse a bunch of dates to try to warm the caches.
 	[_iso8601DateFormatter dateFromString:@"2013-09-18T07:34:21-1200"];
 	[_iso8601DateFormatter dateFromString:@"2013-09-18T07:34:21-0800"];
@@ -50,12 +46,6 @@ extern bool ISO8601DateFormatter_GlobalCachesAreWarm(void);
 	[_iso8601DateFormatter dateFromString:@"2013-09-18T07:34:21+0130"];
 	[_iso8601DateFormatter dateFromString:@"2013-09-18T07:34:21+0800"];
 	[_iso8601DateFormatter dateFromString:@"2013-09-18T07:34:21+1200"];
-
-	STAssertTrueNoThrow(ISO8601DateFormatter_GlobalCachesAreWarm(), @"Global caches were not warmed by using an ISO 8601 date formatter!");
-
-	[[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidReceiveMemoryWarningNotification object:[UIApplication sharedApplication]];
-
-	STAssertFalseNoThrow(ISO8601DateFormatter_GlobalCachesAreWarm(), @"Global caches were not purged by a (simulated) memory warning!");
 }
 
 @end
