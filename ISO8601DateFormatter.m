@@ -40,14 +40,22 @@ const unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 @end
 
-static NSMutableDictionary *timeZonesByOffset;
+@interface ISO8601TimeZoneCache: NSObject
+{}
+
+//The property being read-only means that the formatter cannot change the cache's dictionary, but the formatter is explicitly allowed to mutate the dictionary.
+@property(nonatomic, readonly, strong) NSMutableDictionary *timeZonesByOffset;
+
+@end
+
+static ISO8601TimeZoneCache *timeZoneCache;
 
 #if ISO8601_TESTING_PURPOSES_ONLY
 //This method only exists for use by the project's test cases. DO NOT use this in an application.
 extern bool ISO8601DateFormatter_GlobalCachesAreWarm(void);
 
 bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
-	return (timeZonesByOffset != nil) && (timeZonesByOffset.count > 0);
+	return (timeZoneCache != nil) && (timeZoneCache.timeZonesByOffset.count > 0);
 }
 #endif
 
@@ -57,14 +65,14 @@ bool ISO8601DateFormatter_GlobalCachesAreWarm(void) {
 }
 
 + (void) createGlobalCachesThatDoNotAlreadyExist {
-	if (!timeZonesByOffset) {
-		timeZonesByOffset = [[NSMutableDictionary alloc] init];
+	if (!timeZoneCache) {
+		timeZoneCache = [[ISO8601TimeZoneCache alloc] init];
 	}
 }
 
 + (void) purgeGlobalCaches {
-	NSMutableDictionary *oldCache = timeZonesByOffset;
-	timeZonesByOffset = nil;
+	ISO8601TimeZoneCache *oldCache = timeZoneCache;
+	timeZoneCache = nil;
 	[oldCache release];
 }
 
@@ -603,11 +611,11 @@ static BOOL is_leap_year(NSUInteger year);
 
 							NSInteger timeZoneOffset = (tz_hour * 3600) + (tz_minute * 60);
 							NSNumber *offsetNum = [NSNumber numberWithInteger:timeZoneOffset];
-							timeZone = [timeZonesByOffset objectForKey:offsetNum];
+							timeZone = [timeZoneCache.timeZonesByOffset objectForKey:offsetNum];
 							if (!timeZone) {
 								timeZone = [NSTimeZone timeZoneForSecondsFromGMT:timeZoneOffset];
 								if (timeZone)
-									[timeZonesByOffset setObject:timeZone forKey:offsetNum];
+									[timeZoneCache.timeZonesByOffset setObject:timeZone forKey:offsetNum];
 							}
 						}
 				}
@@ -994,3 +1002,19 @@ static BOOL is_leap_year(NSUInteger year) {
 	&& (((year % 100U) != 0U)
 	||  ((year % 400U) == 0U));
 }
+
+static NSString *const ISO8601ThreadStorageTimeZoneCacheKey = @"org.boredzo.ISO8601ThreadStorageTimeZoneCacheKey";
+
+@implementation ISO8601TimeZoneCache: NSObject
+
+- (NSMutableDictionary *) timeZonesByOffset {
+	NSMutableDictionary *threadDict = [NSThread currentThread].threadDictionary;
+	NSMutableDictionary *currentCacheDict = [threadDict objectForKey:ISO8601ThreadStorageTimeZoneCacheKey];
+	if (currentCacheDict == nil) {
+		currentCacheDict = [NSMutableDictionary dictionaryWithCapacity:2UL];
+		[threadDict setObject:currentCacheDict forKey:ISO8601ThreadStorageTimeZoneCacheKey];
+	}
+	return currentCacheDict;
+}
+
+@end
