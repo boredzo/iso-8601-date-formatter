@@ -25,6 +25,8 @@ const unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR @"%+.2d%.2d"
 #define ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR @"%+.2d%C%.2d"
 
+static NSString * const ISO8601TwoCharIntegerFormat = @"%.2d";
+
 @interface ISO8601DateFormatter ()
 + (void) createGlobalCachesThatDoNotAlreadyExist;
 //Used when a memory warning occurs (if at least one ISO 8601 Date Formatter exists at the time).
@@ -778,12 +780,17 @@ static BOOL is_leap_year(NSUInteger year);
 		if (offset == 0)
 			str = [str stringByAppendingString:ISO_TIMEZONE_UTC_FORMAT];
 		else {
-			int timeZoneOffsetHour = (int)(offset / 60);
-			int timeZoneOffsetMinute = (int)(offset % 60);
-			if (self.timeZoneSeparator)
-				str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_WITH_SEPARATOR, timeZoneOffsetHour, self.timeZoneSeparator, timeZoneOffsetMinute];
-			else
-				str = [str stringByAppendingFormat:ISO_TIMEZONE_OFFSET_FORMAT_NO_SEPARATOR, timeZoneOffsetHour, timeZoneOffsetMinute];
+			int timeZoneOffsetHour = abs((int)(offset / 60));
+			int timeZoneOffsetMinute = abs((int)(offset % 60));
+            
+            if (offset > 0) str = [str stringByAppendingString:@"+"];
+            else str = [str stringByAppendingString:@"-"];
+            
+            str = [str stringByAppendingFormat:ISO8601TwoCharIntegerFormat, timeZoneOffsetHour];
+            
+            if (self.timeZoneSeparator) str = [str stringByAppendingFormat:@"%C", self.timeZoneSeparator];
+            
+            str = [str stringByAppendingFormat:ISO8601TwoCharIntegerFormat, timeZoneOffsetMinute];
 		}
 	}
 

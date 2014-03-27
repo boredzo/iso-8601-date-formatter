@@ -376,6 +376,22 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	STAssertNotNil(date, @"1 PM UTC on October 9th, 2013 should not be nil");
 }
 
+// https://github.com/boredzo/iso-8601-date-formatter/issues/36
+- (void) testParsingFractionaryTimeZone
+{
+    _iso8601DateFormatter.includeTime = YES;
+    
+	NSTimeZone *UTCTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:gSecondsPerHour*-2.5];
+    
+	NSDate *date= [NSDate dateWithTimeIntervalSinceReferenceDate:354987473.0];
+    
+	NSString *expectedString = @"2012-04-01T13:07:53-0230";
+
+	NSString *string = [_iso8601DateFormatter stringFromDate:date
+                                                    timeZone:UTCTimeZone];
+	STAssertEqualObjects(string, expectedString, @"Got wrong string for fractionary time zone");
+}
+
 - (void) testStrictModeRejectsSlashyDates {
 	_iso8601DateFormatter.parsesStrictly = true;
 
