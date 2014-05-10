@@ -4,6 +4,7 @@
  *Copyright 2009–2013 Peter Hosey. All rights reserved.
  */
 
+#import <float.h>
 #import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
 #	import <UIKit/UIKit.h>
