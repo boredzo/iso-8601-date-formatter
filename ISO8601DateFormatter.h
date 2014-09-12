@@ -49,6 +49,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 	unichar timeSeparator;
     unichar timeZoneSeparator;
 	BOOL includeTime;
+	BOOL useMillisecondPrecision;
 	BOOL parsesStrictly;
 }
 
@@ -169,6 +170,13 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	timeZoneSeparator
  */
 @property BOOL includeTime;
+/*!
+ *	@brief	Whether strings should include millisecond precision time.
+ *
+ *	@details	If `YES`, strings include three millisecond digits. Only has an effect if `includeTime` is `YES`
+ *
+ */
+@property BOOL useMillisecondPrecision;
 /*!
  *	@brief	The character to use to separate components of the time of day.
  *
