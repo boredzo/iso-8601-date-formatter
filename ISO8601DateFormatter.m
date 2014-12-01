@@ -204,6 +204,11 @@ static BOOL is_leap_year(NSUInteger year);
 	return [self dateComponentsFromString:string timeZone:outTimeZone range:NULL fractionOfSecond:NULL];
 }
 - (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange fractionOfSecond:(out NSTimeInterval *)outFractionOfSecond {
+    
+    if (![string isKindOfClass:[NSString class]]) {
+        return nil;
+    }
+    
 	if (string == nil)
 		return nil;
 	// Bail if the string contains a slash delimiter (we don't yet support ISO 8601 intervals and we don't support slash-separated dates)
