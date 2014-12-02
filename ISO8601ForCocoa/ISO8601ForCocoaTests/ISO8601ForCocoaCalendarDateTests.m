@@ -420,6 +420,13 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
     STAssertNil(date, @"dateFromString:[NSNull null] returned should have returned nil, but returned %@", date);
 }
 
+- (void) testParseNSMutableStringIntoDate {
+    NSString *dateString = @"2013-09-12T23:40Z";
+    NSDate *expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:400722000.0];
+    NSDate *date = [_iso8601DateFormatter dateFromString:[[NSMutableString alloc] initWithString:dateString]];
+    STAssertEquals(date, expectedDate, @"dateFromString: should have returned %@, but returned %@", expectedDate, date);
+}
+
 - (void) testStringFromInapplicableObjectValues {
 	NSString *string = nil;
 	STAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:@42]), @"stringForObjectValue:@42 threw an exception");
