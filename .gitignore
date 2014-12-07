@@ -12,6 +12,7 @@ xcuserdata
 profile
 *.moved-aside
 .DS_Store
+DerivedData
 
 # `make test` artifacts
 *.o
