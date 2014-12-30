@@ -63,6 +63,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "31A271B417CE9B5A00E3FA7D"
+            BuildableName = "libISO8601ForCocoaTouch.a"
+            BlueprintName = "ISO8601ForCocoaTouch"
+            ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

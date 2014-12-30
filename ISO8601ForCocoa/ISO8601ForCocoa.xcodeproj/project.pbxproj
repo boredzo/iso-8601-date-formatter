@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		027E31BD1A52DFCE00802098 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 027E31BC1A52DFCE00802098 /* ISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		027E31D11A52DFE200802098 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		027E31D21A52DFEC00802098 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3119ABEE17FCF8F0003412AE /* UIKit.framework */; };
 		31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
@@ -61,6 +64,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ISO8601DateFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		027E31BB1A52DFCE00802098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		027E31BC1A52DFCE00802098 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		027E31C81A52DFCE00802098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		027E31C91A52DFCE00802098 /* ISO8601DateFormatterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatterTests.m; sourceTree = "<group>"; };
 		1B2A62BE59D932056840CE25 /* PRHNamedCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRHNamedCharacter.h; sourceTree = "<group>"; };
 		3119ABEE17FCF8F0003412AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaWeekDateTests.h; sourceTree = "<group>"; };
@@ -95,6 +103,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		027E31B41A52DFCE00802098 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		31A271B217CE9B5A00E3FA7D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,6 +149,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		027E31B91A52DFCE00802098 /* ISO8601DateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				027E31BC1A52DFCE00802098 /* ISO8601DateFormatter.h */,
+				027E31BA1A52DFCE00802098 /* Supporting Files */,
+			);
+			path = ISO8601DateFormatter;
+			sourceTree = "<group>";
+		};
+		027E31BA1A52DFCE00802098 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				027E31BB1A52DFCE00802098 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		027E31C61A52DFCE00802098 /* ISO8601DateFormatterTests */ = {
+			isa = PBXGroup;
+			children = (
+				027E31C91A52DFCE00802098 /* ISO8601DateFormatterTests.m */,
+				027E31C71A52DFCE00802098 /* Supporting Files */,
+			);
+			path = ISO8601DateFormatterTests;
+			sourceTree = "<group>";
+		};
+		027E31C71A52DFCE00802098 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				027E31C81A52DFCE00802098 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		31A271B817CE9B5B00E3FA7D /* ISO8601ForCocoaTouch */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +227,8 @@
 				31AEAFE417546BC800BD292F /* ISO8601ForCocoaTests */,
 				31A271B817CE9B5B00E3FA7D /* ISO8601ForCocoaTouch */,
 				31A271CC17CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests */,
+				027E31B91A52DFCE00802098 /* ISO8601DateFormatter */,
+				027E31C61A52DFCE00802098 /* ISO8601DateFormatterTests */,
 				31AEAFCB17546BC800BD292F /* Frameworks */,
 				31AEAFCA17546BC800BD292F /* Products */,
 			);
@@ -190,6 +241,7 @@
 				31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.octest */,
 				31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */,
 				31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.octest */,
+				027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,6 +314,15 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		027E31B51A52DFCE00802098 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				027E31BD1A52DFCE00802098 /* ISO8601DateFormatter.h in Headers */,
+				027E31D11A52DFE200802098 /* ISO8601DateFormatter.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		31AEAFC717546BC800BD292F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -273,6 +334,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		027E31B71A52DFCE00802098 /* ISO8601DateFormatter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 027E31CF1A52DFCE00802098 /* Build configuration list for PBXNativeTarget "ISO8601DateFormatter" */;
+			buildPhases = (
+				027E31B31A52DFCE00802098 /* Sources */,
+				027E31B41A52DFCE00802098 /* Frameworks */,
+				027E31B51A52DFCE00802098 /* Headers */,
+				027E31B61A52DFCE00802098 /* Resources */,
+				027E31D31A52DFFC00802098 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ISO8601DateFormatter;
+			productName = ISO8601DateFormatter;
+			productReference = 027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		31A271B417CE9B5A00E3FA7D /* ISO8601ForCocoaTouch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 31A271D917CE9B5B00E3FA7D /* Build configuration list for PBXNativeTarget "ISO8601ForCocoaTouch" */;
@@ -307,7 +387,7 @@
 			name = ISO8601ForCocoaTouchTests;
 			productName = ISO8601ForCocoaTouchTests;
 			productReference = 31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		31AEAFC817546BC800BD292F /* ISO8601ForCocoa */ = {
 			isa = PBXNativeTarget;
@@ -343,7 +423,7 @@
 			name = ISO8601ForCocoaTests;
 			productName = ISO8601ForCocoaTests;
 			productReference = 31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -354,8 +434,11 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Peter Hosey";
 				TargetAttributes = {
+					027E31B71A52DFCE00802098 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
 					31AEAFDC17546BC800BD292F = {
-						TestTargetID = 31AEAFC817546BC800BD292F /* ISO8601ForCocoa */;
+						TestTargetID = 31AEAFC817546BC800BD292F;
 					};
 				};
 			};
@@ -375,11 +458,19 @@
 				31AEAFDC17546BC800BD292F /* ISO8601ForCocoaTests */,
 				31A271B417CE9B5A00E3FA7D /* ISO8601ForCocoaTouch */,
 				31A271C317CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests */,
+				027E31B71A52DFCE00802098 /* ISO8601DateFormatter */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		027E31B61A52DFCE00802098 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		31A271C117CE9B5B00E3FA7D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,6 +490,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		027E31D31A52DFFC00802098 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport FRAMEWORK_LOCN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework\"\n\n# Create the path to the real Headers die\nmkdir -p \"${FRAMEWORK_LOCN}/Versions/A/Headers\"\n\n# Create the required symlinks\n/bin/ln -sfh A \"${FRAMEWORK_LOCN}/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${FRAMEWORK_LOCN}/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \\\n\"${FRAMEWORK_LOCN}/${PRODUCT_NAME}\"\n\n# Copy the public headers into the framework\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \\\n\"${FRAMEWORK_LOCN}/Versions/A/Headers\"";
+		};
 		31A271C217CE9B5B00E3FA7D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,6 +532,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		027E31B31A52DFCE00802098 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				027E31D21A52DFEC00802098 /* ISO8601DateFormatter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		31A271B117CE9B5A00E3FA7D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -502,6 +614,78 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		027E31CB1A52DFCE00802098 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = ISO8601DateFormatter/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		027E31CC1A52DFCE00802098 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = ISO8601DateFormatter/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		31A271D517CE9B5B00E3FA7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -704,6 +888,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		027E31CF1A52DFCE00802098 /* Build configuration list for PBXNativeTarget "ISO8601DateFormatter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				027E31CB1A52DFCE00802098 /* Debug */,
+				027E31CC1A52DFCE00802098 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		31A271D917CE9B5B00E3FA7D /* Build configuration list for PBXNativeTarget "ISO8601ForCocoaTouch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
