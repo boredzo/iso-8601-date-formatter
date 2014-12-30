@@ -1,6 +1,6 @@
 //
-//  ISO8601DateFormatter.h
-//  ISO8601DateFormatter
+//  ISO8601.h
+//  ISO8601
 //
 //  Created by Agnes Vasarhelyi on 30/12/14.
 //  Copyright (c) 2014 Peter Hosey. All rights reserved.
