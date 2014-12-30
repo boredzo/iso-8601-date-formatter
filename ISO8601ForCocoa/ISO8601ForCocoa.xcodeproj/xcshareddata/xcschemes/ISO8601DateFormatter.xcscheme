@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "027E31B71A52DFCE00802098"
-               BuildableName = "ISO8601DateFormatter.framework"
-               BlueprintName = "ISO8601DateFormatter"
+               BuildableName = "ISO8601.framework"
+               BlueprintName = "ISO8601"
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "027E31B71A52DFCE00802098"
-            BuildableName = "ISO8601DateFormatter.framework"
-            BlueprintName = "ISO8601DateFormatter"
+            BuildableName = "ISO8601.framework"
+            BlueprintName = "ISO8601"
             ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "027E31B71A52DFCE00802098"
-            BuildableName = "ISO8601DateFormatter.framework"
-            BlueprintName = "ISO8601DateFormatter"
+            BuildableName = "ISO8601.framework"
+            BlueprintName = "ISO8601"
             ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -94,8 +94,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "027E31B71A52DFCE00802098"
-            BuildableName = "ISO8601DateFormatter.framework"
-            BlueprintName = "ISO8601DateFormatter"
+            BuildableName = "ISO8601.framework"
+            BlueprintName = "ISO8601"
             ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
