@@ -142,7 +142,7 @@ As mentioned above, there is a "strict" mode that enforces sanity checks. In par
 
 ### Unparsing
 
-I use [Rick McCarty's algorithm for converting calendar dates to week dates](http://personal.ecu.edu/mccartyr/ISOwdAlg.txt), slightly tweaked.
+I use [Rick McCarty's algorithm for converting calendar dates to week dates](http://lachy.id.au/dev/script/examples/datetime/ISOwdALG.txt), slightly tweaked.
 
 ## Bugs
 
