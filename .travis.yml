@@ -6,7 +6,7 @@ before_script:
     - cd ISO8601ForCocoa
 script:
     - xcodebuild test -scheme 'ISO8601ForCocoa' SRCROOT=../build OBJROOT=../build SHARED_PRECOMPS_DIR=../build
-    - xcodebuild test -scheme 'ISO8601ForCocoaTouch' -destination 'name=iPhone Retina (4-inch 64-bit)' SRCROOT=../build OBJROOT=../build SHARED_PRECOMPS_DIR=../build
+    - xcodebuild test -scheme 'ISO8601ForCocoaTouch' -destination 'name=iPhone 5s' SRCROOT=../build OBJROOT=../build SHARED_PRECOMPS_DIR=../build
 after_success:
     - cd ..
     - coveralls -x '.m'
