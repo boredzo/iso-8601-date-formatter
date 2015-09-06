@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "31A271C317CE9B5B00E3FA7D"
-               BuildableName = "ISO8601ForCocoaTouchTests.octest"
+               BuildableName = "ISO8601ForCocoaTouchTests.xctest"
                BlueprintName = "ISO8601ForCocoaTouchTests"
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
@@ -37,40 +37,52 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "31A271C317CE9B5B00E3FA7D"
-               BuildableName = "ISO8601ForCocoaTouchTests.octest"
+               BuildableName = "ISO8601ForCocoaTouchTests.xctest"
                BlueprintName = "ISO8601ForCocoaTouchTests"
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "31A271B417CE9B5A00E3FA7D"
+            BuildableName = "libISO8601ForCocoaTouch.a"
+            BlueprintName = "ISO8601ForCocoaTouch"
+            ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
    </ProfileAction>
    <AnalyzeAction

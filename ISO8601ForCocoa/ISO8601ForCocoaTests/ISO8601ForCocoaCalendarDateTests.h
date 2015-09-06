@@ -3,16 +3,16 @@
 //  ISO8601ForCocoaCalendarDateTests
 //
 //  Created by Peter Hosey on 2013-05-27.
-//  Copyright (c) 2013 Peter Hosey. All rights reserved.
+//  Copyright (c) 2013–2015 Peter Hosey. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 //This should be set to 1 (actually, removed from all uses) after the dateComponentsFromString: methods are refactored to behave reasonably on their own, rather than as the implementation of the dateFromString: methods.
 //For example, “T22” currently returns mostly zero components, when it should return all but one undefined. The filling in of zeroes and the current date should happen on dateFromString:'s side. That refactor is on hold pending much more test coverage (especially of dateFromString: cases).
 #define POST_DATE_COMPONENTS_REFACTOR 0
 
-@interface ISO8601ForCocoaCalendarDateTests : SenTestCase
+@interface ISO8601ForCocoaCalendarDateTests : XCTestCase
 
 - (void) testParsingDateInPacificStandardTime;
 - (void) testUnparsingDateInPacificStandardTime;

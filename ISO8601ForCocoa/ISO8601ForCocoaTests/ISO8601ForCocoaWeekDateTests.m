@@ -46,11 +46,11 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 
 	NSTimeZone *timeZone = nil;
 	NSDate *date = [_iso8601DateFormatter dateFromString:dateString timeZone:&timeZone];
-	STAssertNotNil(date, @"Parsing a valid ISO 8601 calendar date should return an NSDate object");
-	STAssertNotNil(timeZone, @"Parsing a valid ISO 8601 calendar date that specifies a time zone offset should return an NSTimeZone object");
-	STAssertEqualsWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' (%@) should be %f seconds since the reference date (%@)", dateString, date, expectedTimeIntervalSinceReferenceDate, [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate]);
+	XCTAssertNotNil(date, @"Parsing a valid ISO 8601 calendar date should return an NSDate object");
+	XCTAssertNotNil(timeZone, @"Parsing a valid ISO 8601 calendar date that specifies a time zone offset should return an NSTimeZone object");
+	XCTAssertEqualWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' (%@) should be %f seconds since the reference date (%@)", dateString, date, expectedTimeIntervalSinceReferenceDate, [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate]);
 	NSInteger secondsFromGMTForDate = [timeZone secondsFromGMTForDate:date];
-	STAssertEquals(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
+	XCTAssertEqual(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
 
 - (void) attemptToUnparseDateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)timeIntervalSinceReferenceDate
@@ -65,8 +65,8 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	_iso8601DateFormatter.format = ISO8601DateFormatWeek;
 
 	NSString *dateString = [_iso8601DateFormatter stringFromDate:date timeZone:timeZone];
-	STAssertNotNil(dateString, @"Unparsing a date should return a string");
-	STAssertEqualObjects(dateString, expectedDateString, @"Got unexpected output for date with time interval since reference date %f in time zone %@", timeIntervalSinceReferenceDate, timeZone);
+	XCTAssertNotNil(dateString, @"Unparsing a date should return a string");
+	XCTAssertEqualObjects(dateString, expectedDateString, @"Got unexpected output for date with time interval since reference date %f in time zone %@", timeIntervalSinceReferenceDate, timeZone);
 }
 
 - (void) testParsingDateInPacificStandardTime {
@@ -121,10 +121,10 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	NSTimeZone *tz;
 
 	tz = [NSTimeZone timeZoneWithName:@"GMT"];
-	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T13:35:00Z", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+	XCTAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T13:35:00Z", @"Unexpected date string for 13:35 on 2 August 2013 in London");
 
 	tz = [NSTimeZone timeZoneWithName:@"Europe/London"];
-	STAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
+	XCTAssertEqualObjects([_iso8601DateFormatter stringFromDate:date timeZone:tz], @"2013-W31-05T14:35:00+0100", @"Unexpected date string for 13:35 on 2 August 2013 in London");
 
     // swizzle back so only this test is affected
     SwizzleClassMethod([NSLocale class], @selector(currentLocale), @selector(mockCurrentLocale));
@@ -162,7 +162,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 
   NSTimeInterval differenceBetweenDates = [referenceDateWithAddedMilliseconds timeIntervalSinceDate:referenceDate];
 
-  STAssertEqualsWithAccuracy(differenceBetweenDates, 0.123, 1e-3, @"Expected parsed dates to reflect difference in milliseconds");
+  XCTAssertEqualWithAccuracy(differenceBetweenDates, 0.123, 1e-3, @"Expected parsed dates to reflect difference in milliseconds");
 }
 
 - (void) testParsingDateWithUnusualTimeSeparator {
@@ -224,19 +224,19 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	expectedTimeIntervalSinceReferenceDate = 189350696.0;
 	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
 	date = [_iso8601DateFormatter dateFromString:string];
-	STAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
+	XCTAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
 
 	string = @"2007-W01-01T13:24Z";
 	expectedTimeIntervalSinceReferenceDate = 189350640.0;
 	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
 	date = [_iso8601DateFormatter dateFromString:string];
-	STAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
+	XCTAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
 
 	string = @"2007-W01-01T13Z";
 	expectedTimeIntervalSinceReferenceDate = 189349200.0;
 	expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate];
 	date = [_iso8601DateFormatter dateFromString:string];
-	STAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
+	XCTAssertEqualObjects(date, expectedDate, @"Parsing string %@ (expected %f); got date %@ (%f)", string, expectedTimeIntervalSinceReferenceDate, date, date.timeIntervalSinceReferenceDate);
 }
 
 - (void) testUnparsingDateWithoutTime {
@@ -248,7 +248,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	NSTimeInterval timeIntervalSinceReferenceDate = 189302400.0;
 	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
 	NSString *string = [_iso8601DateFormatter stringFromDate:date];
-	STAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
+	XCTAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
 }
 
 - (void) testUnparsingDateInDaylightSavingTime {
@@ -263,12 +263,12 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	date = [NSDate dateWithTimeIntervalSinceReferenceDate:365464800.0];
 	string = [_iso8601DateFormatter stringFromDate:date];
 	expectedString = @"2012-W31-03T00:00:00+0200";
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for first date in DST in Prague #1 (check whether DST is included in TZ offset)");
+	XCTAssertEqualObjects(string, expectedString, @"Got wrong string for first date in DST in Prague #1 (check whether DST is included in TZ offset)");
 
 	date = [NSDate dateWithTimeIntervalSinceReferenceDate:373417200.0];
 	string = [_iso8601DateFormatter stringFromDate:date];
 	expectedString = @"2012-W44-04T00:00:00+0100";
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for second date in DST in Prague #1 (check whether DST is included in TZ offset)");
+	XCTAssertEqualObjects(string, expectedString, @"Got wrong string for second date in DST in Prague #1 (check whether DST is included in TZ offset)");
 }
 
 - (void) testUnparsingDateWithinBritishSummerTimeAsUTC {
@@ -284,18 +284,18 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	expectedString = @"2012-W13-07T15:37:53Z";
 
 	string = [_iso8601DateFormatter stringFromDate:date timeZone:UTCTimeZone];
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC (check whether DST is included in TZ offset)");
+	XCTAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC (check whether DST is included in TZ offset)");
 
 	_iso8601DateFormatter.defaultTimeZone = UTCTimeZone;
 	string = [_iso8601DateFormatter stringFromDate:date];
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC-as-default (check whether DST is included in TZ offset)");
+	XCTAssertEqualObjects(string, expectedString, @"Got wrong string for April date in UTC-as-default (check whether DST is included in TZ offset)");
 
 	//Date https://github.com/boredzo/iso-8601-date-formatter/issues/3 was filed.
 	date = [NSDate dateWithTimeIntervalSinceReferenceDate:370245466.0];
 	expectedString = @"2012-W39-02T05:57:46Z";
 
 	string = [_iso8601DateFormatter stringFromDate:date];
-	STAssertEqualObjects(string, expectedString, @"Got wrong string for September date in UTC-as-default (check whether DST is included in TZ offset)");
+	XCTAssertEqualObjects(string, expectedString, @"Got wrong string for September date in UTC-as-default (check whether DST is included in TZ offset)");
 }
 
 @end

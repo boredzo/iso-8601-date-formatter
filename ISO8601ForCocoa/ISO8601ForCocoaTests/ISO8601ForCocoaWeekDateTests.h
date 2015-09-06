@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Peter Hosey. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface ISO8601ForCocoaWeekDateTests : SenTestCase
+@interface ISO8601ForCocoaWeekDateTests : XCTestCase
 
 - (void) testParsingDateInPacificStandardTime;
 - (void) testUnparsingDateInPacificStandardTime;

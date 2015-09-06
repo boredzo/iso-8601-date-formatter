@@ -77,11 +77,11 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 
 	NSTimeZone *timeZone = nil;
 	NSDate *date = [_iso8601DateFormatter dateFromString:dateString timeZone:&timeZone];
-	STAssertNotNil(date, @"Parsing a valid ISO 8601 date string (%@) should return an NSDate object", dateString);
-	STAssertNotNil(timeZone, @"Parsing a valid ISO 8601 date string (%@) that specifies a time zone offset should return an NSTimeZone object", dateString);
-	STAssertEqualsWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' should be %f seconds since the reference date (%f seconds difference)", dateString, expectedTimeIntervalSinceReferenceDate, [date timeIntervalSinceDate:[NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate]]);
+	XCTAssertNotNil(date, @"Parsing a valid ISO 8601 date string (%@) should return an NSDate object", dateString);
+	XCTAssertNotNil(timeZone, @"Parsing a valid ISO 8601 date string (%@) that specifies a time zone offset should return an NSTimeZone object", dateString);
+	XCTAssertEqualWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' should be %f seconds since the reference date (%f seconds difference)", dateString, expectedTimeIntervalSinceReferenceDate, [date timeIntervalSinceDate:[NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate]]);
 	NSInteger secondsFromGMTForDate = [timeZone secondsFromGMTForDate:date];
-	STAssertEquals(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
+	XCTAssertEqual(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
 
 /*TODO: These tests are inherently flaky.
