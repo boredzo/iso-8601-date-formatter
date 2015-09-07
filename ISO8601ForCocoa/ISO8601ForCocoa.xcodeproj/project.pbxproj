@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3119ABEE17FCF8F0003412AE /* UIKit.framework */; };
-		312D4C441B9CA7D300FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; settings = {ASSET_TAGS = (); }; };
-		312D4C451B9CA7D600FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; settings = {ASSET_TAGS = (); }; };
 		312D4C5A1B9CAB0F00FF3602 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179B3EC17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m */; settings = {ASSET_TAGS = (); }; };
 		312D4C5B1B9CAB1000FF3602 /* ISO8601ForCocoaTimeOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179B3EC17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m */; settings = {ASSET_TAGS = (); }; };
+		312D4C441B9CA7D300FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
+		312D4C451B9CA7D600FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
 		31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		3198826517FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3198826417FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m */; };
