@@ -3,5 +3,6 @@
 //
 
 #ifdef __OBJC__
+#	define NS_ENABLE_CALENDAR_NEW_API 1
 #	import <Foundation/Foundation.h>
 #endif
