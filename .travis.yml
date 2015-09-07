@@ -1,8 +1,6 @@
 language: objective-c
 before_install:
     - sudo easy_install cpp-coveralls
-    - brew update
-    - brew upgrade xctool
 
 before_script:
     - cd ISO8601ForCocoa
