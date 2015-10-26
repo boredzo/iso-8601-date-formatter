@@ -251,6 +251,19 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	XCTAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
 }
 
+//<rdar://problem/23248311>: As of 10.10.4, NSDateFormatter with format @"YYYY-'W'ww-FF" generates 2016-W01-05 for this date.
+- (void) testUnparsingDateWithoutTimeAtEndOf2015 {
+	_iso8601DateFormatter.format = ISO8601DateFormatWeek;
+	_iso8601DateFormatter.includeTime = false;
+	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+
+	NSString *expectedString = @"2015-W53-04";
+	NSTimeInterval timeIntervalSinceReferenceDate = 473241600.000000;
+	NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalSinceReferenceDate];
+	NSString *string = [_iso8601DateFormatter stringFromDate:date];
+	XCTAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
+}
+
 - (void) testUnparsingDateInDaylightSavingTime {
 	_iso8601DateFormatter.defaultTimeZone = [NSTimeZone timeZoneWithName:@"Europe/Prague"];
 	_iso8601DateFormatter.includeTime = YES;
