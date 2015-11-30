@@ -14,6 +14,10 @@
 #import "PRHNamedCharacter.h"
 #include <vis.h>
 
+#ifndef TARGET_OS_TV
+#define TARGET_OS_TV 0
+#endif
+
 static const NSTimeInterval gSecondsPerHour = 3600.0;
 
 @interface ISO8601ForCocoaCalendarDateTests ()
@@ -306,7 +310,11 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 - (void) testUnparsingDatesWithoutTime {
 	_iso8601DateFormatter.includeTime = false;
 
+#if TARGET_OS_TV
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+#else
 	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+#endif
 	XCTAssertNotNil(calendar, @"Couldn't create Gregorian calendar with which to set up date-unparsing tests");
 	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
 	XCTAssertNotNil(calendar, @"Couldn't create C/POSIX locale with which to set up date-unparsing tests");
