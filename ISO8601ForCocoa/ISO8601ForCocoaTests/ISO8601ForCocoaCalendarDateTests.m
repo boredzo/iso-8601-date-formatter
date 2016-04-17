@@ -53,7 +53,7 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	XCTAssertNotNil(timeZone, @"Parsing a valid ISO 8601 calendar date that specifies a time zone offset should return an NSTimeZone object");
 	XCTAssertEqualWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' should be %f seconds since the reference date", dateString, expectedTimeIntervalSinceReferenceDate);
 	NSInteger secondsFromGMTForDate = [timeZone secondsFromGMTForDate:date];
-	XCTAssertEqual(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
+	XCTAssertEqual(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, (long)secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
 
 - (void) attemptToUnparseDateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)timeIntervalSinceReferenceDate
@@ -319,9 +319,9 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 		components.year = year;
 
 		NSDate *date = [calendar dateFromComponents:components];
-		NSString *expectedString = [NSString stringWithFormat:@"%04ld-%02ld-%02ld", components.year, components.month, components.day];
+		NSString *expectedString = [NSString stringWithFormat:@"%04ld-%02ld-%02ld", (long)components.year, (long)components.month, (long)components.day];
 		NSString *string = [_iso8601DateFormatter stringFromDate:date];
-		XCTAssertEqualObjects(string, expectedString, @"Got surprising string for January 1, %lu", year);
+		XCTAssertEqualObjects(string, expectedString, @"Got surprising string for January 1, %lu", (unsigned long)year);
 	}
 }
 
