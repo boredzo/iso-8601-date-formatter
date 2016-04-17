@@ -410,7 +410,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0700;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Peter Hosey";
 				TargetAttributes = {
 					027E31B71A52DFCE00802098 = {
@@ -685,6 +685,7 @@
 				);
 				INFOPLIST_FILE = "ISO8601ForCocoaTouchTests/ISO8601ForCocoaTouchTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.boredzo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos";
@@ -708,6 +709,7 @@
 				);
 				INFOPLIST_FILE = "ISO8601ForCocoaTouchTests/ISO8601ForCocoaTouchTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.boredzo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos";
@@ -730,6 +732,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -814,6 +817,7 @@
 				GCC_PREFIX_HEADER = "ISO8601ForCocoa/ISO8601ForCocoa-Prefix.pch";
 				INFOPLIST_FILE = "ISO8601ForCocoaTests/ISO8601ForCocoaTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.boredzo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -833,6 +837,7 @@
 				GCC_PREFIX_HEADER = "ISO8601ForCocoa/ISO8601ForCocoa-Prefix.pch";
 				INFOPLIST_FILE = "ISO8601ForCocoaTests/ISO8601ForCocoaTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.boredzo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
