@@ -1,10 +1,18 @@
 /*ISO8601DateFormatter.h
  *
  *Created by Peter Hosey on 2009-04-11.
- *Copyright 2009–2013 Peter Hosey. All rights reserved.
+ *Copyright 2009–2016 Peter Hosey. All rights reserved.
  */
 
 #import <Foundation/Foundation.h>
+
+#if __has_feature(nullability)
+#define ISO8601_NULLABLE _Nullable
+#define ISO8601_NONNULL _Nonnull
+#else
+#define ISO8601_NULLABLE /*can be NULL*/
+#define ISO8601_NONNULL /*never NULL*/
+#endif
 
 ///Which of ISO 8601's three date formats the formatter should produce.
 typedef NS_ENUM(NSUInteger, ISO8601DateFormat) {
@@ -53,7 +61,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
 	BOOL parsesStrictly;
 }
 
-@property(nonatomic, retain) NSTimeZone *defaultTimeZone;
+@property(nonatomic, retain) NSTimeZone *ISO8601_NULLABLE defaultTimeZone;
 
 #pragma mark Parsing
 /*!
@@ -92,7 +100,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateComponentsFromString:timeZone:
  *	@sa	dateComponentsFromString:timeZone:range:fractionOfSecond:
  */
-- (NSDateComponents *) dateComponentsFromString:(NSString *)string;
+- (NSDateComponents *ISO8601_NULLABLE) dateComponentsFromString:(NSString *ISO8601_NONNULL)string;
 /*!
  *	@brief	Parse a string into individual date components.
  *
@@ -102,7 +110,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateComponentsFromString:
  *	@sa	dateComponentsFromString:timeZone:range:fractionOfSecond:
  */
-- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone;
+- (NSDateComponents *ISO8601_NULLABLE) dateComponentsFromString:(NSString *ISO8601_NONNULL)string timeZone:(out NSTimeZone *ISO8601_NULLABLE *ISO8601_NULLABLE)outTimeZone;
 /*!
  *	@brief	Parse a string into individual date components.
  *
@@ -114,7 +122,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateComponentsFromString:
  *	@sa	dateComponentsFromString:timeZone:
  */
-- (NSDateComponents *) dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange fractionOfSecond:(NSTimeInterval *)outFractionOfSecond;
+- (NSDateComponents *ISO8601_NULLABLE) dateComponentsFromString:(NSString *ISO8601_NONNULL)string timeZone:(out NSTimeZone *ISO8601_NULLABLE *ISO8601_NULLABLE)outTimeZone range:(out NSRange *ISO8601_NULLABLE)outRange fractionOfSecond:(NSTimeInterval *ISO8601_NULLABLE)outFractionOfSecond;
 
 /*!
  *	@brief	Parse a string.
@@ -126,7 +134,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateFromString:timeZone:
  *	@sa	dateFromString:timeZone:range:
  */
-- (NSDate *) dateFromString:(NSString *)string;
+- (NSDate *ISO8601_NULLABLE) dateFromString:(NSString *ISO8601_NONNULL)string;
 /*!
  *	@brief	Parse a string.
  *
@@ -138,7 +146,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateFromString:
  *	@sa	dateFromString:timeZone:range:
  */
-- (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone;
+- (NSDate *ISO8601_NULLABLE) dateFromString:(NSString *ISO8601_NONNULL)string timeZone:(out NSTimeZone *ISO8601_NULLABLE *ISO8601_NULLABLE)outTimeZone;
 /*!
  *	@brief	Parse a string into a single date, identified by an NSDate object.
  *
@@ -151,7 +159,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@sa	dateFromString:
  *	@sa	dateFromString:timeZone:
  */
-- (NSDate *) dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange;
+- (NSDate *ISO8601_NULLABLE) dateFromString:(NSString *ISO8601_NONNULL)string timeZone:(out NSTimeZone *ISO8601_NULLABLE *ISO8601_NULLABLE)outTimeZone range:(out NSRange *ISO8601_NULLABLE)outRange;
 
 #pragma mark Unparsing
 /*!
@@ -211,10 +219,10 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *	@brief	Produce a string that represents a date in UTC.
  *
  *	@param	date	The string to parse. Must represent a date in one of the ISO 8601 formats.
- *	@result	A string that represents the date in UTC.
+ *	@result	A string that represents the date in UTC. Can be `nil` in some cases; see `stringFromDate:timeZone:` for details.
  *	@sa	stringFromDate:timeZone:
  */
-- (NSString *) stringFromDate:(NSDate *)date;
+- (NSString *ISO8601_NULLABLE) stringFromDate:(NSDate *ISO8601_NONNULL)date;
 /*!
  *	@brief	Produce a string that represents a date.
  *
@@ -228,6 +236,6 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  *
  *	@sa	stringFromDate:
  */
-- (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone;
+- (NSString *ISO8601_NULLABLE) stringFromDate:(NSDate *ISO8601_NONNULL)date timeZone:(NSTimeZone *ISO8601_NONNULL)timeZone;
 
 @end

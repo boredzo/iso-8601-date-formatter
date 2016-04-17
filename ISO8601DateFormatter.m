@@ -1,7 +1,7 @@
 /*ISO8601DateFormatter.m
  *
  *Created by Peter Hosey on 2009-04-11.
- *Copyright 2009–2013 Peter Hosey. All rights reserved.
+ *Copyright 2009–2016 Peter Hosey. All rights reserved.
  */
 
 #import <float.h>
@@ -737,6 +737,9 @@ static BOOL is_leap_year(NSUInteger year);
 		unparsingFormatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
 	}
 
+	NSTimeZone *_Nonnull const savedCalendarTimeZone = unparsingCalendar.timeZone;
+	NSTimeZone *_Nonnull const savedFormatterTimeZone = unparsingFormatter.timeZone;
+
 	unparsingCalendar.timeZone = timeZone;
 	unparsingFormatter.timeZone = timeZone;
 	NSString *str = [unparsingFormatter stringForObjectValue:date];
@@ -762,8 +765,8 @@ static BOOL is_leap_year(NSUInteger year);
 	}
 
 	//Undo the change we made earlier
-	unparsingCalendar.timeZone = self.defaultTimeZone;
-	unparsingFormatter.timeZone = self.defaultTimeZone;
+	unparsingCalendar.timeZone = self.defaultTimeZone ?: savedCalendarTimeZone;
+	unparsingFormatter.timeZone = self.defaultTimeZone ?: savedFormatterTimeZone;
 
 	return str;
 }

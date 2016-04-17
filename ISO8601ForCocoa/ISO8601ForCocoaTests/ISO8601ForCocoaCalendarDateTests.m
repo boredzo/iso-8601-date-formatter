@@ -419,12 +419,18 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 }
 
 - (void) testParseNilIntoDateComponents {
-	NSDateComponents *components = [_iso8601DateFormatter dateComponentsFromString:nil];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+	NSDateComponents *_Nullable const components = [_iso8601DateFormatter dateComponentsFromString:nil];
+#pragma clang diagnostic pop
 	XCTAssertNil(components, @"dateComponentsFromString:nil should have returned nil, but returned %@", components);
 }
 
 - (void) testParseNilIntoDate {
-	NSDate *date = [_iso8601DateFormatter dateFromString:nil];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+	NSDate *_Nullable const date = [_iso8601DateFormatter dateFromString:nil];
+#pragma clang diagnostic pop
 	XCTAssertNil(date, @"dateFromString:nil returned should have returned nil, but returned %@", date);
 }
 
