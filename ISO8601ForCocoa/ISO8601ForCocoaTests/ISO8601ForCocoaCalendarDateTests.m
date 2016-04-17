@@ -377,6 +377,22 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	XCTAssertNotNil(date, @"1 PM UTC on October 9th, 2013 should not be nil");
 }
 
+//https://github.com/boredzo/iso-8601-date-formatter/issues/63
+- (void) testParsingDecember1st2014 {
+	NSString *_Nonnull const str = @"2014-12-01";
+	ISO8601DateFormatter *_Nonnull const formatter = [[ISO8601DateFormatter alloc] init];
+	formatter.defaultTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+
+	NSDateComponents *_Nonnull const components = [formatter dateComponentsFromString:str];
+	components.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+	NSDate *_Nonnull const dateCreatedHereFromComponents = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] dateFromComponents:components];
+	XCTAssertEqual((int)dateCreatedHereFromComponents.timeIntervalSinceReferenceDate, 439084800, @"Expected @\"%@\" to be midnight on 2014-12-01 in UTC, not %@", str, dateCreatedHereFromComponents);
+
+	NSDate *_Nonnull const date = [formatter dateFromString:str];
+	XCTAssertNotNil(date, @"December 1st, 2014 should not be nil");
+	XCTAssertEqual((int)date.timeIntervalSinceReferenceDate, 439084800, @"Expected @\"%@\" to be midnight on 2014-12-01 in UTC, not %@", str, date);
+}
+
 // https://github.com/boredzo/iso-8601-date-formatter/issues/36
 - (void) testParsingFractionaryTimeZone
 {

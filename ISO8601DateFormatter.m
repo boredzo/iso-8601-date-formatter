@@ -650,6 +650,8 @@ static BOOL is_leap_year(NSUInteger year);
 	if (components == nil)
 		return nil;
 
+	if (!timeZone) timeZone = self.defaultTimeZone;
+
 	parsingCalendar.timeZone = timeZone;
 	if ([components respondsToSelector:@selector(setTimeZone:)])
 		components.timeZone = timeZone;
