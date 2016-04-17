@@ -48,30 +48,70 @@ static const NSTimeInterval gSecondsPerMinute = 60.0;
 	return string;
 }
 
-- (NSDate *) dateForTodayWithHour:(NSTimeInterval)hour
+- (NSDateComponents *_Nonnull) dateComponentsForHour:(NSTimeInterval)hour
 	minute:(NSTimeInterval)minute
 	second:(NSTimeInterval)second
-	timeZone:(NSTimeZone *)timeZone
+	timeZone:(NSTimeZone *_Nonnull)timeZone
 {
-	NSDate *now = [NSDate date];
 	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	calendar.timeZone = timeZone;
 
-	NSDate *today = nil;
-	[calendar rangeOfUnit:NSDayCalendarUnit startDate:&today interval:NULL forDate:now];
 
 	NSDateComponents *components = [NSDateComponents new];
 	components.hour = (NSInteger)hour;
 	components.minute = (NSInteger)minute;
-	components.second = (NSInteger)second;
+	if (! isnan(second)) {
+		components.second = (NSInteger)second;
+	}
+	components.timeZone = timeZone;
+	components.calendar = calendar;
 
-	NSDate *date = [calendar dateByAddingComponents:components toDate:today options:0];
+	return components;
+}
+- (NSDate *_Nonnull) dateForTodayWithHour:(NSTimeInterval)hour
+	minute:(NSTimeInterval)minute
+	second:(NSTimeInterval)second
+	timeZone:(NSTimeZone *_Nonnull)timeZone
+{
+	NSDateComponents *_Nonnull const components = [self dateComponentsForHour:hour minute:minute second:second timeZone:timeZone];
+	NSCalendar *_Nonnull const calendar = components.calendar;
+
+	NSDate *_Nonnull const now = [NSDate date];
+	NSDate *_Nullable today = nil;
+	[calendar rangeOfUnit:NSDayCalendarUnit startDate:&today interval:NULL forDate:now];
+
+	NSDate *_Nonnull const date = [calendar dateByAddingComponents:components toDate:today options:0];
 	return date;
 }
 
-- (void)        attemptToParseString:(NSString *)dateString
-expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceReferenceDate
-	  expectTimeZoneWithHoursFromGMT:(NSTimeInterval)expectedHoursFromGMT
+- (NSString *_Nonnull const) ISORepresentationOfComponents:(NSDateComponents *_Nonnull) components {
+	NSMutableString *_Nonnull const result = [NSMutableString stringWithCapacity:@"21016-05-01T12:34:56".length];
+#define HAS_INTEGER(property) (components. property != NSUndefinedDateComponent)
+#define APPEND_INTEGER(property) if (components. property == NSUndefinedDateComponent) [result appendString:@"??"]; else [result appendFormat:@"%ld", (long)components. property]
+	if (HAS_INTEGER(year) || HAS_INTEGER(month) || HAS_INTEGER(weekOfYear) || HAS_INTEGER(day)) {
+		APPEND_INTEGER(year);
+		[result appendString:@"-"];
+		if (! HAS_INTEGER(year))
+			[result appendString:@"-"];
+		APPEND_INTEGER(month);
+		APPEND_INTEGER(weekOfYear);
+		[result appendString:@"-"];
+		APPEND_INTEGER(day);
+	}
+	if (HAS_INTEGER(hour) || HAS_INTEGER(minute) || HAS_INTEGER(second)) {
+		[result appendString:@"T"];
+		APPEND_INTEGER(hour);
+		[result appendString:@":"];
+		APPEND_INTEGER(minute);
+		[result appendString:@":"];
+		APPEND_INTEGER(second);
+	}
+	return result;
+}
+
+- (void) attemptToParseString:(NSString *)dateString
+	expectDateComponents:(NSDateComponents *_Nonnull)expectedComponents
+	expectTimeZoneWithHoursFromGMT:(NSTimeInterval)expectedHoursFromGMT
 {
 	const NSTimeInterval expectedSecondsFromGMT = expectedHoursFromGMT * gSecondsPerHour;
 
@@ -79,7 +119,13 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	NSDate *date = [_iso8601DateFormatter dateFromString:dateString timeZone:&timeZone];
 	XCTAssertNotNil(date, @"Parsing a valid ISO 8601 date string (%@) should return an NSDate object", dateString);
 	XCTAssertNotNil(timeZone, @"Parsing a valid ISO 8601 date string (%@) that specifies a time zone offset should return an NSTimeZone object", dateString);
-	XCTAssertEqualWithAccuracy([date timeIntervalSinceReferenceDate], expectedTimeIntervalSinceReferenceDate, 0.0001, @"Date parsed from '%@' should be %f seconds since the reference date (%f seconds difference)", dateString, expectedTimeIntervalSinceReferenceDate, [date timeIntervalSinceDate:[NSDate dateWithTimeIntervalSinceReferenceDate:expectedTimeIntervalSinceReferenceDate]]);
+	NSDateComponents *_Nullable const components = [_iso8601DateFormatter dateComponentsFromString:dateString timeZone:&timeZone];
+	XCTAssertNotNil(components, @"Parsing a valid ISO 8601 date string (%@) should return an NSDate object", dateString);
+	XCTAssertNotNil(timeZone, @"Parsing a valid ISO 8601 date string (%@) that specifies a time zone offset should return an NSTimeZone object", dateString);
+	//The formatter doesn't set these and I don't currently want to make it API that it will. -- boredzo
+	if (components.calendar == nil) components.calendar = expectedComponents.calendar;
+	if (components.timeZone == nil) components.timeZone = expectedComponents.timeZone;
+	XCTAssertEqualObjects(expectedComponents, components, @"Parsing a valid ISO 8601 date string (%@) should have returned %@, not %@", dateString, [self ISORepresentationOfComponents:expectedComponents], [self ISORepresentationOfComponents:components]);
 	NSInteger secondsFromGMTForDate = [timeZone secondsFromGMTForDate:date];
 	XCTAssertEqual(secondsFromGMTForDate, (NSInteger)expectedSecondsFromGMT, @"Time zone parsed from '%@' should be %f seconds (%f hours) from GMT, not %ld seconds (%f hours)", dateString, expectedSecondsFromGMT, expectedHoursFromGMT, secondsFromGMTForDate, secondsFromGMTForDate / gSecondsPerHour);
 }
@@ -94,9 +140,9 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	NSTimeInterval hour = 14.0, minute = 23.0, second = 56.0;
 	NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
 	NSString *string = [self dateStringWithHour:hour minute:minute second:second timeZone:timeZone];
-	NSTimeInterval timeInterval = [self dateForTodayWithHour:hour minute:minute second:second timeZone:timeZone].timeIntervalSinceReferenceDate;
+	NSDateComponents *_Nonnull const components = [self dateComponentsForHour:hour minute:minute second:second timeZone:timeZone];
 	[self attemptToParseString:string
-		expectTimeIntervalSinceReferenceDate:timeInterval
+		expectDateComponents:components
 		expectTimeZoneWithHoursFromGMT:0.0];
 }
 
@@ -104,9 +150,9 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	NSTimeInterval hour = 14.0, minute = 23.0;
 	NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
 	NSString *string = [self dateStringWithHour:hour minute:minute second:0.0 timeZone:timeZone];
-	NSTimeInterval timeInterval = [self dateForTodayWithHour:hour minute:minute second:0.0 timeZone:timeZone].timeIntervalSinceReferenceDate;
+	NSDateComponents *_Nonnull const components = [self dateComponentsForHour:hour minute:minute second:NAN timeZone:timeZone];
 	[self attemptToParseString:string
-		expectTimeIntervalSinceReferenceDate:timeInterval
+		expectDateComponents:components
 		expectTimeZoneWithHoursFromGMT:0.0];
 }
 
@@ -114,9 +160,9 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	NSTimeInterval hour = 14.0, minute = 23.0, second = 56.0;
 	NSTimeZone *timeZone = [NSTimeZone timeZoneForSecondsFromGMT:(NSInteger)(-8.0 * gSecondsPerHour)];
 	NSString *string = [self dateStringWithHour:hour minute:minute second:second timeZone:timeZone];
-	NSTimeInterval timeInterval = [self dateForTodayWithHour:hour minute:minute second:second timeZone:timeZone].timeIntervalSinceReferenceDate;
+	NSDateComponents *_Nonnull const components = [self dateComponentsForHour:hour minute:minute second:second timeZone:timeZone];
 	[self attemptToParseString:string
-		expectTimeIntervalSinceReferenceDate:timeInterval
+		expectDateComponents:components
 		expectTimeZoneWithHoursFromGMT:-8.0];
 }
 
@@ -124,9 +170,9 @@ expectTimeIntervalSinceReferenceDate:(NSTimeInterval)expectedTimeIntervalSinceRe
 	NSTimeInterval hour = 14.0, minute = 23.0;
 	NSTimeZone *timeZone = [NSTimeZone timeZoneForSecondsFromGMT:(NSInteger)(-8.0 * gSecondsPerHour)];
 	NSString *string = [self dateStringWithHour:hour minute:minute second:0.0 timeZone:timeZone];
-	NSTimeInterval timeInterval = [self dateForTodayWithHour:hour minute:minute second:0.0 timeZone:timeZone].timeIntervalSinceReferenceDate;
+	NSDateComponents *_Nonnull const components = [self dateComponentsForHour:hour minute:minute second:NAN timeZone:timeZone];
 	[self attemptToParseString:string
-		expectTimeIntervalSinceReferenceDate:timeInterval
+		expectDateComponents:components
 		expectTimeZoneWithHoursFromGMT:-8.0];
 }
 
