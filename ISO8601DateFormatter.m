@@ -168,18 +168,18 @@ static BOOL is_leap_year(NSUInteger year);
 	NSDate *now = [NSDate date];
 
 	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
-	NSDateComponents *nowComponents = [parsingCalendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:now];
+	NSDateComponents *nowComponents = [parsingCalendar components:NSCalendarUnitYear fromDate:now];
 
 	NSUInteger
 		//Date
-		year = 0U,
-		month_or_week = 0U,
-		day = 0U,
+		year = NSUndefinedDateComponent,
+		month_or_week = NSUndefinedDateComponent,
+		day = NSUndefinedDateComponent,
 		//Time
-		hour = 0U;
+		hour = NSUndefinedDateComponent;
 	NSTimeInterval
-		minute = 0.0,
-		second = 0.0;
+		minute = NAN,
+		second = NAN;
 	//Time zone
 	NSInteger tz_hour = 0;
 	NSInteger tz_minute = 0;
@@ -220,12 +220,8 @@ static BOOL is_leap_year(NSUInteger year);
 		NSUInteger num_leading_hyphens = 0U, num_digits = 0U;
 
 		if (*ch == 'T') {
-			//There is no date here, only a time. Set the date to now; then we'll parse the time.
+			//There is no date here, only a time.
 			isValidDate = isdigit(*++ch);
-
-			year = nowComponents.year;
-			month_or_week = nowComponents.month;
-			day = nowComponents.day;
 		} else {
 			while(*ch == '-') {
 				++num_leading_hyphens;
@@ -237,12 +233,10 @@ static BOOL is_leap_year(NSUInteger year);
 				case 0:
 					if (*ch == 'W') {
 						if ((ch[1] == '-') && isdigit(ch[2]) && ((num_leading_hyphens == 1U) || ((num_leading_hyphens == 2U) && !strict))) {
-							year = nowComponents.year;
 							month_or_week = 1U;
 							ch += 2;
 							goto parseDayAfterWeek;
 						} else if (num_leading_hyphens == 1U) {
-							year = nowComponents.year;
 							goto parseWeekAndDay;
 						} else
 							isValidDate = NO;
@@ -336,7 +330,6 @@ static BOOL is_leap_year(NSUInteger year);
 						case 2: //MMDD
 							day = segment % 100U;
 							month_or_week = segment / 100U;
-							year = nowComponents.year;
 
 							break;
 
@@ -451,7 +444,6 @@ static BOOL is_leap_year(NSUInteger year);
 							break;
 
 						case 2: //--MM; --MM-DD
-							year = nowComponents.year;
 							month_or_week = segment;
 							if (*ch == '-') {
 								++ch;
@@ -460,8 +452,6 @@ static BOOL is_leap_year(NSUInteger year);
 							break;
 
 						case 3: //---DD
-							year = nowComponents.year;
-							month_or_week = nowComponents.month;
 							day = segment;
 							break;
 
@@ -488,7 +478,6 @@ static BOOL is_leap_year(NSUInteger year);
 						isValidDate = NO;
 					else {
 						day = segment;
-						year = nowComponents.year;
 						dateSpecification = dateOnly;
 						if (strict && (day > (365U + is_leap_year(year))))
 							isValidDate = NO;
@@ -526,6 +515,8 @@ static BOOL is_leap_year(NSUInteger year);
 						else if (*ch == timeSep) {
 							++ch;
 							second = read_double(ch, &ch);
+						} else {
+							second = NAN;
 						}
 					}
 				}
@@ -585,11 +576,11 @@ static BOOL is_leap_year(NSUInteger year);
 			components.year = year;
 			components.day = day;
 			components.hour = hour;
-			components.minute = (NSInteger)minute;
-			components.second = (NSInteger)second;
+			components.minute = isnan(minute) ? NSUndefinedDateComponent : (NSInteger)minute;
+			components.second = isnan(second) ? NSUndefinedDateComponent : (NSInteger)second;
 
 			if (outFractionOfSecond != NULL) {
-				NSTimeInterval fractionOfSecond = second - components.second;
+				NSTimeInterval fractionOfSecond = second - (NSInteger)second;
 				if (fractionOfSecond > 0.0) {
 					*outFractionOfSecond = fractionOfSecond;
 				}
