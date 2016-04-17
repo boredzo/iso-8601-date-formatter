@@ -251,7 +251,7 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	XCTAssertEqualObjects(string, expectedString, @"Generated wrong week date string for %@ (%f)", date, timeIntervalSinceReferenceDate);
 }
 
-//<rdar://problem/23248311>: As of 10.10.4, NSDateFormatter with format @"YYYY-'W'ww-FF" generates 2016-W01-05 for this date.
+// <rdar://problem/23248311>: As of 10.10.4, NSDateFormatter with format @"YYYY-'W'ww-FF" generates 2016-W01-05 for this date.
 - (void) testUnparsingDateWithoutTimeAtEndOf2015 {
 	_iso8601DateFormatter.format = ISO8601DateFormatWeek;
 	_iso8601DateFormatter.includeTime = false;
