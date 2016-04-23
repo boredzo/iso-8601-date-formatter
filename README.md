@@ -175,4 +175,4 @@ I use [Rick McCarty's algorithm for converting calendar dates to week dates](htt
 
 ## Copyright
 
-This code is copyright 2006–2013 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
+This code is copyright 2006–2016 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
