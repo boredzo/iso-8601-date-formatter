@@ -173,6 +173,34 @@ I use [Rick McCarty's algorithm for converting calendar dates to week dates](htt
 
 * There is no method to analyze a date string and tell you what was found in it (year, month, week, day, ordinal day, etc.). Feel free to submit a patch.
 
+## Contributing
+
+This project adheres to [the Contributor Covenant, version 1.4](CODE OF CONDUCT.md). Please read that before deciding whether you are willing to contribute.
+
+You're welcome to work on any open bug in the issue tracker, but we do have some that are [up-for-grabs](https://github.com/boredzo/iso-8601-date-formatter/issues?q=is%3Aissue+is%3Aopen+label%3Aup-for-grabs) that are particularly easy or potentially interesting.
+
+Please don't break compatibility with old OS versions (OS X 10.7/iOS 4) until work begins on the 1.0 release. That won't happen until 0.9 is done, and starting 1.0-only work (e.g., ARCification) early will lead to conflicts.
+
+The tests use ARC, but the formatter itself does not ([yet](https://github.com/boredzo/iso-8601-date-formatter/issues/21)). Please be sure to add the needed `release` or `autorelease` messages when adding code that creates objects.
+
+Adding test cases is highly encouraged, especially if adding new functionality. Ideally, please test a comprehensive set of:
+
+- success cases
+- failure cases
+- exception (programmer error) cases: even if something isn't supported, the behavior should still be reliable and preferably diagnostically helpful
+
+Travis CI will run the tests automatically when you submit a pull request, and a PR with failing tests will not be accepted.
+
+Contributions consisting of nothing but test cases are welcome. If one/some of those cases fail, please include fixes, or at least, submit an issue report for the failure(s) and surround the failing tests with:
+
+    #if FIXED_(issue number)
+    - (void) test_thingThatDoesntWorkButShould {
+        ⋮
+    }
+    #endif FIXED_(issue number)
+
+As far as code style, mostly, please try to remain consistent with the existing code. Please do add nullability annotations (`ISO8601_NULLABLE`/`ISO8601_NONNULL`) and `const` to new code whenever applicable.
+
 ## Copyright
 
 This code is copyright 2006–2016 Peter Hosey. It is under the BSD license; see LICENSE.txt for the full text of the license.
