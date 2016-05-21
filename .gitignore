@@ -21,3 +21,6 @@ testparser
 unparse-date
 unparse-ordinaldate
 unparse-weekdate
+
+# Carthage
+Carthage/Build
