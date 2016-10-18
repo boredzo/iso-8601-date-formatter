@@ -29,7 +29,7 @@ const unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 static NSString * const ISO8601TwoCharIntegerFormat = @"%.2d";
 
-@interface ISO8601DateFormatter(UnparsingPrivate)
+@interface BT_ISO8601DateFormatter(UnparsingPrivate)
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep;
 
@@ -40,7 +40,7 @@ static NSString * const ISO8601TwoCharIntegerFormat = @"%.2d";
 
 static NSCache *timeZonesByOffset;
 
-@implementation ISO8601DateFormatter
+@implementation BT_ISO8601DateFormatter
 
 + (void) initialize {
     timeZonesByOffset = [[NSCache alloc] init];
