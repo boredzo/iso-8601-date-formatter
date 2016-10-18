@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		027E31BD1A52DFCE00802098 /* ISO8601.h in Headers */ = {isa = PBXBuildFile; fileRef = 027E31BC1A52DFCE00802098 /* ISO8601.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		027E31D11A52DFE200802098 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		027E31D21A52DFEC00802098 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		027E31D11A52DFE200802098 /* BT_ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* BT_ISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		027E31D21A52DFEC00802098 /* BT_ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* BT_ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3119ABEE17FCF8F0003412AE /* UIKit.framework */; };
 		312D4C441B9CA7D300FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
 		312D4C451B9CA7D600FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
@@ -23,13 +23,13 @@
 		31A271CB17CE9B5B00E3FA7D /* libISO8601ForCocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */; };
 		31A271D117CE9B5B00E3FA7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31A271CF17CE9B5B00E3FA7D /* InfoPlist.strings */; };
 		31A271DB17CE9C3A00E3FA7D /* ISO8601ForCocoaCalendarDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */; };
-		31A271DC17CE9C5E00E3FA7D /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; };
+		31A271DC17CE9C5E00E3FA7D /* BT_ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* BT_ISO8601DateFormatter.m */; };
 		31A271DD17CE9E3500E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFD117546BC800BD292F /* Foundation.framework */; };
 		31AEAFE317546BC800BD292F /* libISO8601ForCocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFC917546BC800BD292F /* libISO8601ForCocoa.a */; };
 		31AEAFE917546BC800BD292F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31AEAFE717546BC800BD292F /* InfoPlist.strings */; };
 		31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */; };
-		31AEAFF717546BFB00BD292F /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */; };
-		31AEAFF817546BFB00BD292F /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		31AEAFF717546BFB00BD292F /* BT_ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* BT_ISO8601DateFormatter.h */; };
+		31AEAFF817546BFB00BD292F /* BT_ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* BT_ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2417CF34AE003603D1 /* MBMockLocale.m */; };
 		3904FF2817CF34AE003603D1 /* MBMockLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2417CF34AE003603D1 /* MBMockLocale.m */; };
 		3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */; };
@@ -94,8 +94,8 @@
 		31AEAFE817546BC800BD292F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		31AEAFEA17546BC800BD292F /* ISO8601ForCocoaCalendarDateTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaCalendarDateTests.h; sourceTree = "<group>"; };
 		31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaCalendarDateTests.m; sourceTree = "<group>"; };
-		31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		31AEAFF517546BFA00BD292F /* BT_ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BT_ISO8601DateFormatter.h; path = ../BT_ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		31AEAFF617546BFA00BD292F /* BT_ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BT_ISO8601DateFormatter.m; path = ../BT_ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		31D981F31B9E5A35007CF1DA /* ISO8601.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ISO8601.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3904FF2317CF34AE003603D1 /* MBMockLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockLocale.h; sourceTree = "<group>"; };
 		3904FF2417CF34AE003603D1 /* MBMockLocale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockLocale.m; sourceTree = "<group>"; };
@@ -204,8 +204,8 @@
 		31AEAFC017546BC800BD292F = {
 			isa = PBXGroup;
 			children = (
-				31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */,
-				31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */,
+				31AEAFF517546BFA00BD292F /* BT_ISO8601DateFormatter.h */,
+				31AEAFF617546BFA00BD292F /* BT_ISO8601DateFormatter.m */,
 				31AEAFD217546BC800BD292F /* ISO8601ForCocoa */,
 				31AEAFE417546BC800BD292F /* ISO8601ForCocoaTests */,
 				31A271B817CE9B5B00E3FA7D /* ISO8601ForCocoaTouch */,
@@ -302,7 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				027E31BD1A52DFCE00802098 /* ISO8601.h in Headers */,
-				027E31D11A52DFE200802098 /* ISO8601DateFormatter.h in Headers */,
+				027E31D11A52DFE200802098 /* BT_ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +310,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AEAFF717546BFB00BD292F /* ISO8601DateFormatter.h in Headers */,
+				31AEAFF717546BFB00BD292F /* BT_ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +475,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				027E31D21A52DFEC00802098 /* ISO8601DateFormatter.m in Sources */,
+				027E31D21A52DFEC00802098 /* BT_ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31A271DC17CE9C5E00E3FA7D /* ISO8601DateFormatter.m in Sources */,
+				31A271DC17CE9C5E00E3FA7D /* BT_ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AEAFF817546BFB00BD292F /* ISO8601DateFormatter.m in Sources */,
+				31AEAFF817546BFB00BD292F /* BT_ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,7 +45,7 @@ extern const unichar ISO8601DefaultTimeSeparatorCharacter;
  * For a good and more detailed introduction to ISO 8601, see [“A summary of the international standard date and time notation” by Markus Kuhn](http://www.cl.cam.ac.uk/~mgk25/iso-time.html). The actual standard itself can be found in PDF format online with a well-crafted web search.
  */
 
-@interface ISO8601DateFormatter: NSFormatter
+@interface BT_ISO8601DateFormatter: NSFormatter
 {
 	NSString *lastUsedFormatString;
 	NSDateFormatter *unparsingFormatter;
