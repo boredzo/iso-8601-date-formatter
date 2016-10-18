@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 #	import <UIKit/UIKit.h>
 #endif
-#import "ISO8601DateFormatter.h"
+#import "BT_ISO8601DateFormatter.h"
 
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
