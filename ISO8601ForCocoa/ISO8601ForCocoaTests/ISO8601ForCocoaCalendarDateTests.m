@@ -434,6 +434,22 @@ expectTimeZoneWithHoursFromGMT:expectedHoursFromGMT];
 	XCTAssertNil(date, @"dateFromString:nil returned should have returned nil, but returned %@", date);
 }
 
+- (void) testParseNSNullIntoDate {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
+    NSDate *date = [_iso8601DateFormatter dateFromString:[NSNull null]];
+#pragma clang diagnostic pop
+    
+    STAssertNil(date, @"dateFromString:[NSNull null] returned should have returned nil, but returned %@", date);
+}
+
+- (void) testParseNSMutableStringIntoDate {
+    NSString *dateString = @"2013-09-12T23:40Z";
+    NSDate *expectedDate = [NSDate dateWithTimeIntervalSinceReferenceDate:400722000.0];
+    NSDate *date = [_iso8601DateFormatter dateFromString:[[NSMutableString alloc] initWithString:dateString]];
+    STAssertEquals(date, expectedDate, @"dateFromString: should have returned %@, but returned %@", expectedDate, date);
+}
+
 - (void) testStringFromInapplicableObjectValues {
 	NSString *string = nil;
 	XCTAssertNoThrow((string = [_iso8601DateFormatter stringForObjectValue:@42]), @"stringForObjectValue:@42 threw an exception");
