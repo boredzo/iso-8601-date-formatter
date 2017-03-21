@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Peter Hosey. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for ISO8601DateFormatter.
 FOUNDATION_EXPORT double ISO8601DateFormatterVersionNumber;
