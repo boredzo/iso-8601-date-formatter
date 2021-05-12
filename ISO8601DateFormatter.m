@@ -172,11 +172,11 @@ static BOOL is_leap_year(NSUInteger year);
 
 	NSUInteger
 		//Date
-		year = NSUndefinedDateComponent,
-		month_or_week = NSUndefinedDateComponent,
-		day = NSUndefinedDateComponent,
+		year = NSDateComponentUndefined,
+		month_or_week = NSDateComponentUndefined,
+		day = NSDateComponentUndefined,
 		//Time
-		hour = NSUndefinedDateComponent;
+		hour = NSDateComponentUndefined;
 	NSTimeInterval
 		minute = NAN,
 		second = NAN;
@@ -576,8 +576,8 @@ static BOOL is_leap_year(NSUInteger year);
 			components.year = year;
 			components.day = day;
 			components.hour = hour;
-			components.minute = isnan(minute) ? NSUndefinedDateComponent : (NSInteger)minute;
-			components.second = isnan(second) ? NSUndefinedDateComponent : (NSInteger)second;
+			components.minute = isnan(minute) ? NSDateComponentUndefined : (NSInteger)minute;
+			components.second = isnan(second) ? NSDateComponentUndefined : (NSInteger)second;
 
 			if (outFractionOfSecond != NULL) {
 				NSTimeInterval fractionOfSecond = second - (NSInteger)second;
